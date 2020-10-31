@@ -11,8 +11,6 @@ import { IButtonProps, Button, Checkbox } from '@blueprintjs/core';
 
 import { FixedSizeList as List } from 'react-window';
 
-import { callIPC, useIPCValue } from '@riboseinc/coulomb/ipc/renderer';
-
 import { availableLanguages } from '../../models/lang';
 import { MultiLanguageConcept, ConceptRef } from '../../models/concepts';
 
@@ -28,6 +26,7 @@ import { RepositoryViewProps } from '@riboseinc/paneron-extension-kit/types';
 interface ConceptListProps {
   React: RepositoryViewProps["React"]
   useObjectData: RepositoryViewProps["useObjectData"]
+  useAuthorEmail: RepositoryViewProps["useAuthorEmail"]
 
   concepts: MultiLanguageConcept<any>[]
   itemMarker?: (c: MultiLanguageConcept<any>) => JSX.Element
@@ -39,20 +38,24 @@ interface ConceptListProps {
 
   lang: keyof typeof availableLanguages
   className?: string
+  conceptItemClassName?: string
 }
 export const ConceptList: React.FC<ConceptListProps> =
 function ({
     React,
     useObjectData,
+    useAuthorEmail,
 
     lang,
     concepts,
-    className,
     itemMarker,
     itemMarkerRight,
     buttonProps,
     paddings,
-    itemHeight
+    itemHeight,
+
+    className,
+    conceptItemClassName,
   }) {
 
   const CONTAINER_PADDINGS = paddings || 0;
@@ -68,8 +71,7 @@ function ({
   const listEl = React.useRef<List>(null);
 
   const sourceCtx = React.useContext(SourceContext);
-  const committerEmail = useIPCValue<{}, { email: string }>
-  ('db-default-get-current-committer-info', { email: '' }).value.email;
+  const committerEmail = useAuthorEmail().value.email;
 
   React.useEffect(() => {
     const updateListHeight = debounce(100, () => {
@@ -116,13 +118,13 @@ function ({
   }
 
   async function addToCollection(collectionID: string, refs: ConceptRef[]) {
-    await callIPC<{ objID: string, ids: ConceptRef[], commit: boolean }, { success: true }>
-    ('model-collections-add-items', { objID: collectionID, ids: refs, commit: true });
+    //await callIPC<{ objID: string, ids: ConceptRef[], commit: boolean }, { success: true }>
+    //('model-collections-add-items', { objID: collectionID, ids: refs, commit: true });
   }
 
   async function removeFromCollection(collectionID: string, refs: ConceptRef[]) {
-    await callIPC<{ objID: string, ids: ConceptRef[], commit: boolean }, { success: true }>
-    ('model-collections-remove-items', { objID: collectionID, ids: refs, commit: true });
+    //await callIPC<{ objID: string, ids: ConceptRef[], commit: boolean }, { success: true }>
+    //('model-collections-remove-items', { objID: collectionID, ids: refs, commit: true });
   }
 
   function invokeRowContextMenu(ref: ConceptRef) {
@@ -208,6 +210,8 @@ function ({
 
         <ConceptItem
           React={React}
+          useObjectData={useObjectData}
+          className={conceptItemClassName}
           lang={lang as keyof typeof availableLanguages}
           concept={c} />
 

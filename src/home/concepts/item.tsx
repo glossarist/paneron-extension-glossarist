@@ -1,7 +1,8 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 
-import { jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/core';
+import styled from '@emotion/styled';
 import React from 'react';
 
 import { SupportedLanguages, availableLanguages } from '../../models/lang';
@@ -10,6 +11,8 @@ import { MultiLanguageConcept, ConceptRef, Concept, PARENT_RELATIONSHIP } from '
 //import styles from '../styles.scss';
 import { RepresentingDesignation } from './designation';
 import { RepositoryViewProps } from '@riboseinc/paneron-extension-kit/types';
+import { Colors } from '@blueprintjs/core';
+import { useConcept } from '../../hooks';
 
 
 interface LazyParentConceptListProps {
@@ -18,6 +21,7 @@ interface LazyParentConceptListProps {
 
   parentConceptIDs: ConceptRef[]
   lang: keyof SupportedLanguages
+
   className?: string
 }
 export const LazyParentConceptList: React.FC<LazyParentConceptListProps> =
@@ -25,7 +29,7 @@ function ({ React, useObjectData, parentConceptIDs, lang, className }) {
   return (
     <>
       {(parentConceptIDs && parentConceptIDs.length > 0)
-        ? <span className={`${styles.parents} ${className}`}
+        ? <ParentConceptList className={className}
                 title="Parent concept (domain, broader concept)">
             {parentConceptIDs.map(id =>
               <LazyConceptItem
@@ -33,26 +37,56 @@ function ({ React, useObjectData, parentConceptIDs, lang, className }) {
                 conceptRef={id} lang={lang}
               />
             )}
-          </span>
+          </ParentConceptList>
         : null}
     </>
   );
 };
 
 
+const ParentConceptList = styled.span`
+  white-space: nowrap;
+
+  &::before {
+    content: "<";
+    color: ${Colors.LIGHT_GRAY1};
+  }
+  &::after {
+    content: ">";
+    margin-left: -.25em;
+    color: ${Colors.LIGHT_GRAY1};
+  }
+
+  > :not(:last-child) {
+    margin-right: -.25em;
+
+    &::after {
+      display: inline;
+      margin-left: -.25em;
+      content: ", ";
+    }
+  }
+
+  div {
+    display: inline;
+  }
+`;
+
+
 interface ConceptItemProps {
   React: RepositoryViewProps["React"]
+  useObjectData: RepositoryViewProps["useObjectData"]
+
   concept: MultiLanguageConcept<any>
   lang: keyof typeof availableLanguages
   className?: string
 }
 export const ConceptItem: React.FC<ConceptItemProps> =
-function ({ React, lang, concept, className }) {
+function ({ React, useObjectData, lang, concept, className }) {
 
   const c = concept[lang as keyof typeof availableLanguages] || concept.eng;
 
   const isValid = c ? ['retired', 'superseded'].indexOf(c.entry_status) < 0 : undefined;
-  const designationValidityClass = isValid === false ? styles.invalidDesignation : '';
 
   const parents = (concept.relations || []).
     filter(r => r.type === PARENT_RELATIONSHIP).
@@ -60,12 +94,19 @@ function ({ React, lang, concept, className }) {
 
   return (
     <span
-        className={`
-          ${styles.conceptItem} ${className || ''}
-          ${designationValidityClass}
-        `}>
+        css={isValid === false
+          ? css`
+            text-decoration: line-through;
+            opacity: .4;
+
+            :global .bp3-input {
+              text-decoration: line-through;
+            }
+          `
+          : undefined}
+        className={className}>
       {c
-        ? <RepresentingDesignation React={React} entry={c} parentConceptIDs={parents} />
+        ? <RepresentingDesignation React={React} useObjectData={useObjectData} entry={c} parentConceptIDs={parents} />
         : <i>missing designation</i>}
     </span>
   );
@@ -74,18 +115,16 @@ function ({ React, lang, concept, className }) {
 
 interface LocalizedEntryProps {
   React: RepositoryViewProps["React"]
+  useObjectData: RepositoryViewProps["useObjectData"]
   entry: Concept<any, any>
   className?: string
 }
 export const LocalizedEntry: React.FC<LocalizedEntryProps> =
-function ({ React, entry, className }) {
+function ({ React, useObjectData, entry, className }) {
 
   return (
-    <span
-        className={`
-          ${styles.conceptItem} ${className || ''}
-        `}>
-      <RepresentingDesignation React={React} entry={entry} />
+    <span className={className || ''}>
+      <RepresentingDesignation React={React} useObjectData={useObjectData} entry={entry} />
     </span>
   );
 };
@@ -105,17 +144,19 @@ function ({ React, useObjectData, conceptRef, lang, className }) {
      NOTE: Should not be used in large lists, too slow.
      For large lists, fetch all concepts in one request and use LazyConceptList.
   */
-  const concept = useConcept<MultiLanguageConcept<any>, ConceptRef>(useObjectData, conceptRef);
+  const concept = useConcept(useObjectData, conceptRef).value;
 
-  if (concept.object) {
+  if (concept !== undefined) {
     return <ConceptItem
       React={React}
-      concept={concept.object}
+      useObjectData={useObjectData}
+      concept={concept}
       lang={lang}
       className={className}
     />;
+
   } else {
-    return <span className={`${styles.conceptItem} ${className || ''}`}>
+    return <span className={className}>
       {conceptRef}
     </span>
   }
