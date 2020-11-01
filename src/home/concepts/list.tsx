@@ -1,13 +1,13 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 
-import { jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/core';
 import type React from 'react';
 
 import { debounce } from 'throttle-debounce';
 import { remote } from 'electron';
 
-import { IButtonProps, Button, Checkbox } from '@blueprintjs/core';
+import { IButtonProps, Button, Checkbox, Colors } from '@blueprintjs/core';
 
 import { FixedSizeList as List } from 'react-window';
 
@@ -19,6 +19,7 @@ import { useHelp } from '../help';
 import { ConceptContext, SourceContext } from '../contexts';
 import { ConceptItem } from './item';
 import { RepositoryViewProps } from '@riboseinc/paneron-extension-kit/types';
+import styled from '@emotion/styled';
 
 //import styles from './styles.scss';
 
@@ -180,11 +181,24 @@ function ({
           style={style}
           alignText="left"
           onContextMenu={() => invokeRowContextMenu(c.termid)}
-          className={`
-            ${styles.lazyConceptListItem}
-            ${conceptCtx.ref === c.termid
-              ? styles.lazyConceptListItemSelected
-              : ''}
+          css={css`
+            border-radius: 0 !important;
+            overflow: hidden;
+        
+            :global .bp3-button-text {
+              display: flex;
+              flex-flow: row nowrap;
+        
+              overflow: hidden;
+              align-items: center;
+              white-space: nowrap;
+            }
+        
+            :global .bp3-icon {
+              margin: 0 $pt-grid-size !important;
+              color: unset;
+            }
+            ${conceptCtx.ref === c.termid ? css`background: ${Colors.BLUE5};` : ''}
           `}
           {...buttonProps}
           onClick={(evt: React.MouseEvent) => {
@@ -205,18 +219,19 @@ function ({
           }} />
 
         {itemMarker
-          ? <span className={styles.itemMarker}>{itemMarker(c)}</span>
+          ? <ItemMarker>{itemMarker(c)}</ItemMarker>
           : null}
 
         <ConceptItem
           React={React}
           useObjectData={useObjectData}
           className={conceptItemClassName}
+          css={css`text-overflow: ellipsis; overflow: hidden;`}
           lang={lang as keyof typeof availableLanguages}
           concept={c} />
 
         {itemMarkerRight
-          ? <span className={styles.itemMarkerRight}>{itemMarkerRight(c)}</span>
+          ? <ItemMarkerRight>{itemMarkerRight(c)}</ItemMarkerRight>
           : null}
 
       </Button>
@@ -227,7 +242,6 @@ function ({
     <div ref={listContainer} className={className}>
       <List
           ref={listEl}
-          className={styles.lazyConceptList}
           direction={isRTL ? "rtl" : undefined}
           itemCount={concepts.length}
           width="100%"
@@ -239,3 +253,24 @@ function ({
   );
 };
 
+
+const ItemMarker = styled.span`
+  flex-shrink: 0;
+  width: 4rem;
+  margin-left: .5rem;
+  margin-right: .5rem;
+  display: flex;
+  flex-flow: row nowrap;
+  overflow: hidden;
+`
+
+
+const ItemMarkerRight = styled.span`
+  flex: 1;
+  width: 14em;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+`

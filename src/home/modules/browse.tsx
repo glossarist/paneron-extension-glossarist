@@ -22,15 +22,21 @@ import {
   ObjectQueryContext,
 } from '../contexts';
 import { ConceptList, refToString } from '../concepts';
-import * as panels from '../panels';
+//import * as panels from '../panels';
 import { ModuleConfig, ToolbarItem } from '../module-config';
 import styled from '@emotion/styled';
+import { ConceptID } from '../concepts/item';
+import { PANEL_SEPARATOR_CSS } from '../styling';
 
 //import sharedStyles from '../styles.scss';
 //import styles from './browse.scss';
 
 
-const MainView: React.FC<{ React: RepositoryViewProps["React"] }> = function ({ React }) {
+const MainView: React.FC<{
+  React: RepositoryViewProps["React"]
+  useObjectData: RepositoryViewProps["useObjectData"]
+  useAuthorEmail: RepositoryViewProps["useAuthorEmail"]
+}> = function ({ React, useObjectData, useAuthorEmail }) {
   const source = React.useContext(SourceContext);
   const concepts = source.objects;
   const lang = React.useContext(I18nConfigContext);
@@ -50,10 +56,13 @@ const MainView: React.FC<{ React: RepositoryViewProps["React"] }> = function ({ 
   return (
     <ConceptBrowser>
       <ConceptList
+        React={React}
+        useObjectData={useObjectData}
+        useAuthorEmail={useAuthorEmail}
         lang={lang.selected as keyof typeof availableLanguages}
         concepts={concepts}
         itemMarker={(c: MultiLanguageConcept<any>) =>
-          <span className={sharedStyles.conceptID}>{refToString(c.termid)}</span>}
+          <ConceptID>{refToString(c.termid)}</ConceptID>}
         itemMarkerRight={renderItemMarker}
       />
     </ConceptBrowser>
@@ -237,24 +246,24 @@ export default {
   title: "List",
 
   leftSidebar: [
-    panels.system,
-    panels.catalog,
-    panels.collections,
-    panels.help,
+    //panels.system,
+    //panels.catalog,
+    //panels.collections,
+    //panels.help,
   ],
 
   MainView,
   mainToolbar: [({ React }) => <LanguageMenu React={React} />, FilterMenu, SearchByText, SortOrder],
 
   rightSidebar: [
-    panels.basics,
-    panels.relationships,
-    panels.status,
-    { className: sharedStyles.flexiblePanelSeparator,
+    //panels.basics,
+    //panels.relationships,
+    //panels.status,
+    { className: PANEL_SEPARATOR_CSS,
       Contents: () => <span><Icon icon="chevron-down" />{" "}Lineage</span>,
       collapsed: 'never' },
-    panels.lineage,
-    panels.revision,
+    //panels.lineage,
+    //panels.revision,
   ],
 } as ModuleConfig;
 

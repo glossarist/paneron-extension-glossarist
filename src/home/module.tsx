@@ -26,7 +26,7 @@ import { ConceptRef } from '../models/concepts';
 import { ConceptQuery } from '../models/query';
 import { GlossaryRegisterRoles, ROLES_FILENAME } from '../models/meta';
 
-import { useCollections, useIDs, useConcepts } from '../hooks';
+import { /*useCollections, */useIDs, useConcepts } from '../hooks';
 
 import {
   ConceptContext, SourceContext,
@@ -104,11 +104,11 @@ export const Module: React.FC<ModuleProps> = function ({
     objects: Object.values(_concepts.value).sort((a, b) => a.termid - b.termid),
   };
 
-  const _collections = useCollections(useObjectPaths, useObjectData, {});
+  //const _collections = useCollections(useObjectPaths, useObjectData, {});
   const collections = {
-    objects: Object.values(_collections.value).
+    objects: []/*Object.values(_collections.value).
       sort((a, b) => a.label.localeCompare(b.label)).
-      map(c => update(c, { $unset: ['items' ]})),
+      map(c => update(c, { $unset: ['items' ]}))*/,
   };
 
   React.useEffect(() => {
@@ -265,7 +265,11 @@ export const Module: React.FC<ModuleProps> = function ({
 
     <ModuleView className={Classes.ELEVATION_1}>
       {leftSidebar.length > 0
-        ? <Sidebar React={React} key="left" position="left" panelSet={leftSidebar} />
+        ? <Sidebar
+            React={React}
+            key="left"
+            position="left"
+            panelSet={leftSidebar} />
         : null}
 
       <ModuleMainView key="main">
@@ -279,7 +283,11 @@ export const Module: React.FC<ModuleProps> = function ({
       </ModuleMainView>
 
       {rightSidebar.length > 0
-        ? <Sidebar React={React} key="right" position="right" panelSet={rightSidebar} />
+        ? <Sidebar
+            React={React}
+            key="right"
+            position="right"
+            panelSet={rightSidebar} />
         : null}
     </ModuleView>
 

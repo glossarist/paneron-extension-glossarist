@@ -168,9 +168,22 @@ function ({ React, useObjectData, makeAbsolutePath, activeModuleID, activateModu
       <Panel
           isCollapsible
 
-          className={css`${styling.PANEL}`}
-          titleBarClassName={css`${styling.PANEL_TITLE_BAR}`}
-          contentsClassName={css`${styling.PANEL_CONTENTS}`}
+          className={cx(css`${styling.PANEL}`, css`overflow: hidden;`)}
+          titleBarClassName={cx(css`${styling.PANEL_TITLE_BAR}`, css`
+            justify-content: center;
+            z-index: 2;
+            position: relative;
+          `)}
+          contentsClassName={cx(css`${styling.PANEL_CONTENTS}`, css`
+            height: 3.75rem;
+            padding: 0 ${styling.GRID_SIZE_PX * 2}px .35rem ${styling.GRID_SIZE_PX * 2}px !important;
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            justify-content: space-between;
+            background: ${styling.PANEL_LIGHT_BG};
+          `)}
+
           ref={topPanelRef as (item: HTMLDivElement) => void}
 
           iconCollapsed="caret-down"

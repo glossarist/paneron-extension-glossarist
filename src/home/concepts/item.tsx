@@ -161,3 +161,12 @@ function ({ React, useObjectData, conceptRef, lang, className }) {
     </span>
   }
 };
+
+
+export const ConceptID = styled.span`
+  opacity: .4;
+  font-size: 80%;
+
+  text-overflow: ellipsis;
+  overflow: hidden;
+`

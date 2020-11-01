@@ -1,6 +1,6 @@
 import memoizeOne from 'memoize-one';
 import axios from 'axios';
-import { DocsContext, HoveredItem } from './contexts';
+import { HelpContext, HoveredItem } from './contexts';
 import { RepositoryViewProps } from '@riboseinc/paneron-extension-kit/types';
 
 
@@ -29,7 +29,7 @@ const memoizedReq = memoizeOne(async (itemID: string): Promise<HelpResponse | un
 
 
 export function useHelp(React: RepositoryViewProps["React"], itemID: string): (item: HTMLElement) => void {
-  const ctx = React.useContext(DocsContext);
+  const ctx = React.useContext(HelpContext);
   const [ref, setRef] = React.useState<HTMLElement | null>(document.createElement('div'));
   const [itemHelp, setItemHelp] = React.useState<HoveredItem | null>(null);
 
