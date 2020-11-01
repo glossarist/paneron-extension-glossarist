@@ -1,4 +1,3 @@
-import { AnyIDType } from '@riboseinc/coulomb/db/models';
 import { Revision } from './revisions';
 
 
@@ -6,7 +5,7 @@ import { Revision } from './revisions';
 
 
 export type RevisionInCR<T> = Omit<Revision<T>, 'changeRequestID' | 'author'> & {
-  createdObjectID?: AnyIDType
+  createdObjectID?: number | string
   createdRevisionID?: string
 };
 
