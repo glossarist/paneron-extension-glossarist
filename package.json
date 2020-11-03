@@ -13,12 +13,9 @@
     "*.js",
     "*.js.map",
     "*.d.ts",
-    "home/**/*.js",
-    "home/**/*.js.map",
-    "home/**/*.d.ts",
-    "models/*.js",
-    "models/*.js.map",
-    "models/*.d.ts"
+    "classes/**/*.js",
+    "classes/**/*.js.map",
+    "classes/**/*.d.ts"
   ],
   "devDependencies": {
     "@babel/cli": "^7.1.5",
