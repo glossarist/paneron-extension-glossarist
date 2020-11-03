@@ -2,16 +2,52 @@
 /** @jsxFrag React.Fragment */
 
 import log from 'electron-log';
-import React from 'react';
+import type React from 'react';
 import { jsx } from '@emotion/core';
 
-import { RepositoryViewProps } from '@riboseinc/paneron-extension-kit/types';
-import HomeView from './home';
-
+import type { RepositoryViewProps } from '@riboseinc/paneron-extension-kit/types';
 
 Object.assign(console, log);
 
+import { RegistryView } from '@riboseinc/paneron-registry-kit/views';
 
-export const RepositoryView: React.FC<RepositoryViewProps> = (props) => {
-  return <HomeView {...props} />;
+import { concept } from './classes/concept';
+import { definition } from './classes/definition';
+import { designation } from './classes/designation';
+
+
+const itemConfig = {
+  'concept': concept,
+  'definition': definition,
+  'designation': designation,
+};
+
+
+const subregisters = {
+  universal: {
+    title: "Universal",
+    itemClasses: ['concept'],
+  },
+  eng: {
+    title: "English",
+    itemClasses: ['definition', 'designation'],
+  },
+  fre: {
+    title: "French",
+    itemClasses: ['definition', 'designation'],
+  },
+  ara: {
+    title: "Arabic",
+    itemClasses: ['definition', 'designation'],
+  },
 }
+
+
+export const RepositoryView: React.FC<RepositoryViewProps> =
+function (props) {
+  return <RegistryView
+    {...props}
+    itemClassConfiguration={itemConfig}
+    subregisters={subregisters}
+  />
+};

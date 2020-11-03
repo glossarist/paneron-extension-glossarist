@@ -145,7 +145,7 @@ export interface ConceptCollection {
 
 export type Designation = {
   designation: string
-  normative_status?: NormativeStatus
+  normativeStatus?: NormativeStatus
 } & TypedDesignation;
 
 export const NORMATIVE_STATUS_CHOICES = [
