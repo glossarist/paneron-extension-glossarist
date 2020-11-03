@@ -32,7 +32,7 @@ const subregisters = {
     title: "English",
     itemClasses: ['definition', 'designation'],
   },
-  fre: {
+  fra: {
     title: "French",
     itemClasses: ['definition', 'designation'],
   },
