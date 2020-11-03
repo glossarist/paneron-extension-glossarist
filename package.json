@@ -1,6 +1,6 @@
 {
   "name": "@riboseinc/paneron-extension-glossarist",
-  "version": "1.0.0-dev1",
+  "version": "1.0.0-dev3",
   "description": "Paneron extension for authoring documentation sites",
   "main": "plugin.js",
   "repository": "https://github.com/riboseinc/paneron-extension-documentation-site",
