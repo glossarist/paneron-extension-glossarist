@@ -966,15 +966,18 @@
   dependencies:
     chokidar "2.1.8"
 
-"@riboseinc/paneron-extension-kit@^1.0.0-alpha13":
-  version "1.0.0-alpha13"
-  resolved "https://registry.yarnpkg.com/@riboseinc/paneron-extension-kit/-/paneron-extension-kit-1.0.0-alpha13.tgz#f908320f2b4f0b82b3ea80690844656ae954a59a"
-  integrity sha512-0q318mLXBLLFtz9inF/MtH+zRjueNJkLmdQfUJamgok/C/lAUdxWCbQAHxegoibbNP1uj7aLkbpvMRu6vqUG0w==
+"@riboseinc/paneron-extension-kit@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@riboseinc/paneron-extension-kit/-/paneron-extension-kit-1.0.1.tgz#b7a63f328b0f716e717d1c530b00390ec4bea486"
+  integrity sha512-wE/CfAIsS6kXvRGWP3ov2DHl6gKuiFRbphWDT8w0aX/CJDk53niCMgghjhYjIUnyoCNKAhekzwru2v3eahZUHw==
+  dependencies:
+    "@types/semver" "^7.3.4"
+    semver "^7.3.2"
 
-"@riboseinc/paneron-registry-kit@^1.0.0-alpha16":
-  version "1.0.0-alpha16"
-  resolved "https://registry.yarnpkg.com/@riboseinc/paneron-registry-kit/-/paneron-registry-kit-1.0.0-alpha16.tgz#0fabdf5d891e0d6c92da03a36052cb9d24569e47"
-  integrity sha512-cwg8BbRMP7ebnPTlrujwaSZDWzzzBZgrod+/QEPexJr9z4pa5eD2H89g8tR11jJMO7o42eBbEYuRZjQ1m2uAhg==
+"@riboseinc/paneron-registry-kit@^1.0.0-alpha17":
+  version "1.0.0-alpha17"
+  resolved "https://registry.yarnpkg.com/@riboseinc/paneron-registry-kit/-/paneron-registry-kit-1.0.0-alpha17.tgz#deb63c43f43f1f3d79c946699a1dc2b8ee5170d8"
+  integrity sha512-Uqb/W4uZeCAWhRdKAe04SswjWFQtgcAogHky7ppHdFLVuN4w3nxz7/VGU5KiyBpspNzZr/sgOPYa4/hBYRZvOA==
 
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
@@ -1025,6 +1028,11 @@
   dependencies:
     "@types/prop-types" "*"
     csstype "^3.0.2"
+
+"@types/semver@^7.3.4":
+  version "7.3.4"
+  resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.3.4.tgz#43d7168fec6fa0988bb1a513a697b29296721afb"
+  integrity sha512-+nVsLKlcUCeMzD2ufHEYuJ9a2ovstb6Dp52A5VsoKxDXgvE051XgHI/33I1EymwkRGQkwnA0LkhnUzituGs4EQ==
 
 ansi-styles@^3.2.1:
   version "3.2.1"
