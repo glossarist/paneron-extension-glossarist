@@ -10,7 +10,7 @@ import { PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
 import { Designation } from '../models/concepts';
 
 
-type DesignationData = Designation
+export type DesignationData = Designation
 
 
 //export function isRTL(lang: keyof SupportedLanguages) {

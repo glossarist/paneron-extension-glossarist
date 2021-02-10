@@ -10,7 +10,7 @@ import { GenericRelatedItemView, PropertyDetailView } from '@riboseinc/paneron-r
 import { availableLanguages, SupportedLanguages } from '../models/lang';
 
 
-interface ConceptData {
+export interface ConceptData {
   identifier: string
 
   // These strings are UUIDs

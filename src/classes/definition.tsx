@@ -7,7 +7,7 @@ import { ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
 import { PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
 
 
-interface DefinitionData {
+export interface DefinitionData {
   definition: string
   notes: string[]
   examples: string[]
