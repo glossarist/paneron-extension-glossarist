@@ -19,6 +19,9 @@
     "*.js",
     "*.js.map",
     "*.d.ts",
+    "models/**/*.js",
+    "models/**/*.js.map",
+    "models/**/*.d.ts",
     "classes/**/*.js",
     "classes/**/*.js.map",
     "classes/**/*.d.ts"
