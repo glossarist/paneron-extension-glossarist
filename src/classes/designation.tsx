@@ -6,13 +6,11 @@ import { Checkbox, InputGroup } from '@blueprintjs/core';
 import { jsx } from '@emotion/core';
 //import React from 'react';
 import { ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
-import { GenericRelatedItemView, PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
+import { PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
 import { Designation } from '../models/concepts';
 
 
-type DesignationData = Designation & {
-  concept: string
-}
+type DesignationData = Designation
 
 
 //export function isRTL(lang: keyof SupportedLanguages) {
@@ -41,20 +39,9 @@ export const designation: ItemClassConfiguration<DesignationData> = {
 
       return (
         <div>
-
-          <PropertyDetailView title="Abstract concept">
-            <GenericRelatedItemView
-              itemRef={{ classID: 'concept', subregisterID: 'universal', itemID: d.concept }}
-              useRegisterItemData={props.useRegisterItemData}
-              getRelatedItemClassConfiguration={props.getRelatedItemClassConfiguration}
-            />
-          </PropertyDetailView>
-
-          <PropertyDetailView title="Designation">
-            <InputGroup fill
-              value={d.designation}
-              readOnly />
-          </PropertyDetailView>
+          <InputGroup fill
+            value={d.designation}
+            readOnly />
 
           <PropertyDetailView title="Type">
             <InputGroup fill

@@ -4,11 +4,10 @@
 import { TextArea } from '@blueprintjs/core';
 import { jsx } from '@emotion/core';
 import { ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
-import { GenericRelatedItemView, PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
+import { PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
 
 
 interface DefinitionData {
-  concept: string
   definition: string
   notes: string[]
   examples: string[]
@@ -27,26 +26,16 @@ export const definition: ItemClassConfiguration<DefinitionData> = {
     listItemView: (props) => {
       //const c = <GenericRelatedItemView
       //  itemRef={{ classID: 'concept', subregistryID: 'universal', itemID: props.itemData.concept }} />
-      return <span className={props.className}>{props.itemData.concept}</span>
+      return <span className={props.className}>{props.itemData.definition.slice(0, 20)}…</span>
     },
     detailView: (props) => {
       const d = props.itemData;
       return (
         <div>
-          <PropertyDetailView title="Abstract concept">
-            <GenericRelatedItemView
-              itemRef={{ classID: 'concept', subregisterID: 'universal', itemID: d.concept }}
-              useRegisterItemData={props.useRegisterItemData}
-              getRelatedItemClassConfiguration={props.getRelatedItemClassConfiguration}
-            />
-          </PropertyDetailView>
-
-          <PropertyDetailView title="Definition">
-            <TextArea fill
-              readOnly
-              value={d.definition || ''}
-              id="definition" />
-          </PropertyDetailView>
+          <TextArea fill
+            readOnly
+            value={d.definition || ''}
+            id="definition" />
 
           {[...d.examples.entries()].map(([idx, item]) =>
             <PropertyDetailView
