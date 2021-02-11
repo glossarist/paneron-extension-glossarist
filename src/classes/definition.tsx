@@ -26,7 +26,7 @@ export const definition: ItemClassConfiguration<DefinitionData> = {
     listItemView: (props) => {
       //const c = <GenericRelatedItemView
       //  itemRef={{ classID: 'concept', subregistryID: 'universal', itemID: props.itemData.concept }} />
-      return <span className={props.className}>{props.itemData.definition.slice(0, 20)}…</span>
+      return <span className={props.className}>{props.itemData.definition.slice(0, 100)}…</span>
     },
     detailView: (props) => {
       const d = props.itemData;
