@@ -112,24 +112,18 @@ const DesignationForm: React.FC<{
     }
   }
 
-  function normativeStatusChoices() {
-    return <>
-      {[...NORMATIVE_STATUS_CHOICES.entries()].map(([nsIdx, ns]) =>
-        <Button small minimal
-            key={nsIdx}
-            active={ns === d.normativeStatus}
-            onClick={() => handleDesignationNormativeStatusEdit(ns)}>
-          {ns}
-        </Button>
-      )}
-    </>
-  }
-
   return (
     <>
       {props.onChange
         ? <ButtonGroup title="Select normative status">
-            {normativeStatusChoices()}
+            {[...NORMATIVE_STATUS_CHOICES.entries()].map(([nsIdx, ns]) =>
+              <Button small minimal
+                  key={nsIdx}
+                  active={ns === d.normativeStatus}
+                  onClick={() => handleDesignationNormativeStatusEdit(ns)}>
+                {ns}
+              </Button>
+            )}
           </ButtonGroup>
         : <>{d.normativeStatus || '(unspecified)'}</>}
 
@@ -161,7 +155,7 @@ const DesignationForm: React.FC<{
                   placeholder="Area…"
                   disabled={!props.onChange}
                   onChange={(evt: React.FormEvent<HTMLInputElement>) =>
-                    handleExpressionArea(evt.currentTarget.value)}
+                    handleExpressionAreaEdit(evt.currentTarget.value)}
                   maxLength={5} />
 
                 <HTMLSelect
@@ -201,7 +195,7 @@ const DesignationForm: React.FC<{
                           value={d.gender}
                           disabled={!props.onChange}
                           onChange={(evt: React.FormEvent<HTMLSelectElement>) =>
-                            handleNounGender(evt.currentTarget.value as Noun["gender"] || '')
+                            handleNounGenderEdit(evt.currentTarget.value as Noun["gender"] || '')
                           }>
                         <option value="">gender</option>
                         <option value="masculine" title="Masculine">m.</option>
@@ -214,7 +208,7 @@ const DesignationForm: React.FC<{
                           value={d.grammaticalNumber}
                           disabled={!props.onChange}
                           onChange={(evt: React.FormEvent<HTMLSelectElement>) =>
-                            handleNounNumber(evt.currentTarget.value as Noun["grammaticalNumber"] || '')
+                            handleNounNumberEdit(evt.currentTarget.value as Noun["grammaticalNumber"] || '')
                           }>
                         <option value="">number</option>
                         <option value="singular">sing.</option>
