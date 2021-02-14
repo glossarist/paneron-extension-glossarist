@@ -17,6 +17,34 @@ import { isRTL, availableLanguages } from '../models/lang';
 export type DesignationData = Designation;
 
 
+export const designation: ItemClassConfiguration<DesignationData> = {
+  meta: {
+    title: "Designation",
+    description: "Concept designation (term)",
+    id: 'designation',
+    alternativeNames: [],
+  },
+  defaults: {
+    normativeStatus: 'preferred',
+    type: 'expression',
+  },
+  itemSorter: () => 0,
+  views: {
+    listItemView: (props) => {
+      return <span className={props.className}>{props.itemData.designation}</span>
+    },
+    editView: (props) => <>
+      <DesignationForm
+        designation={props.itemData}
+        lang="eng"
+      />
+    </>,
+  },
+  validatePayload: async () => true,
+  sanitizePayload: async (t) => t,
+};
+
+
 const DesignationForm: React.FC<{
   designation: Designation
   lang: keyof typeof availableLanguages
@@ -202,31 +230,3 @@ const DesignationForm: React.FC<{
     </>
   );
 }
-
-
-export const designation: ItemClassConfiguration<DesignationData> = {
-  meta: {
-    title: "Designation",
-    description: "Concept designation (term)",
-    id: 'designation',
-    alternativeNames: [],
-  },
-  defaults: {
-    normativeStatus: 'preferred',
-    type: 'expression',
-  },
-  itemSorter: () => 0,
-  views: {
-    listItemView: (props) => {
-      return <span className={props.className}>{props.itemData.designation}</span>
-    },
-    editView: (props) => <>
-      <DesignationForm
-        designation={props.itemData}
-        lang="eng"
-      />
-    </>,
-  },
-  validatePayload: async () => true,
-  sanitizePayload: async (t) => t,
-};
