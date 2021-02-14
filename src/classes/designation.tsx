@@ -56,7 +56,7 @@ const DesignationForm: React.FC<{
   const { designation: d } = props;
   const rtl = isRTL(props.lang);
 
-  function handleExpressionArea(val: string) {
+  function handleExpressionAreaEdit(val: string) {
     if (!props.onChange) { return; }
     if (d.type === 'expression') {
       props.onChange({ ...d, geographicalArea: val.trim() || undefined });
@@ -95,12 +95,12 @@ const DesignationForm: React.FC<{
     }
   }
 
-  function handleNounGender(gnd: Noun["gender"] | '') {
+  function handleNounGenderEdit(gnd: Noun["gender"] | '') {
     if (!props.onChange) { return; }
     props.onChange({ ...d, partOfSpeech: 'noun', gender: gnd || undefined });
   }
 
-  function handleNounNumber(nmb: Noun["grammaticalNumber"] | '') {
+  function handleNounNumberEdit(nmb: Noun["grammaticalNumber"] | '') {
     if (!props.onChange) { return; }
     props.onChange({ ...d, partOfSpeech: 'noun', grammaticalNumber: nmb || undefined });
   }
