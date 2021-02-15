@@ -83,3 +83,6 @@ export const concept: ItemClassConfiguration<ConceptData> = {
   validatePayload: async () => true,
   sanitizePayload: async (t) => t,
 };
+
+
+export default concept;
