@@ -23,6 +23,7 @@ export interface ConceptData {
 };
 
 export const concept: ItemClassConfiguration<ConceptData> = {
+  itemCanBeSuperseded: false,
   meta: {
     title: "Concept",
     description: "Abstract concept",

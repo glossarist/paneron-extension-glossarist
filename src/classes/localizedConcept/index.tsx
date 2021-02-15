@@ -9,6 +9,7 @@ import { LocalizedConceptData } from './LocalizedConceptData';
 
 
 export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
+  itemCanBeSuperseded: false,
   meta: {
     title: "Localized concept",
     description: "Concept verbalised in a language",
