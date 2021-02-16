@@ -12,6 +12,9 @@ import { LocalizedConceptData } from './LocalizedConceptData';
 import { FullDesignation } from './designation';
 
 
+const styles: Record<string, any> = {};
+
+
 
 interface EntryDetailsProps {
   localizedConcept: LocalizedConceptData
@@ -59,7 +62,7 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
         : null*/}
 
       <H2
-          className={`${styles.primaryDesignation} ${loadingClass}`}>
+          className={`${styles.primaryDesignation}`}>
         <FullDesignation d={primaryDesignation} />
       </H2>
 
@@ -68,20 +71,20 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
       </div>
 
       <div className={`${Classes.RUNNING_TEXT}`}>
-        <div className={`${styles.definition} ${loadingClass}`}>
+        <div className={`${styles.definition}`}>
           {entry.usageInfo ? <span className={styles.usageInfo}>&lt;{entry.usageInfo}&gt;</span> : null}
           <MathJax.Text text={entry.definition} />
         </div>
 
         {[...entry.examples.entries()].map(([idx, item]) =>
-          <div className={`${styles.example} ${loadingClass}`} key={`example-${idx}`}>
+          <div className={`${styles.example}`} key={`example-${idx}`}>
             <div dir="ltr" className={styles.label}>EXAMPLE:</div>
             <MathJax.Text text={item} />
           </div>
         )}
 
         {[...entry.notes.entries()].map(([idx, item]) =>
-            <div className={`${styles.note} ${loadingClass}`} key={`note-${idx}`}>
+            <div className={`${styles.note}`} key={`note-${idx}`}>
               <div dir="ltr" className={styles.label}>Note {idx + 1} to entry:</div>
               <MathJax.Text text={item} />
             </div>

@@ -8,6 +8,9 @@ import { Designation, Expression } from '../../models/concepts';
 import { LocalizedConceptData } from './LocalizedConceptData';
 
 
+const styles: Record<string, any> = {};
+
+
 export const FullDesignation: React.FC<{ d: Designation }> = function ({ d }) {
   function partOfSpeechLabel(d: Expression): JSX.Element | null {
     if (d.partOfSpeech === 'noun') {
@@ -22,6 +25,7 @@ export const FullDesignation: React.FC<{ d: Designation }> = function ({ d }) {
   }
 
   //const normativeStatusClass = styles[`normativeStatus-${d.normative_status || 'undefined'}`];
+  const normativeStatusClass = '';
 
   return <span className={`${styles.designation} ${normativeStatusClass}`}>
     <MathJax.Text text={d.designation} />
