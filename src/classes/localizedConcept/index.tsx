@@ -30,7 +30,7 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
     listItemView: (props) => {
       return (
         <span className={props.className}>
-          {props.itemData.terms[0]?.designation ?? '<no designation>'}
+          {props.itemData.terms?.[0]?.designation ?? '<no designation>'}
         </span>
       );
     },
