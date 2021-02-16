@@ -2,7 +2,7 @@
 /** @jsxFrag React.Fragment */
 
 //import React from 'react';
-import { H3, UL } from '@blueprintjs/core';
+import { UL } from '@blueprintjs/core';
 import { css, jsx } from '@emotion/core';
 //import React from 'react';
 import { ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
