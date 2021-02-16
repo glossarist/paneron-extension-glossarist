@@ -1,8 +1,7 @@
 import React from 'react';
-import { Button, ButtonGroup, Classes, FormGroup, InputGroup } from '@blueprintjs/core';
+import { Button, ButtonGroup, Classes, FormGroup, InputGroup, TextArea } from '@blueprintjs/core';
 import { Designation, DesignationType, NORMATIVE_STATUS_CHOICES } from '../../models/concepts';
 import { getHTMLDir, WritingDirectionality } from '../../models/lang';
-import { AutoSizedTextArea } from '../../widgets';
 import { openLinkInBrowser } from './util';
 import { DesignationForm } from './DesignationForm';
 import { LocalizedConceptData } from './LocalizedConceptData';
@@ -172,7 +171,7 @@ export const LocalizedConceptForm: React.FC<{
             </p>
         </>}
         labelInfo="(required)">
-        <AutoSizedTextArea fill
+        <TextArea fill
           dir={dir}
           className={dir === 'rtl' ? Classes.RTL : undefined}
           value={props.localizedConcept.definition || ''}
@@ -193,7 +192,7 @@ export const LocalizedConceptForm: React.FC<{
             onClick={() => handleExampleDeletion(idx)} />
           : undefined}
         intent={item.trim() === '' ? 'danger' : undefined}>
-        <AutoSizedTextArea fill
+        <TextArea fill
           dir={dir}
           className={dir === 'rtl' ? Classes.RTL : undefined}
           value={item}
@@ -218,7 +217,7 @@ export const LocalizedConceptForm: React.FC<{
             onClick={() => handleNoteDeletion(idx)} />
           : undefined}
         intent={item.trim() === '' ? 'danger' : undefined}>
-        <AutoSizedTextArea fill
+        <TextArea fill
           dir={dir}
           className={dir === 'rtl' ? Classes.RTL : undefined}
           value={item}
