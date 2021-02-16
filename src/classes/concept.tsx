@@ -36,22 +36,22 @@ export const concept: ItemClassConfiguration<ConceptData> = {
 
       return (
         <div>
-          <H3 css={css`margin-top: 1.5em`}>Localized concepts</H3>
-
-          <UL css={css`padding-left: 0; list-style: square;`}>
-            {localizedConcepts.map(([langID, uuid]) =>
-              <li key={langID} css={css`margin-top: 1em;`}>
-                <PropertyDetailView
-                    title={`In ${languageTitles[langID as SupportedLanguage]}`}>
-                  <GenericRelatedItemView
-                    itemRef={{ classID: 'localized-concept', subregisterID: langID, itemID: uuid }}
-                    useRegisterItemData={useRegisterItemData}
-                    getRelatedItemClassConfiguration={getRelatedItemClassConfiguration}
-                  />
-                </PropertyDetailView>
-              </li>
-            )}
-          </UL>
+          <PropertyDetailView title="Localized concepts">
+            <UL css={css`padding-left: 0; list-style: square;`}>
+              {localizedConcepts.map(([langID, uuid]) =>
+                <li key={langID} css={css`margin-top: 1em;`}>
+                  <PropertyDetailView
+                      title={`In ${languageTitles[langID as SupportedLanguage]}`}>
+                    <GenericRelatedItemView
+                      itemRef={{ classID: 'localized-concept', subregisterID: langID, itemID: uuid }}
+                      useRegisterItemData={useRegisterItemData}
+                      getRelatedItemClassConfiguration={getRelatedItemClassConfiguration}
+                    />
+                  </PropertyDetailView>
+                </li>
+              )}
+            </UL>
+          </PropertyDetailView>
         </div>
       );
     },
