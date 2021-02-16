@@ -7,7 +7,8 @@ import { css, jsx } from '@emotion/core';
 //import React from 'react';
 import { ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
 import { GenericRelatedItemView, PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
-import { languageTitles, SupportedLanguage } from '../models/lang';
+import { defaultLanguage, languageTitles, SupportedLanguage } from '../models/lang';
+import { LocalizedConceptData } from './localizedConcept/LocalizedConceptData';
 
 
 export interface ConceptData {
@@ -30,7 +31,20 @@ export const concept: ItemClassConfiguration<ConceptData> = {
   defaults: {},
   itemSorter: (p1, p2) => p1.identifier.localeCompare(p2.identifier),
   views: {
-    listItemView: (props) => <span className={props.className}>{props.itemData.identifier}</span>,
+    listItemView: (props) => {
+      console.debug(props?.itemData ?? 'none');
+      const defaultLanguageEntryUUID = props.itemData.localizedConcepts?.[defaultLanguage];
+      const defaultLanguageEntryPath = `subregisters/${defaultLanguage}/localized-concept/${defaultLanguageEntryUUID}`;
+      const itemData = props.useRegisterItemData({ [defaultLanguageEntryPath]: 'utf-8' as const });
+      const defaultLanguageEntry = itemData.value?.[defaultLanguageEntryPath]?.data as LocalizedConceptData | undefined;
+      const primaryDesignation = defaultLanguageEntry?.terms?.[0]?.designation || '<unknown>';
+
+      return (
+        <span className={props.className}>
+          {props.itemData.identifier}: {primaryDesignation}
+        </span>
+      );
+    },
     detailView: ({ itemData, useRegisterItemData, getRelatedItemClassConfiguration }) => {
       const localizedConcepts = Object.entries(itemData.localizedConcepts ?? {});
 
