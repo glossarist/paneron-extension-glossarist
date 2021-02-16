@@ -122,10 +122,10 @@ export const LocalizedConceptForm: React.FC<{
         labelInfo={<>
           {props.onChange
             ? <Button small
-              title="Delete this designation"
-              icon="cross"
-              disabled={idx === 0}
-              onClick={() => handleDesignationDeletion(idx)} />
+                title="Delete this designation"
+                icon="cross"
+                disabled={idx === 0}
+                onClick={() => handleDesignationDeletion(idx)} />
             : undefined}
         </>}
         intent={d.designation.trim() === '' ? 'danger' : undefined}>

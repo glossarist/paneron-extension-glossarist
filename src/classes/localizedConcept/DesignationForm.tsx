@@ -81,14 +81,15 @@ export const DesignationForm: React.FC<{
     <>
       {props.onChange
         ? <ButtonGroup title="Select normative status">
-          {[...NORMATIVE_STATUS_CHOICES.entries()].map(([nsIdx, ns]) => <Button small minimal
-            key={nsIdx}
-            active={ns === d.normative_status}
-            onClick={() => handleDesignationNormativeStatusEdit(ns)}>
-            {ns}
-          </Button>
-          )}
-        </ButtonGroup>
+            {[...NORMATIVE_STATUS_CHOICES.entries()].map(([nsIdx, ns]) =>
+              <Button small minimal
+                  key={nsIdx}
+                  active={ns === d.normative_status}
+                  onClick={() => handleDesignationNormativeStatusEdit(ns)}>
+                {ns}
+              </Button>
+            )}
+          </ButtonGroup>
         : <>{d.normative_status || '(unspecified)'}</>}
 
       <InputGroup fill
@@ -105,11 +106,11 @@ export const DesignationForm: React.FC<{
         <ControlGroup>
           {props.onChange
             ? <HTMLSelect
-              onChange={(evt: React.FormEvent<HTMLSelectElement>) => {
-                handleDesignationTypeEdit(evt.currentTarget.value as DesignationType);
-              }}
-              value={d.type}
-              options={DESIGNATION_TYPES.map(dt => ({ value: dt }))} />
+                onChange={(evt: React.FormEvent<HTMLSelectElement>) => {
+                  handleDesignationTypeEdit(evt.currentTarget.value as DesignationType);
+                }}
+                value={d.type}
+                options={DESIGNATION_TYPES.map(dt => ({ value: dt }))} />
             : <Button disabled>{d.type}</Button>}
 
           {d.type === 'expression'
@@ -122,9 +123,9 @@ export const DesignationForm: React.FC<{
                 maxLength={5} />
 
               <HTMLSelect
-                value={d.partOfSpeech}
-                disabled={!props.onChange}
-                onChange={(evt: React.FormEvent<HTMLSelectElement>) => handleExpressionPartOfSpeechEdit(evt.currentTarget.value as Expression["partOfSpeech"])}>
+                  value={d.partOfSpeech}
+                  disabled={!props.onChange}
+                  onChange={(evt: React.FormEvent<HTMLSelectElement>) => handleExpressionPartOfSpeechEdit(evt.currentTarget.value as Expression["partOfSpeech"])}>
                 <option value={undefined}>PoS</option>
                 <option value="noun" title="Noun">n.</option>
                 <option value="adjective" title="Adjective">adj.</option>
@@ -134,29 +135,29 @@ export const DesignationForm: React.FC<{
 
               {d.partOfSpeech === 'adjective' || d.partOfSpeech === 'adverb'
                 ? <Button small
-                  title="This is a participle form"
-                  disabled={!props.onChange}
-                  onClick={() => handleExpParticipleToggle()}
-                  active={d.isParticiple}>
-                  prp.
-                    </Button>
+                      title="This is a participle form"
+                      disabled={!props.onChange}
+                      onClick={() => handleExpParticipleToggle()}
+                      active={d.isParticiple}>
+                    prp.
+                  </Button>
                 : null}
 
               <Button small
-                title="This is an abbreviated form"
-                disabled={!props.onChange}
-                onClick={() => handleExpAbbrToggle()}
-                active={d.isAbbreviation}>
+                  title="This is an abbreviated form"
+                  disabled={!props.onChange}
+                  onClick={() => handleExpAbbrToggle()}
+                  active={d.isAbbreviation}>
                 abbr.
-                </Button>
+              </Button>
 
               {d.partOfSpeech === 'noun'
                 ? <>
                   <HTMLSelect key="gender"
-                    title="Grammatical gender"
-                    value={d.gender}
-                    disabled={!props.onChange}
-                    onChange={(evt: React.FormEvent<HTMLSelectElement>) => handleNounGenderEdit(evt.currentTarget.value as Noun["gender"] || '')}>
+                      title="Grammatical gender"
+                      value={d.gender}
+                      disabled={!props.onChange}
+                      onChange={(evt: React.FormEvent<HTMLSelectElement>) => handleNounGenderEdit(evt.currentTarget.value as Noun["gender"] || '')}>
                     <option value="">gender</option>
                     <option value="masculine" title="Masculine">m.</option>
                     <option value="feminine" title="Feminine">f.</option>
@@ -164,10 +165,10 @@ export const DesignationForm: React.FC<{
                     <option value="neuter" title="Neuter/neutral gender">nt.</option>
                   </HTMLSelect>
                   <HTMLSelect key="number"
-                    title="Grammatical number"
-                    value={d.grammaticalNumber}
-                    disabled={!props.onChange}
-                    onChange={(evt: React.FormEvent<HTMLSelectElement>) => handleNounNumberEdit(evt.currentTarget.value as Noun["grammaticalNumber"] || '')}>
+                      title="Grammatical number"
+                      value={d.grammaticalNumber}
+                      disabled={!props.onChange}
+                      onChange={(evt: React.FormEvent<HTMLSelectElement>) => handleNounNumberEdit(evt.currentTarget.value as Noun["grammaticalNumber"] || '')}>
                     <option value="">number</option>
                     <option value="singular">sing.</option>
                     <option value="plural">pl.</option>
