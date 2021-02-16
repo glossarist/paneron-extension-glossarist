@@ -32,7 +32,7 @@ export const concept: ItemClassConfiguration<ConceptData> = {
   views: {
     listItemView: (props) => <span className={props.className}>{props.itemData.identifier}</span>,
     detailView: ({ itemData, useRegisterItemData, getRelatedItemClassConfiguration }) => {
-      const localizedConcepts = Object.entries(itemData.localizedConcepts);
+      const localizedConcepts = Object.entries(itemData.localizedConcepts ?? {});
 
       return (
         <div>
