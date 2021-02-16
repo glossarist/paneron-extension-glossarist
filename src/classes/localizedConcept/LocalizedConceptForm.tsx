@@ -145,7 +145,7 @@ export const LocalizedConceptForm: React.FC<{
           <InputGroup fill
             value={localizedConcept.usageInfo ?? ''}
             id="usageInfo"
-            disabled={!props.onChange}
+            readOnly={!props.onChange}
             onChange={(evt: React.FormEvent<HTMLInputElement>) => props.onChange
               ? handleUsageInfoChange((evt.target as HTMLInputElement).value)
               : void 0} />
@@ -176,7 +176,7 @@ export const LocalizedConceptForm: React.FC<{
           className={dir === 'rtl' ? Classes.RTL : undefined}
           value={props.localizedConcept.definition || ''}
           id="definition"
-          disabled={!props.onChange}
+          readOnly={!props.onChange}
           intent={!props.localizedConcept.definition ? 'danger' : undefined}
           onChange={(evt: React.FormEvent<HTMLTextAreaElement>) => handleDefinitionChange((evt.target as HTMLTextAreaElement).value)} />
       </FormGroup>
@@ -197,7 +197,7 @@ export const LocalizedConceptForm: React.FC<{
           className={dir === 'rtl' ? Classes.RTL : undefined}
           value={item}
           id={`example-${idx}`}
-          disabled={!props.onChange}
+          readOnly={!props.onChange}
           onChange={(evt: React.FormEvent<HTMLTextAreaElement>) => {
             evt.persist();
             handleExampleChange(idx, (evt.target as HTMLTextAreaElement).value);

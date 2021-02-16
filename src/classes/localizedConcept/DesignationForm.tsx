@@ -96,7 +96,7 @@ export const DesignationForm: React.FC<{
         className={`${props.designationClassName ?? ''} ${dir === 'rtl' ? Classes.RTL : ''}`}
         dir={dir}
         value={d.designation}
-        disabled={!props.onChange}
+        readOnly={!props.onChange}
         onChange={(evt: React.FormEvent<HTMLInputElement>) => {
           evt.persist();
           handleDesignationEdit((evt.target as HTMLInputElement).value);
@@ -118,7 +118,7 @@ export const DesignationForm: React.FC<{
               <InputGroup
                 className={props.usageAreaClassName}
                 placeholder="Area…"
-                disabled={!props.onChange}
+                readOnly={!props.onChange}
                 onChange={(evt: React.FormEvent<HTMLInputElement>) => handleExpressionAreaEdit(evt.currentTarget.value)}
                 maxLength={5} />
 
