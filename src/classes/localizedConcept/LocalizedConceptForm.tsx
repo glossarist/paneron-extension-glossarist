@@ -109,10 +109,10 @@ export const LocalizedConceptForm: React.FC<{
     <div className={props.className}>
       {props.onChange
         ? <ButtonGroup>
-          <Button icon="add" disabled={!props.onChange} onClick={handleDesignationAddition} title="Add another designation/synonym">Designation</Button>
-          <Button icon="add" disabled={!props.onChange} onClick={handleExampleAddition} title="Add an EXAMPLE">EX.</Button>
-          <Button icon="add" disabled={!props.onChange} onClick={handleNoteAddition} title="Add a NOTE">NOTE</Button>
-        </ButtonGroup>
+            <Button icon="add" disabled={!props.onChange} onClick={handleDesignationAddition} title="Add another designation/synonym">Designation</Button>
+            <Button icon="add" disabled={!props.onChange} onClick={handleExampleAddition} title="Add an EXAMPLE">EX.</Button>
+            <Button icon="add" disabled={!props.onChange} onClick={handleNoteAddition} title="Add a NOTE">NOTE</Button>
+          </ButtonGroup>
         : null}
 
       {props.localizedConcept.terms.map((d, idx) => <FormGroup
