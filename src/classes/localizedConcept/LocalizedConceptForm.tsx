@@ -144,7 +144,7 @@ export const LocalizedConceptForm: React.FC<{
           label="Usage notes"
           labelFor="usageInfo">
           <InputGroup fill
-            value={localizedConcept.usageInfo || ''}
+            value={localizedConcept.usageInfo ?? ''}
             id="usageInfo"
             disabled={!props.onChange}
             onChange={(evt: React.FormEvent<HTMLInputElement>) => props.onChange
