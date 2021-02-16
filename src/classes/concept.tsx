@@ -1,14 +1,27 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 
-//import React from 'react';
+import React from 'react';
 import { UL } from '@blueprintjs/core';
 import { css, jsx } from '@emotion/core';
 //import React from 'react';
-import { ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
+import { ItemClassConfiguration, RegisterItemDataHook } from '@riboseinc/paneron-registry-kit/types';
 import { GenericRelatedItemView, PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
 import { defaultLanguage, languageTitles, SupportedLanguage } from '../models/lang';
 import { LocalizedConceptData } from './localizedConcept/LocalizedConceptData';
+
+
+const _PrimaryDesignation: React.FC<{ lang: string, itemID: string, useRegisterItemData: RegisterItemDataHook }> =
+function ({ lang, itemID, useRegisterItemData }) {
+  const defaultLanguageEntryPath = `subregisters/${lang}/localized-concept/${itemID}`;
+  const itemData = useRegisterItemData({ [defaultLanguageEntryPath]: 'utf-8' as const });
+  const defaultLanguageEntry = itemData.value?.[defaultLanguageEntryPath]?.data as LocalizedConceptData | undefined;
+  return <>{defaultLanguageEntry?.terms?.[0]?.designation || '<unknown>'}</>;
+}
+
+const PrimaryDesignation = React.memo(
+  _PrimaryDesignation,
+  (p1, p2) => p1.lang === p2.lang && p1.itemID === p2.itemID);
 
 
 export interface ConceptData {
@@ -32,16 +45,15 @@ export const concept: ItemClassConfiguration<ConceptData> = {
   itemSorter: (p1, p2) => p1.identifier.localeCompare(p2.identifier),
   views: {
     listItemView: (props) => {
-      console.debug(props?.itemData ?? 'none');
-      const defaultLanguageEntryUUID = props.itemData.localizedConcepts?.[defaultLanguage];
-      const defaultLanguageEntryPath = `subregisters/${defaultLanguage}/localized-concept/${defaultLanguageEntryUUID}`;
-      const itemData = props.useRegisterItemData({ [defaultLanguageEntryPath]: 'utf-8' as const });
-      const defaultLanguageEntry = itemData.value?.[defaultLanguageEntryPath]?.data as LocalizedConceptData | undefined;
-      const primaryDesignation = defaultLanguageEntry?.terms?.[0]?.designation || '<unknown>';
-
       return (
         <span className={props.className}>
-          <code>{props.itemData.identifier}</code>: {primaryDesignation}
+          <code>{props.itemData.identifier}</code>:
+          &nbsp;
+          <PrimaryDesignation
+            lang={defaultLanguage}
+            itemID={props.itemData.localizedConcepts?.[defaultLanguage] ?? ''}
+            useRegisterItemData={props.useRegisterItemData}
+          />
         </span>
       );
     },
