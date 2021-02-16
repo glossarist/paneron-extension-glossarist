@@ -41,7 +41,7 @@ export const concept: ItemClassConfiguration<ConceptData> = {
 
       return (
         <span className={props.className}>
-          {props.itemData.identifier}: {primaryDesignation}
+          <code>{props.itemData.identifier}</code>: {primaryDesignation}
         </span>
       );
     },
