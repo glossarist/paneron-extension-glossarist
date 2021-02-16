@@ -115,68 +115,68 @@ export const DesignationForm: React.FC<{
 
           {d.type === 'expression'
             ? <>
-              <InputGroup
-                className={props.usageAreaClassName}
-                placeholder="Area…"
-                readOnly={!props.onChange}
-                onChange={(evt: React.FormEvent<HTMLInputElement>) => handleExpressionAreaEdit(evt.currentTarget.value)}
-                maxLength={5} />
+                <InputGroup
+                  className={props.usageAreaClassName}
+                  placeholder="Area…"
+                  readOnly={!props.onChange}
+                  onChange={(evt: React.FormEvent<HTMLInputElement>) => handleExpressionAreaEdit(evt.currentTarget.value)}
+                  maxLength={5} />
 
-              <HTMLSelect
-                  value={d.partOfSpeech}
-                  disabled={!props.onChange}
-                  onChange={(evt: React.FormEvent<HTMLSelectElement>) => handleExpressionPartOfSpeechEdit(evt.currentTarget.value as Expression["partOfSpeech"])}>
-                <option value={undefined}>PoS</option>
-                <option value="noun" title="Noun">n.</option>
-                <option value="adjective" title="Adjective">adj.</option>
-                <option value="verb" title="Verb">v.</option>
-                <option value="adverb" title="Adverb">adv.</option>
-              </HTMLSelect>
+                <HTMLSelect
+                    value={d.partOfSpeech}
+                    disabled={!props.onChange}
+                    onChange={(evt: React.FormEvent<HTMLSelectElement>) => handleExpressionPartOfSpeechEdit(evt.currentTarget.value as Expression["partOfSpeech"])}>
+                  <option value={undefined}>PoS</option>
+                  <option value="noun" title="Noun">n.</option>
+                  <option value="adjective" title="Adjective">adj.</option>
+                  <option value="verb" title="Verb">v.</option>
+                  <option value="adverb" title="Adverb">adv.</option>
+                </HTMLSelect>
 
-              {d.partOfSpeech === 'adjective' || d.partOfSpeech === 'adverb'
-                ? <Button small
-                      title="This is a participle form"
-                      disabled={!props.onChange}
-                      onClick={() => handleExpParticipleToggle()}
-                      active={d.isParticiple}>
-                    prp.
-                  </Button>
-                : null}
+                {d.partOfSpeech === 'adjective' || d.partOfSpeech === 'adverb'
+                  ? <Button small
+                        title="This is a participle form"
+                        disabled={!props.onChange}
+                        onClick={() => handleExpParticipleToggle()}
+                        active={d.isParticiple}>
+                      prp.
+                    </Button>
+                  : null}
 
-              <Button small
-                  title="This is an abbreviated form"
-                  disabled={!props.onChange}
-                  onClick={() => handleExpAbbrToggle()}
-                  active={d.isAbbreviation}>
-                abbr.
-              </Button>
+                <Button small
+                    title="This is an abbreviated form"
+                    disabled={!props.onChange}
+                    onClick={() => handleExpAbbrToggle()}
+                    active={d.isAbbreviation}>
+                  abbr.
+                </Button>
 
-              {d.partOfSpeech === 'noun'
-                ? <>
-                  <HTMLSelect key="gender"
-                      title="Grammatical gender"
-                      value={d.gender}
-                      disabled={!props.onChange}
-                      onChange={(evt: React.FormEvent<HTMLSelectElement>) => handleNounGenderEdit(evt.currentTarget.value as Noun["gender"] || '')}>
-                    <option value="">gender</option>
-                    <option value="masculine" title="Masculine">m.</option>
-                    <option value="feminine" title="Feminine">f.</option>
-                    <option value="common" title="Common gender">comm.</option>
-                    <option value="neuter" title="Neuter/neutral gender">nt.</option>
-                  </HTMLSelect>
-                  <HTMLSelect key="number"
-                      title="Grammatical number"
-                      value={d.grammaticalNumber}
-                      disabled={!props.onChange}
-                      onChange={(evt: React.FormEvent<HTMLSelectElement>) => handleNounNumberEdit(evt.currentTarget.value as Noun["grammaticalNumber"] || '')}>
-                    <option value="">number</option>
-                    <option value="singular">sing.</option>
-                    <option value="plural">pl.</option>
-                    <option value="mass">mass</option>
-                  </HTMLSelect>
-                </>
-                : null}
-            </>
+                {d.partOfSpeech === 'noun'
+                  ? <>
+                      <HTMLSelect key="gender"
+                          title="Grammatical gender"
+                          value={d.gender}
+                          disabled={!props.onChange}
+                          onChange={(evt: React.FormEvent<HTMLSelectElement>) => handleNounGenderEdit(evt.currentTarget.value as Noun["gender"] || '')}>
+                        <option value="">gender</option>
+                        <option value="masculine" title="Masculine">m.</option>
+                        <option value="feminine" title="Feminine">f.</option>
+                        <option value="common" title="Common gender">comm.</option>
+                        <option value="neuter" title="Neuter/neutral gender">nt.</option>
+                      </HTMLSelect>
+                      <HTMLSelect key="number"
+                          title="Grammatical number"
+                          value={d.grammaticalNumber}
+                          disabled={!props.onChange}
+                          onChange={(evt: React.FormEvent<HTMLSelectElement>) => handleNounNumberEdit(evt.currentTarget.value as Noun["grammaticalNumber"] || '')}>
+                        <option value="">number</option>
+                        <option value="singular">sing.</option>
+                        <option value="plural">pl.</option>
+                        <option value="mass">mass</option>
+                      </HTMLSelect>
+                    </>
+                  : null}
+              </>
             : null}
         </ControlGroup>
       </div>
