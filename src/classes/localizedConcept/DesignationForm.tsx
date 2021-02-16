@@ -40,7 +40,7 @@ export const DesignationForm: React.FC<{
 
   function handleDesignationNormativeStatusEdit(ns: NormativeStatus) {
     if (!props.onChange) { return; }
-    props.onChange({ ...d, normativeStatus: ns } as Designation);
+    props.onChange({ ...d, normative_status: ns } as Designation);
   }
 
   function handleExpressionPartOfSpeechEdit(pos: Expression["partOfSpeech"]) {
@@ -83,13 +83,13 @@ export const DesignationForm: React.FC<{
         ? <ButtonGroup title="Select normative status">
           {[...NORMATIVE_STATUS_CHOICES.entries()].map(([nsIdx, ns]) => <Button small minimal
             key={nsIdx}
-            active={ns === d.normativeStatus}
+            active={ns === d.normative_status}
             onClick={() => handleDesignationNormativeStatusEdit(ns)}>
             {ns}
           </Button>
           )}
         </ButtonGroup>
-        : <>{d.normativeStatus || '(unspecified)'}</>}
+        : <>{d.normative_status || '(unspecified)'}</>}
 
       <InputGroup fill
         className={`${props.designationClassName ?? ''} ${dir === 'rtl' ? Classes.RTL : ''}`}

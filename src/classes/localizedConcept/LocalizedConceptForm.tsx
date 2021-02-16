@@ -59,11 +59,11 @@ export const LocalizedConceptForm: React.FC<{
 
     props.onChange({
       ...e, terms: items.sort((i1, i2) => {
-        if (NORMATIVE_STATUS_CHOICES.indexOf(i1.normativeStatus || 'admitted') >
-          NORMATIVE_STATUS_CHOICES.indexOf(i2.normativeStatus || 'admitted')) {
+        if (NORMATIVE_STATUS_CHOICES.indexOf(i1.normative_status || 'admitted') >
+          NORMATIVE_STATUS_CHOICES.indexOf(i2.normative_status || 'admitted')) {
           return 1;
-        } else if (NORMATIVE_STATUS_CHOICES.indexOf(i1.normativeStatus || 'admitted') <
-          NORMATIVE_STATUS_CHOICES.indexOf(i2.normativeStatus || 'admitted')) {
+        } else if (NORMATIVE_STATUS_CHOICES.indexOf(i1.normative_status || 'admitted') <
+          NORMATIVE_STATUS_CHOICES.indexOf(i2.normative_status || 'admitted')) {
           return -1;
         } else {
           return 0;

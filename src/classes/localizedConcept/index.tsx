@@ -19,7 +19,7 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
   },
   defaults: {
     terms: [
-      { designation: "New designation", type: 'expression', normativeStatus: 'preferred', partOfSpeech: undefined },
+      { designation: "New designation", type: 'expression', normative_status: 'preferred', partOfSpeech: undefined },
     ],
     definition: "",
     notes: [],
