@@ -197,7 +197,6 @@ export const LocalizedConceptForm: React.FC<{
           className={dir === 'rtl' ? Classes.RTL : undefined}
           value={item}
           id={`example-${idx}`}
-          growVertically
           disabled={!props.onChange}
           onChange={(evt: React.FormEvent<HTMLTextAreaElement>) => {
             evt.persist();
@@ -221,7 +220,6 @@ export const LocalizedConceptForm: React.FC<{
           dir={dir}
           className={dir === 'rtl' ? Classes.RTL : undefined}
           value={item}
-          growVertically
           id={`note-${idx}`}
           readOnly={!props.onChange}
           onChange={(evt: React.FormEvent<HTMLTextAreaElement>) => {
