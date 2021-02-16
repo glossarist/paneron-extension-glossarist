@@ -11,7 +11,7 @@ const languageSubregisters: Subregisters = {};
 for (const langID of [ ...priorityLanguages, ...nonPriorityLanguages ]) {
   languageSubregisters[langID] = {
     title: languageTitles[langID],
-    itemClasses: ['localizedConcept'],
+    itemClasses: ['localized-concept'],
   };
 }
 
