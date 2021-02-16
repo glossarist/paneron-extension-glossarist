@@ -6,19 +6,20 @@ import {
   NormativeStatus, NORMATIVE_STATUS_CHOICES,
   Noun
 } from '../../models/concepts';
-import { isRTL, availableLanguages } from '../../models/lang';
+import { getHTMLDir, WritingDirectionality } from '../../models/lang';
 
 
 export const DesignationForm: React.FC<{
   designation: Designation;
-  lang: keyof typeof availableLanguages;
+  writingDirectionality: WritingDirectionality;
   designationClassName?: string;
   designationPropsClassName?: string;
   usageAreaClassName?: string;
   onChange?: (newVal: Designation) => void;
 }> = function (props) {
   const { designation: d } = props;
-  const rtl = isRTL(props.lang);
+
+  const dir = getHTMLDir(props.writingDirectionality);
 
   function handleExpressionAreaEdit(val: string) {
     if (!props.onChange) { return; }
@@ -91,8 +92,8 @@ export const DesignationForm: React.FC<{
         : <>{d.normativeStatus || '(unspecified)'}</>}
 
       <InputGroup fill
-        className={`${props.designationClassName ?? ''} ${rtl ? Classes.RTL : ''}`}
-        dir={rtl ? 'rtl' : 'ltr'}
+        className={`${props.designationClassName ?? ''} ${dir === 'rtl' ? Classes.RTL : ''}`}
+        dir={dir}
         value={d.designation}
         disabled={!props.onChange}
         onChange={(evt: React.FormEvent<HTMLInputElement>) => {

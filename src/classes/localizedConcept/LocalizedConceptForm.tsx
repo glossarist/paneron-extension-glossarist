@@ -1,22 +1,22 @@
 import React from 'react';
 import { Button, ButtonGroup, Classes, FormGroup, InputGroup } from '@blueprintjs/core';
 import { Designation, DesignationType, NORMATIVE_STATUS_CHOICES } from '../../models/concepts';
-import { isRTL, availableLanguages } from '../../models/lang';
+import { getHTMLDir, WritingDirectionality } from '../../models/lang';
 import { AutoSizedTextArea } from '../../widgets';
-import { openHelpPage } from './util';
+import { openLinkInBrowser } from './util';
 import { DesignationForm } from './DesignationForm';
 import { LocalizedConceptData } from './LocalizedConceptData';
 
 
 export const LocalizedConceptForm: React.FC<{
   localizedConcept: LocalizedConceptData;
-  lang: keyof typeof availableLanguages;
+  writingDirectionality: WritingDirectionality;
   className?: string;
   usageInfoClassName?: string;
   onChange?: (newVal: LocalizedConceptData) => void;
 }> = function (props) {
 
-  const rtl = isRTL(props.lang);
+  const dir = getHTMLDir(props.writingDirectionality);
 
   const { localizedConcept } = props;
 
@@ -135,7 +135,7 @@ export const LocalizedConceptForm: React.FC<{
           onChange={props.onChange
             ? ((newD) => handleDesignationChange(idx, newD))
             : undefined}
-          lang={props.lang} />
+          writingDirectionality={props.writingDirectionality} />
       </FormGroup>
       )}
 
@@ -164,17 +164,17 @@ export const LocalizedConceptForm: React.FC<{
           <p>
             Refer to
               {" "}
-            <a onClick={() => openHelpPage("https://www.iso.org/standard/40362.html")}>ISO 10241-1:2011, 6.4</a>
+            <a onClick={() => openLinkInBrowser("https://www.iso.org/standard/40362.html")}>ISO 10241-1:2011, 6.4</a>
             {" "}
               and
               {" "}
-            <a onClick={() => openHelpPage("https://www.iso.org/standard/38109.html")}>ISO 704:2009, 6.3</a> for more details about what constitutes a good definition.
+            <a onClick={() => openLinkInBrowser("https://www.iso.org/standard/38109.html")}>ISO 704:2009, 6.3</a> for more details about what constitutes a good definition.
             </p>
         </>}
         labelInfo="(required)">
         <AutoSizedTextArea fill
-          dir={rtl ? 'rtl' : 'ltr'}
-          className={rtl ? Classes.RTL : undefined}
+          dir={dir}
+          className={dir === 'rtl' ? Classes.RTL : undefined}
           value={props.localizedConcept.definition || ''}
           id="definition"
           disabled={!props.onChange}
@@ -194,8 +194,8 @@ export const LocalizedConceptForm: React.FC<{
           : undefined}
         intent={item.trim() === '' ? 'danger' : undefined}>
         <AutoSizedTextArea fill
-          dir={rtl ? 'rtl' : 'ltr'}
-          className={rtl ? Classes.RTL : undefined}
+          dir={dir}
+          className={dir === 'rtl' ? Classes.RTL : undefined}
           value={item}
           id={`example-${idx}`}
           growVertically
@@ -219,8 +219,8 @@ export const LocalizedConceptForm: React.FC<{
           : undefined}
         intent={item.trim() === '' ? 'danger' : undefined}>
         <AutoSizedTextArea fill
-          dir={rtl ? 'rtl' : 'ltr'}
-          className={rtl ? Classes.RTL : undefined}
+          dir={dir}
+          className={dir === 'rtl' ? Classes.RTL : undefined}
           value={item}
           growVertically
           id={`note-${idx}`}

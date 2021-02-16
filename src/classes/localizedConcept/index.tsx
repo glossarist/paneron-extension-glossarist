@@ -6,6 +6,7 @@ import { jsx } from '@emotion/core';
 import { ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
 import { LocalizedConceptForm } from './LocalizedConceptForm';
 import { LocalizedConceptData } from './LocalizedConceptData';
+import { SupportedLanguage, WritingDirectionality, writingDirectionalityOverrides } from '../../models/lang';
 
 
 export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
@@ -37,7 +38,11 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
       <LocalizedConceptForm
         localizedConcept={props.itemData}
         className={props.className}
-        lang="eng"
+        writingDirectionality={
+          (props.subregisterID
+            ? writingDirectionalityOverrides[props.subregisterID as SupportedLanguage]
+            : undefined
+          ) || ('LTR' as WritingDirectionality)}
       />
     </>,
   },

@@ -1,4 +1,4 @@
-import { SupportedLanguages } from './lang';
+import { SupportedLanguage } from './lang';
 
 
 export type CatalogPresetName = 'all' | 'current-proposal';
@@ -15,7 +15,7 @@ export interface ConceptQuery {
   inSource?: ObjectSource
   matchingText?: string
   localization?: {
-    lang: keyof SupportedLanguages
+    lang: SupportedLanguage
     status: 'missing' | 'possiblyOutdated'
   }
 }

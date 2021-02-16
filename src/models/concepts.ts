@@ -1,6 +1,6 @@
 import { StandardRef, StandardClause } from './standards';
 import { WithRevisions } from './revisions';
-import { AuthoritativeLanguage, OptionalLanguages, SupportedLanguages } from './lang';
+import { AuthoritativeLanguage, OptionalLanguage, SupportedLanguage } from './lang';
 
 
 /* Concepts */
@@ -29,7 +29,7 @@ export type MultiLanguageConcept<Ref extends ConceptRef> = {
 
 
 export type _Concepts<Ref extends ConceptRef> = {
-  [Lang in keyof OptionalLanguages]?: WithRevisions<Concept<Ref, Lang>>
+  [Lang in OptionalLanguage]?: WithRevisions<Concept<Ref, Lang>>
 }
 
 
@@ -48,7 +48,7 @@ export const LIFECYCLE_STAGES = [
 export type LifecycleStage = typeof LIFECYCLE_STAGES[number];
 
 
-export interface Concept<Ref extends ConceptRef, Lang extends keyof SupportedLanguages> {
+export interface Concept<Ref extends ConceptRef, Lang extends SupportedLanguage> {
   id: Ref
   language_code: Lang
   entry_status: ConceptStatus

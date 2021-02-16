@@ -7,7 +7,7 @@ import { css, jsx } from '@emotion/core';
 //import React from 'react';
 import { ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
 import { GenericRelatedItemView, PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
-import { availableLanguages, SupportedLanguages } from '../models/lang';
+import { languageTitles, SupportedLanguage } from '../models/lang';
 
 
 export interface ConceptData {
@@ -48,7 +48,7 @@ export const concept: ItemClassConfiguration<ConceptData> = {
                 <li key={`${langID}-${idx}`} css={css`margin-top: 1em;`}>
                   <PropertyDetailView
                       title={`Designation ${idx + 1}`}
-                      secondaryTitle={availableLanguages[langID as keyof SupportedLanguages]}>
+                      secondaryTitle={languageTitles[langID as SupportedLanguage]}>
                     <GenericRelatedItemView
                       itemRef={{ classID: 'designation', subregisterID: langID, itemID: uuid }}
                       useRegisterItemData={useRegisterItemData}
@@ -66,7 +66,7 @@ export const concept: ItemClassConfiguration<ConceptData> = {
             {definitionsByLang.map(([langID, uuid]) =>
               <li key={langID} css={css`margin-top: 1em;`}>
                 <PropertyDetailView
-                    title={`In ${availableLanguages[langID as keyof SupportedLanguages]}`}>
+                    title={`In ${languageTitles[langID as SupportedLanguage]}`}>
                   <GenericRelatedItemView
                     itemRef={{ classID: 'definition', subregisterID: langID, itemID: uuid }}
                     useRegisterItemData={useRegisterItemData}

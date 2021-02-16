@@ -25,7 +25,7 @@ export const availableLanguageIDs = [
   'srp',
 ] as const;
 
-export const availableLanguages:
+export const languageTitles:
 { [langID in typeof availableLanguageIDs[number]]: string } = {
   'eng': 'English',
   'ara': 'Arabic',
@@ -51,6 +51,21 @@ export const availableLanguages:
   'srp': 'Serbian',
 } as const;
 
+export type WritingDirectionality = 'LTR' | 'RTL' | 'TBRL';
+
+export function getHTMLDir(wd: WritingDirectionality): 'rtl' | 'ltr' {
+  if (wd === 'RTL') {
+    return 'rtl';
+  } else {
+    return 'ltr';
+  }
+}
+
+export const writingDirectionalityOverrides:
+Partial<{ [langID in typeof availableLanguageIDs[number]]: WritingDirectionality }> = {
+  'ara': 'RTL',
+};
+
 export const priorityLanguages:
 (typeof availableLanguageIDs[number])[] = [
   'eng',
@@ -60,17 +75,8 @@ export const priorityLanguages:
 export const nonPriorityLanguages =
   availableLanguageIDs.filter(lang => priorityLanguages.indexOf(lang) > 0);
 
-const rtlLanguages:
-(typeof availableLanguageIDs[number])[] = [
-  'ara',
-];
-
-export type SupportedLanguages = typeof availableLanguages;
+export type SupportedLanguage = typeof availableLanguageIDs[number];
 
 export type AuthoritativeLanguage = typeof defaultLanguage;
 
-export type OptionalLanguages = Omit<SupportedLanguages, AuthoritativeLanguage>;
-
-export function isRTL(lang: keyof typeof availableLanguages) {
-  return rtlLanguages.indexOf(lang) >= 0;
-}
+export type OptionalLanguage = Exclude<SupportedLanguage, AuthoritativeLanguage>;

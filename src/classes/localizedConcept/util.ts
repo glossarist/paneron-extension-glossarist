@@ -1,3 +1,3 @@
-export function openHelpPage(link: string) {
+export function openLinkInBrowser(link: string) {
   require('electron').shell.openExternal(link);
 }
