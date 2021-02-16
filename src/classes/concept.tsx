@@ -16,7 +16,7 @@ function ({ lang, itemID, useRegisterItemData }) {
   const defaultLanguageEntryPath = `subregisters/${lang}/localized-concept/${itemID}`;
   const itemData = useRegisterItemData({ [defaultLanguageEntryPath]: 'utf-8' as const });
   const defaultLanguageEntry = itemData.value?.[defaultLanguageEntryPath]?.data as LocalizedConceptData | undefined;
-  return <>{defaultLanguageEntry?.terms?.[0]?.designation || '<unknown>'}</>;
+  return <>{defaultLanguageEntry?.terms?.[0]?.designation}</>;
 }
 
 const PrimaryDesignation = React.memo(
@@ -47,8 +47,8 @@ export const concept: ItemClassConfiguration<ConceptData> = {
     listItemView: (props) => {
       return (
         <span className={props.className}>
-          <code>{props.itemData.identifier}</code>:
-          &nbsp;
+          <code>{props.itemData.identifier}</code>
+          &ensp;
           <PrimaryDesignation
             lang={defaultLanguage}
             itemID={props.itemData.localizedConcepts?.[defaultLanguage] ?? ''}
