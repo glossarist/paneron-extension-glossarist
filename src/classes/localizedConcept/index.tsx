@@ -50,6 +50,7 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
       <LocalizedConceptForm
         localizedConcept={props.itemData}
         className={props.className}
+        onChange={props.onChange}
         writingDirectionality={
           (props.subregisterID
             ? writingDirectionalityOverrides[props.subregisterID as SupportedLanguage]
