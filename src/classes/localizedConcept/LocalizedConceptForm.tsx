@@ -1,4 +1,8 @@
+/** @jsx jsx */
+/** @jsxFrag React.Fragment */
+
 import React from 'react';
+import { jsx, css } from '@emotion/core';
 import { Button, ButtonGroup, Classes, InputGroup, TextArea } from '@blueprintjs/core';
 import { Designation, DesignationType, NORMATIVE_STATUS_CHOICES } from '../../models/concepts';
 import { getHTMLDir, WritingDirectionality } from '../../models/lang';
@@ -109,7 +113,7 @@ export const LocalizedConceptForm: React.FC<{
   return (
     <div className={props.className}>
       {props.onChange
-        ? <ButtonGroup>
+        ? <ButtonGroup css={css`margin-bottom: 1rem;`}>
             <Button icon="add" disabled={!props.onChange} onClick={handleDesignationAddition} title="Add another designation/synonym">Designation</Button>
             <Button icon="add" disabled={!props.onChange} onClick={handleExampleAddition} title="Add an EXAMPLE">EX.</Button>
             <Button icon="add" disabled={!props.onChange} onClick={handleNoteAddition} title="Add a NOTE">NOTE</Button>
@@ -162,7 +166,7 @@ export const LocalizedConceptForm: React.FC<{
           intent={!props.localizedConcept.definition ? 'danger' : undefined}
           onChange={(evt: React.FormEvent<HTMLTextAreaElement>) => handleDefinitionChange((evt.target as HTMLTextAreaElement).value)} />
         {props.onChange
-          ? <>
+          ? <div css={css`font-size: 90%; margin-top: 1em; line-height: 1`}>
               <p>
                 Use a single phrase specifying the concept and, if possible, reflecting the position of the concept in the concept system.
                 </p>
@@ -175,7 +179,7 @@ export const LocalizedConceptForm: React.FC<{
                   {" "}
                 <a onClick={() => openLinkInBrowser("https://www.iso.org/standard/38109.html")}>ISO 704:2009, 6.3</a> for more details about what constitutes a good definition.
                 </p>
-            </>
+            </div>
           : undefined}
       </PropertyDetailView>
 
