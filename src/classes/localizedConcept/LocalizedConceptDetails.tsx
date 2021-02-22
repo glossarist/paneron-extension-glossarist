@@ -10,6 +10,7 @@ import { getHTMLDir, WritingDirectionality } from '../../models/lang';
 import { Designation } from '../../models/concepts';
 import { LocalizedConceptData } from './LocalizedConceptData';
 import { FullDesignation } from './designation';
+import { openLinkInBrowser } from './util';
 
 
 const styles: Record<string, any> = {};
@@ -42,7 +43,7 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
   }
 
   function openAuthSource(link: string) {
-    require('electron').shell.openExternal(link);
+    return openLinkInBrowser(link);
   }
 
   return (
