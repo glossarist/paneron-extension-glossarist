@@ -73,7 +73,7 @@ export const priorityLanguages:
 ];
 
 export const nonPriorityLanguages =
-  availableLanguageIDs.filter(lang => priorityLanguages.indexOf(lang) > 0);
+  availableLanguageIDs.filter(lang => priorityLanguages.indexOf(lang) < 0);
 
 export type SupportedLanguage = typeof availableLanguageIDs[number];
 
