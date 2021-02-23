@@ -4,14 +4,20 @@
 import React from 'react';
 import MathJax from 'react-mathjax2';
 import { jsx } from '@emotion/core';
+import styled from '@emotion/styled';
+import { Colors } from '@blueprintjs/core';
 import { Designation, Expression } from '../../models/concepts';
+import { Label } from '../../widgets';
 import { LocalizedConceptData } from './LocalizedConceptData';
 
 
-const styles: Record<string, any> = {};
-
-
-export const FullDesignation: React.FC<{ d: Designation }> = function ({ d }) {
+export interface FullDesignationProps {
+  d: Designation
+  className?: string
+  markersContainerClassName?: string 
+}
+export const FullDesignation: React.FC<FullDesignationProps> =
+function ({ d, className, markersContainerClassName }) {
   function partOfSpeechLabel(d: Expression): JSX.Element | null {
     if (d.partOfSpeech === 'noun') {
       return <><span>{d.gender}</span> <span>{d.grammaticalNumber}</span> noun</>
@@ -24,32 +30,39 @@ export const FullDesignation: React.FC<{ d: Designation }> = function ({ d }) {
     }
   }
 
-  //const normativeStatusClass = styles[`normativeStatus-${d.normative_status || 'undefined'}`];
-  const normativeStatusClass = '';
+  const normativeStatusStyling: React.CSSProperties = d.normative_status === 'deprecated'
+    ? { color: Colors.GRAY1 }
+    : {};
 
-  return <span className={`${styles.designation} ${normativeStatusClass}`}>
+  return <DesignationContainer className={className} style={normativeStatusStyling}>
     <MathJax.Text text={d.designation} />
 
-    <span className={styles.designationMarkers}>
+    <DesignationMarkersContainer className={markersContainerClassName}>
       {d.type === 'expression' && d.partOfSpeech
-        ? <span dir="ltr" className={styles.grammar}>{partOfSpeechLabel(d)}</span>
+        ? <GrammarMarker dir="ltr">
+            {partOfSpeechLabel(d)}
+          </GrammarMarker>
         : null}
       {d.type === 'expression' && d.isAbbreviation
-        ? <span dir="ltr" className={styles.grammar} title="Acronym or abbreviation">abbr.</span>
+        ? <GrammarMarker dir="ltr" title="Acronym or abbreviation">
+            abbr.
+          </GrammarMarker>
         : null}
       {d.type === 'expression' && d.geographicalArea
-        ? <span dir="ltr" className={styles.usage} title="Geographical area of usage">{d.geographicalArea}</span>
+        ? <UsageMarker dir="ltr" title="Geographical area of usage">
+            {d.geographicalArea}
+          </UsageMarker>
         : null}
       {d.normative_status !== 'admitted' && (d.normative_status?.trim() || '') !== ''
-        ? <strong
+        ? <NormativeStatusMarker
               dir="ltr"
-              className={`${styles.normativeStatus} ${styles.label} ${normativeStatusClass}`}
+              style={normativeStatusStyling}
               title="Normative status">
             {d.normative_status}
-          </strong>
+          </NormativeStatusMarker>
         : null}
-    </span>
-  </span>
+    </DesignationMarkersContainer>
+  </DesignationContainer>
 };
 
 
@@ -79,3 +92,40 @@ export function getRepresentingDesignation(entry: LocalizedConceptData): string 
 //       : null}
 //   </div>;
 // };
+
+
+const DesignationContainer = styled.span`
+  font-weight: normal;
+  font-family: Georgia, serif;
+  margin-bottom: 1rem;
+
+  > * {
+    display: inline;
+  }
+`;
+
+const DesignationMarkersContainer = styled.span`
+  font-family: sans-serif;
+  font-size: 16px;
+  padding-left: .5em;
+
+  > * {
+    &:not(:last-child)::after {
+      content: ",";
+    }
+  }
+`;
+
+const GrammarMarker = styled.span`
+  color: ${Colors.GRAY2};
+`;
+
+const UsageMarker = styled.span`
+  color: ${Colors.GRAY2};
+  text-transform: uppercase;
+`;
+
+const NormativeStatusMarker = styled(Label)`
+  color: ${Colors.GRAY2};
+  font-weight: bold;
+`;

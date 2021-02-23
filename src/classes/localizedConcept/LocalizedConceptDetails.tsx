@@ -4,13 +4,15 @@
 import React from 'react';
 import MathJax from 'react-mathjax2';
 import { jsx } from '@emotion/core';
-import { Classes, H2 } from '@blueprintjs/core';
+import styled from '@emotion/styled';
+import { Classes, Colors, H2 } from '@blueprintjs/core';
 
 import { getHTMLDir, WritingDirectionality } from '../../models/lang';
 import { Designation } from '../../models/concepts';
 import { LocalizedConceptData } from './LocalizedConceptData';
 import { FullDesignation } from './designation';
 import { openLinkInBrowser } from './util';
+import { Label } from '../../widgets';
 
 
 const styles: Record<string, any> = {};
@@ -73,28 +75,34 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
         <FullDesignation d={primaryDesignation} />
       </H2>
 
-      <div className={styles.synonyms}>
-        {[...synonyms.entries()].map(([idx, s]) => <FullDesignation key={idx} d={s} />)}
-      </div>
+      <SynonymsContainer>
+        {[...synonyms.entries()].map(([idx, s]) =>
+          <FullDesignation
+            className={Classes.TEXT_LARGE}
+            key={idx}
+            d={s}
+          />
+        )}
+      </SynonymsContainer>
 
       <div className={`${Classes.RUNNING_TEXT}`}>
-        <div className={`${styles.definition}`}>
-          {entry.usageInfo ? <span className={styles.usageInfo}>&lt;{entry.usageInfo}&gt;</span> : null}
+        <DefinitionContainer>
+          {entry.usageInfo ? <UsageInfo>&lt;{entry.usageInfo}&gt;</UsageInfo> : null}
           <MathJax.Text text={entry.definition} />
-        </div>
+        </DefinitionContainer>
 
         {[...entry.examples.entries()].map(([idx, item]) =>
-          <div className={`${styles.example}`} key={`example-${idx}`}>
-            <div dir="ltr" className={styles.label}>EXAMPLE:</div>
+          <ExampleContainer key={`example-${idx}`}>
+            <Label dir="ltr" className={styles.label}>EXAMPLE:</Label>
             <MathJax.Text text={item} />
-          </div>
+          </ExampleContainer>
         )}
 
         {[...entry.notes.entries()].map(([idx, item]) =>
-            <div className={`${styles.note}`} key={`note-${idx}`}>
-              <div dir="ltr" className={styles.label}>Note {idx + 1} to entry:</div>
+            <NoteContainer className={`${styles.note}`} key={`note-${idx}`}>
+              <Label dir="ltr">Note {idx + 1} to entry:</Label>
               <MathJax.Text text={item} />
-            </div>
+            </NoteContainer>
           )}
       </div>
 
@@ -120,3 +128,47 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
 
 
 export default EntryDetails;
+
+
+const UsageInfo = styled.span`
+    color: ${Colors.GRAY2};
+    margin-right: 1em;
+`;
+
+
+const SynonymsContainer = styled.div`
+  &:not(:empty) {
+    margin-bottom: 1rem;
+  }
+
+  &:not(:empty)::before {
+    content: "Syn.";
+    font-style: italic;
+  }
+
+  > * {
+    margin-left: .75em;
+
+    &:not(:last-child)::after {
+      content: ";";
+      font-style: italic;
+    }
+  }
+`;
+
+
+const DefinitionContainer = styled.div`
+  font-size: 120%;
+  margin-left: 1em;
+  margin-bottom: 2rem;
+`;
+
+
+const NoteContainer = styled.div`
+  margin-bottom: 1rem;
+`;
+
+
+const ExampleContainer = styled(NoteContainer)`
+  font-style: italic;
+`;
