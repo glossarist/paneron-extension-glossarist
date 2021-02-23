@@ -101,11 +101,17 @@ export interface Concept<Ref extends ConceptRef, Lang extends SupportedLanguage>
   lineage_source_similarity?: number
 }
 
+
+interface AuthoritativeSourceRelationship {
+  type: 'identical' | 'modified'
+}
+
 export type AuthoritativeSource = {
   // All are optional, but either ref & clause or link must be present
   ref?: StandardRef
   clause?: StandardClause
   link?: URL
+  relationship?: AuthoritativeSourceRelationship
 }
 
 
