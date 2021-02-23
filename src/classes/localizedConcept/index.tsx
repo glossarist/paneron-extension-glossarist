@@ -13,7 +13,7 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
   itemCanBeSuperseded: false,
   meta: {
     title: "Localized concept",
-    description: "Concept verbalised in a language",
+    description: "Provides a verbal representation of a concept in a particular language, which includes a definition (with accompanying notes and examples), a set of acceptable designations (terms), supporting authoritative sources.",
     id: 'localized-concept',
     alternativeNames: [],
   },
