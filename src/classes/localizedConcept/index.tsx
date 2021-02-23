@@ -7,6 +7,7 @@ import { ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
 import { LocalizedConceptForm } from './LocalizedConceptForm';
 import { LocalizedConceptData } from './LocalizedConceptData';
 import { SupportedLanguage, WritingDirectionality, writingDirectionalityOverrides } from '../../models/lang';
+import LocalizedConceptDetails from './LocalizedConceptDetails';
 
 
 export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
@@ -34,6 +35,17 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
         </span>
       );
     },
+    detailView: (props) => <>
+      <LocalizedConceptDetails
+        localizedConcept={props.itemData}
+        className={props.className}
+        writingDirectionality={
+          (props.subregisterID
+            ? writingDirectionalityOverrides[props.subregisterID as SupportedLanguage]
+            : undefined
+          ) || ('LTR' as WritingDirectionality)}
+      />
+    </>,
     editView: (props) => <>
       <LocalizedConceptForm
         localizedConcept={props.itemData}
