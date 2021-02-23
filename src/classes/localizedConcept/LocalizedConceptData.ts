@@ -12,3 +12,6 @@ export interface LocalizedConceptData {
   examples: string[];
   authoritative_source: AuthoritativeSource[];
 }
+
+
+export default LocalizedConceptData;

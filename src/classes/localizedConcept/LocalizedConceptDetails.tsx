@@ -111,3 +111,6 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
     </div>
   );
 };
+
+
+export default EntryDetails;

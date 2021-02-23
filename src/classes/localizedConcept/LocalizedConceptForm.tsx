@@ -227,3 +227,6 @@ export const LocalizedConceptForm: React.FC<{
     </div>
   );
 };
+
+
+export default LocalizedConceptForm;
