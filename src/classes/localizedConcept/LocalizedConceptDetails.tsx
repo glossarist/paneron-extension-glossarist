@@ -110,7 +110,7 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
         <dl dir="ltr" className={styles.label}>
           {authSources.map((source, idx) =>
             <>
-              <dt key={`${idx}-label`}>Authoritative source:</dt>
+              <dt key={`${idx}-label`}>Authoritative source(s):</dt>
               <dd key={`${idx}-desc`}>
                 {`${source.link || ''}`.trim() !== ''
                   ? <a onClick={() => openAuthSource(`${source.link}`)}>
