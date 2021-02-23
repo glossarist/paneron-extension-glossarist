@@ -111,6 +111,7 @@ export type AuthoritativeSource = {
   ref?: StandardRef
   clause?: StandardClause
   link?: URL
+  original?: string
   relationship?: AuthoritativeSourceRelationship
 }
 
