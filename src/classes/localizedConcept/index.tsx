@@ -43,7 +43,7 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
           (props.subregisterID
             ? writingDirectionalityOverrides[props.subregisterID as SupportedLanguage]
             : undefined
-          ) || ('LTR' as WritingDirectionality)}
+          ) ?? ('LTR' as WritingDirectionality)}
       />
     </>,
     editView: (props) => <>
@@ -54,7 +54,7 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
           (props.subregisterID
             ? writingDirectionalityOverrides[props.subregisterID as SupportedLanguage]
             : undefined
-          ) || ('LTR' as WritingDirectionality)}
+          ) ?? ('LTR' as WritingDirectionality)}
       />
     </>,
   },
