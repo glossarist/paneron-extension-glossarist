@@ -4,10 +4,10 @@
 import React from 'react';
 import { jsx } from '@emotion/core';
 import { ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
-import { LocalizedConceptForm } from './LocalizedConceptForm';
-import { LocalizedConceptData } from './LocalizedConceptData';
 import { SupportedLanguage, WritingDirectionality, writingDirectionalityOverrides } from '../../models/lang';
+import LocalizedConceptForm from './LocalizedConceptForm';
 import LocalizedConceptDetails from './LocalizedConceptDetails';
+import LocalizedConceptData from './LocalizedConceptData';
 
 
 export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
