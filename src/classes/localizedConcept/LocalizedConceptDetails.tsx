@@ -117,6 +117,9 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
                       {source.ref || source.link} {source.clause}
                     </a>
                   : <>{source.ref || 'unknown'} {source.clause}</>}
+                {source.relationship
+                  ? <>— {source.relationship}</>
+                  : null}
               </dd>
             </>
           )}
