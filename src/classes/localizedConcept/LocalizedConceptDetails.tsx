@@ -46,6 +46,12 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
     return openLinkInBrowser(link);
   }
 
+  const authSources: LocalizedConceptData["authoritativeSource"] = Array.isArray(entry.authoritativeSource)
+    ? entry.authoritativeSource
+    : Object.keys(entry.authoritativeSource).length > 0
+      ? [entry.authoritativeSource]
+      : [];
+
   return (
     <div
         dir={dir}
@@ -94,7 +100,7 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
 
       <footer>
         <dl dir="ltr" className={styles.label}>
-          {entry.authoritative_source.map((source, idx) =>
+          {authSources.map((source, idx) =>
             <>
               <dt key={`${idx}-label`}>Authoritative source:</dt>
               <dd key={`${idx}-desc`}>

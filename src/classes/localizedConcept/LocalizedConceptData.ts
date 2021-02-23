@@ -10,7 +10,7 @@ export interface LocalizedConceptData {
   definition: string;
   notes: string[];
   examples: string[];
-  authoritative_source: AuthoritativeSource[];
+  authoritativeSource: AuthoritativeSource[];
 }
 
 
