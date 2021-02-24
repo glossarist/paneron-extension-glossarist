@@ -2,12 +2,12 @@
 /** @jsxFrag React.Fragment */
 
 import React from 'react';
-import { UL } from '@blueprintjs/core';
+import { UL, H2 } from '@blueprintjs/core';
 import { css, jsx } from '@emotion/core';
 //import React from 'react';
 import { ItemClassConfiguration, RegisterItemDataHook } from '@riboseinc/paneron-registry-kit/types';
 import { GenericRelatedItemView, PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
-import { defaultLanguage, languageTitles, SupportedLanguage } from '../models/lang';
+import { defaultLanguage, languageTitles, priorityLanguages, nonPriorityLanguages, SupportedLanguage } from '../models/lang';
 import { LocalizedConceptData } from './localizedConcept/LocalizedConceptData';
 
 
@@ -58,26 +58,31 @@ export const concept: ItemClassConfiguration<ConceptData> = {
       );
     },
     detailView: ({ itemData, useRegisterItemData, getRelatedItemClassConfiguration }) => {
-      const localizedConcepts = Object.entries(itemData.localizedConcepts ?? {});
+      const localizedConcepts = itemData.localizedConcepts ?? {};
+
+      const langs: SupportedLanguage[] = [
+        ...priorityLanguages,
+        ...nonPriorityLanguages,
+      ].filter(langID => localizedConcepts[langID] !== undefined);
 
       return (
         <div>
-          <PropertyDetailView title="Localized concepts">
-            <UL css={css`padding-left: 0; list-style: square;`}>
-              {localizedConcepts.map(([langID, uuid]) =>
-                <li key={langID} css={css`margin-top: 1em;`}>
-                  <PropertyDetailView
-                      title={`In ${languageTitles[langID as SupportedLanguage]}`}>
-                    <GenericRelatedItemView
-                      itemRef={{ classID: 'localized-concept', subregisterID: langID, itemID: uuid }}
-                      useRegisterItemData={useRegisterItemData}
-                      getRelatedItemClassConfiguration={getRelatedItemClassConfiguration}
-                    />
-                  </PropertyDetailView>
-                </li>
-              )}
-            </UL>
-          </PropertyDetailView>
+          <H2 style={{ marginBottom: '1rem' }}>Concept <code>{itemData.identifier}</code></H2>
+
+          <UL css={css`padding-left: 0; list-style: square;`}>
+            {langs.map(langID =>
+              <li key={langID} css={css`margin-top: 1em;`}>
+                <PropertyDetailView
+                    title={`Description in ${languageTitles[langID as SupportedLanguage]}`}>
+                  <GenericRelatedItemView
+                    itemRef={{ classID: 'localized-concept', subregisterID: langID, itemID: localizedConcepts[langID] }}
+                    useRegisterItemData={useRegisterItemData}
+                    getRelatedItemClassConfiguration={getRelatedItemClassConfiguration}
+                  />
+                </PropertyDetailView>
+              </li>
+            )}
+          </UL>
         </div>
       );
     },
