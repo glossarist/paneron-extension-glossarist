@@ -37,7 +37,7 @@ export const concept: ItemClassConfiguration<ConceptData> = {
   itemCanBeSuperseded: false,
   meta: {
     title: "Concept",
-    description: "A concept is a unit of meaning. Each of these register items acts as an umbrella, linking together register items that provide verbalized representations of this unit in different languages.",
+    description: "A concept is a unit of meaning. Each concept acts as an umbrella, linking together descriptions of the concept in different languages.",
     id: 'concept',
     alternativeNames: [],
   },

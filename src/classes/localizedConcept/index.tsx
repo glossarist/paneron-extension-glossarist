@@ -13,8 +13,8 @@ import LocalizedConceptData from './LocalizedConceptData';
 export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
   itemCanBeSuperseded: false,
   meta: {
-    title: "Localized concept",
-    description: "Provides a verbal representation of a concept in a particular language, which includes a definition (with accompanying notes and examples), a set of acceptable designations (terms), supporting authoritative sources.",
+    title: "Concept description",
+    description: "Provides a verbal representation of a concept in a particular language, including definition (with accompanying notes and examples), acceptable designations (terms) and supporting authoritative sources.",
     id: 'localized-concept',
     alternativeNames: [],
   },
