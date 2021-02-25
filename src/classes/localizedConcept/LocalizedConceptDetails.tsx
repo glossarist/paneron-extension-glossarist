@@ -50,7 +50,7 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
 
   const authSources: LocalizedConceptData["authoritativeSource"] = Array.isArray(entry.authoritativeSource)
     ? entry.authoritativeSource
-    : Object.keys(entry.authoritativeSource).length > 0
+    : Object.keys(entry.authoritativeSource ?? {}).length > 0
       ? [entry.authoritativeSource]
       : [];
 
@@ -118,7 +118,12 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
                     </a>
                   : <>{source.ref || 'unknown'} {source.clause}</>}
                 {source.relationship
-                  ? <>— {source.relationship}</>
+                  ? <>
+                      — {source.relationship.type}
+                      {source.relationship.type === 'modified'
+                        ? <em>&ensp;{source.relationship.modificiation ?? 'no modification note'}</em>
+                        : null}
+                    </>
                   : null}
               </dd>
             </>
