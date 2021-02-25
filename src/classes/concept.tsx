@@ -2,7 +2,7 @@
 /** @jsxFrag React.Fragment */
 
 import React from 'react';
-import { UL, H2 } from '@blueprintjs/core';
+import { UL, InputGroup } from '@blueprintjs/core';
 import { css, jsx } from '@emotion/core';
 //import React from 'react';
 import { ItemClassConfiguration, RegisterItemDataHook } from '@riboseinc/paneron-registry-kit/types';
@@ -57,40 +57,93 @@ export const concept: ItemClassConfiguration<ConceptData> = {
         </span>
       );
     },
-    detailView: ({ itemData, useRegisterItemData, getRelatedItemClassConfiguration }) => {
-      const localizedConcepts = itemData.localizedConcepts ?? {};
-
-      const langs: SupportedLanguage[] = [
-        ...priorityLanguages,
-        ...nonPriorityLanguages,
-      ].filter(langID => localizedConcepts[langID] !== undefined);
-
+    detailView: (props) => {
       return (
-        <div>
-          <H2 style={{ marginBottom: '1rem' }}>Concept <code>{itemData.identifier}</code></H2>
-
-          <UL css={css`padding-left: 0; list-style: square;`}>
-            {langs.map(langID =>
-              <li key={langID} css={css`margin-top: 1em;`}>
-                <PropertyDetailView
-                    title={`Description in ${languageTitles[langID as SupportedLanguage]}`}>
-                  <GenericRelatedItemView
-                    itemRef={{ classID: 'localized-concept', subregisterID: langID, itemID: localizedConcepts[langID] }}
-                    useRegisterItemData={useRegisterItemData}
-                    getRelatedItemClassConfiguration={getRelatedItemClassConfiguration}
-                  />
-                </PropertyDetailView>
-              </li>
-            )}
-          </UL>
-        </div>
+        <ConceptEditView {...props} />
       );
     },
-    editView: () => <span></span>,
+    editView: (props) => {
+      return (
+        <ConceptEditView {...props} />
+      );
+    },
   },
   validatePayload: async () => true,
   sanitizePayload: async (t) => t,
 };
+
+
+const ConceptEditView: ItemClassConfiguration<ConceptData>["views"]["editView"] = function (props) {
+  const { itemData } = props;
+
+  const localizedConcepts = itemData.localizedConcepts ?? {};
+
+  let langs: SupportedLanguage[];
+  if (props.onChange) {
+    langs = [
+      ...priorityLanguages,
+      ...nonPriorityLanguages,
+    ];
+  } else {
+    langs = [
+      ...priorityLanguages,
+      ...nonPriorityLanguages,
+    ].filter(langID => localizedConcepts[langID] !== undefined);
+  }
+
+  function handleIdentifierChange(newVal: string) {
+    if (!props.onChange) { return; }
+    props.onChange({ ...props.itemData, identifier: newVal });
+  }
+
+  async function handleCreateDescription(classID: string, langID: SupportedLanguage) {
+    if (!props.onCreateRelatedItem || !props.onChange) { throw new Error("Cannot create description (read-only)") }
+    const itemRef = await props.onCreateRelatedItem(classID, langID);
+    props.onChange({ ...props.itemData, localizedConcepts: { ...localizedConcepts, [langID]: itemRef.itemID } });
+    return itemRef;
+  }
+
+  function handleClearDescription(langID: SupportedLanguage) {
+    if (!props.onChange) { throw new Error("Cannot clear description (read-only)") }
+    const localizedConcepts = { ...(props.itemData.localizedConcepts ?? {}) };
+    delete localizedConcepts[langID];
+    props.onChange({ ...props.itemData, localizedConcepts });
+  }
+
+  return (
+    <div>
+      <PropertyDetailView title="Identifier">
+        <InputGroup
+          fill
+          readOnly={!props.onChange}
+          value={itemData.identifier ?? ''}
+          onChange={props.onChange
+            ? ((evt: React.FormEvent<HTMLInputElement>) => handleIdentifierChange(evt.currentTarget.value))
+            : undefined}
+        />
+      </PropertyDetailView>
+
+      <UL css={css`padding-left: 0; list-style: square;`}>
+        {langs.map(langID =>
+          <li key={langID} css={css`margin-top: 1em;`}>
+            <PropertyDetailView
+                title={`Description in ${languageTitles[langID as SupportedLanguage]}`}>
+              <GenericRelatedItemView
+                itemRef={{ classID: 'localized-concept', subregisterID: langID, itemID: localizedConcepts[langID] ?? '' }}
+                onClear={props.onChange ? () => handleClearDescription(langID) : undefined}
+                onCreateNew={props.onCreateRelatedItem && props.onChange
+                  ? (() => handleCreateDescription('localized-concept', langID))
+                  : undefined}
+                useRegisterItemData={props.useRegisterItemData}
+                getRelatedItemClassConfiguration={props.getRelatedItemClassConfiguration}
+              />
+            </PropertyDetailView>
+          </li>
+        )}
+      </UL>
+    </div>
+  );
+}
 
 
 export default concept;
