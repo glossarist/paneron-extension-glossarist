@@ -3,8 +3,8 @@
 
 import React from 'react';
 import { jsx, css } from '@emotion/core';
-import { Button, ButtonGroup, Classes, InputGroup, TextArea } from '@blueprintjs/core';
-import { Designation, DesignationType, NORMATIVE_STATUS_CHOICES } from '../../models/concepts';
+import { Button, ButtonGroup, Classes, ControlGroup, FormGroup, InputGroup, TextArea } from '@blueprintjs/core';
+import { AuthoritativeSource, Designation, DesignationType, NORMATIVE_STATUS_CHOICES } from '../../models/concepts';
 import { getHTMLDir, WritingDirectionality } from '../../models/lang';
 import { openLinkInBrowser } from './util';
 import { DesignationForm } from './DesignationForm';
@@ -24,7 +24,13 @@ export const LocalizedConceptForm: React.FC<{
 
   const { localizedConcept } = props;
 
-  function handleItemDeletion(field: 'notes' | 'examples' | 'terms') {
+  const authSources: LocalizedConceptData["authoritativeSource"] = Array.isArray(localizedConcept.authoritativeSource)
+    ? localizedConcept.authoritativeSource
+    : Object.keys(localizedConcept.authoritativeSource ?? {}).length > 0
+      ? [localizedConcept.authoritativeSource]
+      : [];
+
+  function handleItemDeletion(field: 'notes' | 'examples' | 'terms' | 'authoritativeSource') {
     return (idx: number) => {
       if (!props.onChange) { return; }
       const e = props.localizedConcept;
@@ -34,17 +40,18 @@ export const LocalizedConceptForm: React.FC<{
     };
   }
 
-  function handleItemAddition<T extends 'notes' | 'examples' | 'terms'>(field: T, makeNewItem: () => LocalizedConceptData[T][number]) {
+  function handleItemAddition<T extends 'notes' | 'examples' | 'terms' | 'authoritativeSource'>(field: T, makeNewItem: () => LocalizedConceptData[T][number]) {
     return () => {
       if (!props.onChange) { return; }
       const e = props.localizedConcept;
-      props.onChange({ ...e, [field]: [...e[field], makeNewItem()] });
+      props.onChange({ ...e, [field]: [...(Array.isArray(e[field]) ? e[field] : []), makeNewItem()] });
     };
   }
 
   const handleDesignationDeletion = handleItemDeletion('terms');
   const handleNoteDeletion = handleItemDeletion('notes');
   const handleExampleDeletion = handleItemDeletion('examples');
+  const handleAuthSourceDeletion = handleItemDeletion('authoritativeSource');
 
   const handleDesignationAddition = handleItemAddition('terms', () => ({
     type: 'expression',
@@ -53,6 +60,18 @@ export const LocalizedConceptForm: React.FC<{
   }));
   const handleNoteAddition = handleItemAddition('notes', () => '');
   const handleExampleAddition = handleItemAddition('examples', () => '');
+  const handleAuthSourceAddition = handleItemAddition('authoritativeSource', () => ({
+    ref: 'Enter reference…',
+  }));
+
+  function handleAuthSourceChange(idx: number, val: AuthoritativeSource) {
+    if (!props.onChange) { return; }
+
+    const e = props.localizedConcept;
+    var items = [...e.authoritativeSource];
+    items[idx] = val;
+    props.onChange({ ...e, authoritativeSource: items });
+  }
 
   function handleDesignationChange(idx: number, val: Designation) {
     if (!props.onChange) { return; }
@@ -117,6 +136,7 @@ export const LocalizedConceptForm: React.FC<{
             <Button icon="add" disabled={!props.onChange} onClick={handleDesignationAddition} title="Add another designation/synonym">Designation</Button>
             <Button icon="add" disabled={!props.onChange} onClick={handleExampleAddition} title="Add an EXAMPLE">EX.</Button>
             <Button icon="add" disabled={!props.onChange} onClick={handleNoteAddition} title="Add a NOTE">NOTE</Button>
+            <Button icon="add" disabled={!props.onChange} onClick={handleAuthSourceAddition} title="Add a source">Auth. source</Button>
           </ButtonGroup>
         : null}
 
@@ -228,7 +248,64 @@ export const LocalizedConceptForm: React.FC<{
             }} />
         </PropertyDetailView>
       )}
+
+      {authSources.map((src, idx) =>
+        <PropertyDetailView
+            key={`authSource-${idx}`}
+            title={`Authoritative source ${idx + 1}`}
+            secondaryTitle={props.onChange
+              ? <Button small
+                title="Delete this source"
+                icon="cross"
+                onClick={() => handleAuthSourceDeletion(idx)} />
+              : undefined}>
+          <AuthSource src={src} onChange={(newVal) => handleAuthSourceChange(idx, newVal)} />
+        </PropertyDetailView>
+      )}
     </div>
+  );
+};
+
+
+const AuthSource: React.FC<{ src: AuthoritativeSource, onChange: (newVal: AuthoritativeSource) => void }> = function ({ src, onChange }) {
+  return (
+    <>
+      <FormGroup label="Ref.:">
+        <InputGroup value={src.ref ?? ''} onChange={(evt: React.FormEvent<HTMLInputElement>) => onChange({ ...src, ref: evt.currentTarget.value })} />
+      </FormGroup>
+      <FormGroup label="Clause:">
+        <InputGroup value={src.clause ?? ''} onChange={(evt: React.FormEvent<HTMLInputElement>) => onChange({ ...src, clause: evt.currentTarget.value })} />
+      </FormGroup>
+      <FormGroup label="Original:">
+        <InputGroup value={src.original ?? ''} onChange={(evt: React.FormEvent<HTMLInputElement>) => onChange({ ...src, original: evt.currentTarget.value })} />
+      </FormGroup>
+      <FormGroup label="Link:">
+        <InputGroup value={src.link ?? ''} onChange={(evt: React.FormEvent<HTMLInputElement>) => onChange({ ...src, link: evt.currentTarget.value })} />
+      </FormGroup>
+      <FormGroup label="Relationship:">
+        <ControlGroup>
+          <Button
+              active={src.relationship?.type === 'identical'}
+              onClick={() => onChange({ ...src, relationship: { type: 'identical', modificiation: '' }})}>
+            Identical
+          </Button>
+          <Button
+              active={src.relationship?.type === 'modified'}
+              onClick={() => onChange({ ...src, relationship: { type: 'modified' }})}>
+            Modified
+          </Button>
+          <InputGroup
+            value={src.relationship?.modificiation ?? ''}
+            placeholder="Modification note…"
+            disabled={src.relationship?.type !== 'modified'}
+            onChange={(evt: React.FormEvent<HTMLInputElement>) => onChange({
+              ...src,
+              relationship: { type: 'modified', modificiation: evt.currentTarget.value },
+            })}
+          />
+        </ControlGroup>
+      </FormGroup>
+    </>
   );
 };
 
