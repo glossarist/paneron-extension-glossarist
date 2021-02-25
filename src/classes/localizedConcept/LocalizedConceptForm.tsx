@@ -208,14 +208,14 @@ export const LocalizedConceptForm: React.FC<{
 
       {props.localizedConcept.notes.map((item, idx) =>
         <PropertyDetailView
-          key={`note-${idx}`}
-          title={`NOTE ${idx + 1}`}
-          secondaryTitle={props.onChange
-            ? <Button small
-              title="Delete this note"
-              icon="cross"
-              onClick={() => handleNoteDeletion(idx)} />
-            : undefined}>
+            key={`note-${idx}`}
+            title={`NOTE ${idx + 1}`}
+            secondaryTitle={props.onChange
+              ? <Button small
+                title="Delete this note"
+                icon="cross"
+                onClick={() => handleNoteDeletion(idx)} />
+              : undefined}>
           <TextArea fill
             dir={dir}
             className={dir === 'rtl' ? Classes.RTL : undefined}
