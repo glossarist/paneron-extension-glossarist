@@ -110,7 +110,7 @@ export type AuthoritativeSource = {
   // All are optional, but either ref & clause or link must be present
   ref?: StandardRef
   clause?: StandardClause
-  link?: URL
+  link?: string
   original?: string
   relationship?: AuthoritativeSourceRelationship
 }
