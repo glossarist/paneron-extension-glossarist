@@ -111,7 +111,7 @@ const ConceptEditView: ItemClassConfiguration<ConceptData>["views"]["editView"] 
   }
 
   return (
-    <div css={css`padding: 1rem; position: absolute; top: 0; left: 0; right: 0; bottom: 0;`}>
+    <div css={css`padding: 1rem; position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow-y: auto;`}>
       <PropertyDetailView title="Identifier">
         <InputGroup
           fill
