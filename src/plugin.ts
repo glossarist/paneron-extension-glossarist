@@ -4,7 +4,7 @@ import 'electron';
 export default makeExtension({
   mainView: () => import('./RepoView'),
   name: "Glossarist",
-  requiredHostAppVersion: '^1.0.0-alpha19',
+  requiredHostAppVersion: '^1.0.0-beta1',
   datasetMigrations: {},
   datasetInitializer: () => import('./migrations/initial'),
 });
