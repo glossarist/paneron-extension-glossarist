@@ -5,7 +5,7 @@ import React from 'react';
 import { UL, InputGroup } from '@blueprintjs/core';
 import { css, jsx } from '@emotion/core';
 //import React from 'react';
-import { ItemClassConfiguration, RegisterItemDataHook } from '@riboseinc/paneron-registry-kit/types';
+import { InternalItemReference, ItemClassConfiguration, RegisterItemDataHook } from '@riboseinc/paneron-registry-kit/types';
 import { GenericRelatedItemView, PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
 import { defaultLanguage, languageTitles, priorityLanguages, nonPriorityLanguages, SupportedLanguage } from '../models/lang';
 import { LocalizedConceptData } from './localizedConcept/LocalizedConceptData';
@@ -103,6 +103,12 @@ const ConceptEditView: ItemClassConfiguration<ConceptData>["views"]["editView"] 
     return itemRef;
   }
 
+  function handleSetDescription(itemRef: InternalItemReference, langID: SupportedLanguage) {
+    if (!props.onChange) { throw new Error("Cannot set description (read-only)") }
+    props.onChange({ ...props.itemData, localizedConcepts: { ...localizedConcepts, [langID]: itemRef.itemID } });
+    return itemRef;
+  }
+
   function handleClearDescription(langID: SupportedLanguage) {
     if (!props.onChange) { throw new Error("Cannot clear description (read-only)") }
     const localizedConcepts = { ...(props.itemData.localizedConcepts ?? {}) };
@@ -131,6 +137,9 @@ const ConceptEditView: ItemClassConfiguration<ConceptData>["views"]["editView"] 
               <GenericRelatedItemView
                 itemRef={{ classID: 'localized-concept', subregisterID: langID, itemID: localizedConcepts[langID] ?? '' }}
                 onClear={props.onChange ? () => handleClearDescription(langID) : undefined}
+                onChange={props.onChange && !localizedConcepts[langID]
+                  ? (itemRef) => handleSetDescription(itemRef, langID)
+                  : undefined}
                 onCreateNew={props.onCreateRelatedItem && props.onChange
                   ? (() => handleCreateDescription('localized-concept', langID))
                   : undefined}
