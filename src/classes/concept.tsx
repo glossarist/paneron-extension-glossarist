@@ -14,7 +14,7 @@ import { LocalizedConceptData } from './localizedConcept/LocalizedConceptData';
 const _PrimaryDesignation: React.FC<{ lang: string, itemID: string, useRegisterItemData: RegisterItemDataHook }> =
 function ({ lang, itemID, useRegisterItemData }) {
   const defaultLanguageEntryPath = `subregisters/${lang}/localized-concept/${itemID}`;
-  const itemData = useRegisterItemData({ [defaultLanguageEntryPath]: 'utf-8' as const });
+  const itemData = useRegisterItemData({ itemPaths: [defaultLanguageEntryPath] });
   const defaultLanguageEntry = itemData.value?.[defaultLanguageEntryPath]?.data as LocalizedConceptData | undefined;
   return <>{defaultLanguageEntry?.terms?.[0]?.designation}</>;
 }
@@ -111,7 +111,7 @@ const ConceptEditView: ItemClassConfiguration<ConceptData>["views"]["editView"] 
   }
 
   return (
-    <div>
+    <div css={css`padding: 1rem; position: absolute; top: 0; left: 0; right: 0; bottom: 0;`}>
       <PropertyDetailView title="Identifier">
         <InputGroup
           fill

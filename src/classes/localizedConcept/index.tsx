@@ -2,7 +2,7 @@
 /** @jsxFrag React.Fragment */
 
 import React from 'react';
-import { jsx } from '@emotion/core';
+import { jsx, css } from '@emotion/core';
 import { ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
 import { SupportedLanguage, WritingDirectionality, writingDirectionalityOverrides } from '../../models/lang';
 import LocalizedConceptForm from './LocalizedConceptForm';
@@ -37,6 +37,7 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
     },
     detailView: (props) => <>
       <LocalizedConceptDetails
+        css={css`padding: 1rem; position: absolute; top: 0; left: 0; right: 0; bottom: 0;`}
         localizedConcept={props.itemData}
         className={props.className}
         writingDirectionality={
@@ -48,6 +49,7 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
     </>,
     editView: (props) => <>
       <LocalizedConceptForm
+        css={css`padding: 1rem; position: absolute; top: 0; left: 0; right: 0; bottom: 0;`}
         localizedConcept={props.itemData}
         className={props.className}
         onChange={props.onChange}
