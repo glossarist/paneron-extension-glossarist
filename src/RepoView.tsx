@@ -18,6 +18,7 @@ function () {
   return <RegistryView
     itemClassConfiguration={itemClassConfiguration}
     subregisters={subregisters}
+    keyExpression="obj.data.identifier || `${obj.data.terms?.[0]?.designation}-${obj.id}` || obj.id"
   />
 };
 
