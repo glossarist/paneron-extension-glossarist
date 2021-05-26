@@ -9,6 +9,7 @@ import { InternalItemReference, ItemClassConfiguration, RegisterItemDataHook } f
 import { GenericRelatedItemView, PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
 import { defaultLanguage, languageTitles, priorityLanguages, nonPriorityLanguages, SupportedLanguage } from '../models/lang';
 import { LocalizedConceptData } from './localizedConcept/LocalizedConceptData';
+import rdfExport from './concept-export';
 
 
 const _PrimaryDesignation: React.FC<{ lang: string, itemID: string, useRegisterItemData: RegisterItemDataHook }> =
@@ -43,6 +44,7 @@ export const concept: ItemClassConfiguration<ConceptData> = {
   },
   defaults: {},
   itemSorter: (p1, p2) => p1.identifier.localeCompare(p2.identifier),
+  exportFormats: [rdfExport],
   views: {
     listItemView: (props) => {
       return (
