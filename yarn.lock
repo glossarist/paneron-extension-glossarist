@@ -991,15 +991,15 @@
   dependencies:
     chokidar "2.1.8"
 
-"@riboseinc/paneron-extension-kit@2.0.0-dev23":
-  version "2.0.0-dev23"
-  resolved "https://registry.yarnpkg.com/@riboseinc/paneron-extension-kit/-/paneron-extension-kit-2.0.0-dev23.tgz#a6f06fd1584ac39a002b3841268d3c317f0b19dc"
-  integrity sha512-E5EUJSy3V0/wujb7hW+0ptz5UyR64kiD542rqdNjpEVWxO+J3dT6HWzbiSeSFhhb3B+H6fUkdrguIB3sPzlA3A==
+"@riboseinc/paneron-extension-kit@2.0.0-dev25":
+  version "2.0.0-dev25"
+  resolved "https://registry.yarnpkg.com/@riboseinc/paneron-extension-kit/-/paneron-extension-kit-2.0.0-dev25.tgz#027a66235b95202267b6ea06da3874a515950140"
+  integrity sha512-SQGLeGvdUZM/wPgAom8eT9hD+hzNo4QdwrK3vwqEH2PtNxZWrksGMDQcjS4gFh1fImh8VzWAQ8qG81l1/OJhkg==
 
-"@riboseinc/paneron-registry-kit@2.0.0-dev16":
-  version "2.0.0-dev16"
-  resolved "https://registry.yarnpkg.com/@riboseinc/paneron-registry-kit/-/paneron-registry-kit-2.0.0-dev16.tgz#e7f5e7858e6f75fcd068ecf60b1fd142a33aa75c"
-  integrity sha512-/weqd7AoBQBZqnizpstIb9V4FLjrYXWnIB3VT39BXeXOq8Sv2y2qY8QjNkEWwXK6/eeP25MHCtWkMfZ2T2+BHg==
+"@riboseinc/paneron-registry-kit@2.0.0-dev19":
+  version "2.0.0-dev19"
+  resolved "https://registry.yarnpkg.com/@riboseinc/paneron-registry-kit/-/paneron-registry-kit-2.0.0-dev19.tgz#a75a071c1870da5c3a47ca6bc26c34e8fcccc52a"
+  integrity sha512-sRpd22JBbpz9Jds+wl0ph1dvPiWY82KanaCvPcx5mDqB6ijI4gveUBkKzX/vk1K+D5JKMdZ6gqqe0Rc8iWAakA==
 
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
@@ -2269,6 +2269,11 @@ lines-and-columns@^1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"
   integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
+
+liquidjs@^9.25.0:
+  version "9.25.0"
+  resolved "https://registry.yarnpkg.com/liquidjs/-/liquidjs-9.25.0.tgz#6975764b74827c81bc1363b5ca4e9bc1140b7bb6"
+  integrity sha512-TIccrphsWN53fVF9G/wDaKD1cHaB097ULLf+FzxxqN2iyJjzp/Oe9xlFjZCR1ZrAeISusWSPg3r7Dg8BD2Uztg==
 
 load-script@^1.0.0:
   version "1.0.0"
