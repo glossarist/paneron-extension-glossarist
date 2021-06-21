@@ -2,9 +2,8 @@
 /** @jsxFrag React.Fragment */
 
 import React from 'react';
+import { css, jsx } from '@emotion/react';
 import { UL, InputGroup } from '@blueprintjs/core';
-import { css, jsx } from '@emotion/core';
-//import React from 'react';
 import { InternalItemReference, ItemClassConfiguration, RegisterItemDataHook } from '@riboseinc/paneron-registry-kit/types';
 import { GenericRelatedItemView, PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
 import { defaultLanguage, languageTitles, priorityLanguages, nonPriorityLanguages, SupportedLanguage } from '../models/lang';

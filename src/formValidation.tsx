@@ -2,8 +2,8 @@
 /** @jsxFrag React.Fragment */
 
 import React from 'react';
-import { css, jsx } from '@emotion/core';
-import { FormGroup, IFormGroupProps, Intent } from '@blueprintjs/core';
+import { css, jsx } from '@emotion/react';
+import { FormGroup, FormGroupProps as IFormGroupProps, Intent } from '@blueprintjs/core';
 
 
 export type Validator<T> = (object: T) => ValidationResult<T>

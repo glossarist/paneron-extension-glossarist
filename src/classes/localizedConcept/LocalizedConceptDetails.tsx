@@ -2,9 +2,9 @@
 /** @jsxFrag React.Fragment */
 
 import React from 'react';
-import MathJax from 'react-mathjax2';
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 import styled from '@emotion/styled';
+import MathJax from 'react-mathjax2';
 import { Classes, Colors, H2 } from '@blueprintjs/core';
 
 import { getHTMLDir, WritingDirectionality } from '../../models/lang';

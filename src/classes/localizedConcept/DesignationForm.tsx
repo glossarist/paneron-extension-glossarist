@@ -2,7 +2,7 @@
 /** @jsxFrag React.Fragment */
 
 import React from 'react';
-import { jsx, css } from '@emotion/core';
+import { jsx, css } from '@emotion/react';
 import { Button, ButtonGroup, Classes, ControlGroup, HTMLSelect, InputGroup } from '@blueprintjs/core';
 import {
   Designation, DesignationType, DESIGNATION_TYPES,

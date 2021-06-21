@@ -3,7 +3,7 @@
 
 import log from 'electron-log';
 import type React from 'react';
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 
 
 Object.assign(console, log);

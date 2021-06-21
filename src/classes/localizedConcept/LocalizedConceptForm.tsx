@@ -2,7 +2,7 @@
 /** @jsxFrag React.Fragment */
 
 import React from 'react';
-import { jsx, css } from '@emotion/core';
+import { jsx, css } from '@emotion/react';
 import { Button, ButtonGroup, Classes, ControlGroup, FormGroup, InputGroup, TextArea } from '@blueprintjs/core';
 import { AuthoritativeSource, Designation, DesignationType, NORMATIVE_STATUS_CHOICES } from '../../models/concepts';
 import { getHTMLDir, WritingDirectionality } from '../../models/lang';

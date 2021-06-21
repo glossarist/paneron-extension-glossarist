@@ -2,9 +2,9 @@
 /** @jsxFrag React.Fragment */
 
 import React from 'react';
-import MathJax from 'react-mathjax2';
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 import styled from '@emotion/styled';
+import MathJax from 'react-mathjax2';
 import { Colors } from '@blueprintjs/core';
 import { Designation, Expression } from '../../models/concepts';
 import { Label } from '../../widgets';
