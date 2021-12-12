@@ -31,21 +31,23 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
     listItemView: (props) => {
       return (
         <span className={props.className}>
-          {props.itemData.terms?.[0]?.designation ?? '<no designation>'}
+          {props.itemData?.terms?.[0]?.designation ?? '<no designation>'}
         </span>
       );
     },
     detailView: (props) => <>
-      <LocalizedConceptDetails
-        css={css`padding: 1rem; position: absolute; top: 0; left: 0; right: 0; bottom: 0;`}
-        localizedConcept={props.itemData}
-        className={props.className}
-        writingDirectionality={
-          (props.subregisterID
-            ? writingDirectionalityOverrides[props.subregisterID as SupportedLanguage]
-            : undefined
-          ) ?? ('LTR' as WritingDirectionality)}
-      />
+      {props.itemData
+        ? <LocalizedConceptDetails
+            css={css`padding: 1rem; position: absolute; inset: 0;`}
+            localizedConcept={props.itemData}
+            className={props.className}
+            writingDirectionality={
+              (props.itemRef.subregisterID
+                ? writingDirectionalityOverrides[props.itemRef.subregisterID as SupportedLanguage]
+                : undefined
+              ) ?? ('LTR' as WritingDirectionality)}
+          />
+        : null}
     </>,
     editView: (props) => <>
       <LocalizedConceptForm
@@ -54,8 +56,8 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
         className={props.className}
         onChange={props.onChange}
         writingDirectionality={
-          (props.subregisterID
-            ? writingDirectionalityOverrides[props.subregisterID as SupportedLanguage]
+          (props.itemRef.subregisterID
+            ? writingDirectionalityOverrides[props.itemRef.subregisterID as SupportedLanguage]
             : undefined
           ) ?? ('LTR' as WritingDirectionality)}
       />

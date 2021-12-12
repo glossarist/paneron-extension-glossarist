@@ -1,18 +1,20 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { css, jsx } from '@emotion/react';
 import { UL, InputGroup } from '@blueprintjs/core';
-import { InternalItemReference, ItemClassConfiguration, RegisterItemDataHook } from '@riboseinc/paneron-registry-kit/types';
+import { InternalItemReference, ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
 import { GenericRelatedItemView, PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
 import { defaultLanguage, languageTitles, priorityLanguages, nonPriorityLanguages, SupportedLanguage } from '../models/lang';
 import { LocalizedConceptData } from './localizedConcept/LocalizedConceptData';
+import { BrowserCtx } from '@riboseinc/paneron-registry-kit/views/BrowserCtx';
 import rdfExport from './concept-export';
 
 
-const _PrimaryDesignation: React.FC<{ lang: string, itemID: string, useRegisterItemData: RegisterItemDataHook }> =
-function ({ lang, itemID, useRegisterItemData }) {
+const _PrimaryDesignation: React.FC<{ lang: string, itemID: string }> =
+function ({ lang, itemID }) {
+  const { useRegisterItemData } = useContext(BrowserCtx);
   const defaultLanguageEntryPath = `subregisters/${lang}/localized-concept/${itemID}`;
   const itemData = useRegisterItemData({ itemPaths: [defaultLanguageEntryPath] });
   const defaultLanguageEntry = itemData.value?.[defaultLanguageEntryPath]?.data as LocalizedConceptData | undefined;
@@ -48,12 +50,11 @@ export const concept: ItemClassConfiguration<ConceptData> = {
     listItemView: (props) => {
       return (
         <span className={props.className}>
-          <code>{props.itemData.identifier}</code>
+          <code>{props.itemData?.identifier}</code>
           &ensp;
           <PrimaryDesignation
             lang={defaultLanguage}
-            itemID={props.itemData.localizedConcepts?.[defaultLanguage] ?? ''}
-            useRegisterItemData={props.useRegisterItemData}
+            itemID={props.itemData?.localizedConcepts?.[defaultLanguage] ?? ''}
           />
         </span>
       );
@@ -144,8 +145,6 @@ const ConceptEditView: ItemClassConfiguration<ConceptData>["views"]["editView"] 
                 onCreateNew={props.onCreateRelatedItem && props.onChange
                   ? (() => handleCreateDescription('localized-concept', langID))
                   : undefined}
-                useRegisterItemData={props.useRegisterItemData}
-                getRelatedItemClassConfiguration={props.getRelatedItemClassConfiguration}
               />
             </PropertyDetailView>
           </li>
