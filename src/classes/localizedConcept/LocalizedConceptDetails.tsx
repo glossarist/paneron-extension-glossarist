@@ -109,7 +109,7 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
       <footer>
         <dl dir="ltr" className={styles.label}>
           {authSources.map((source, idx) =>
-            <>
+            <React.Fragment key={idx}>
               <dt key={`${idx}-label`}>Authoritative source(s):</dt>
               <dd key={`${idx}-desc`}>
                 {`${source.link || ''}`.trim() !== ''
@@ -126,7 +126,7 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
                     </>
                   : null}
               </dd>
-            </>
+            </React.Fragment>
           )}
         </dl>
       </footer>
