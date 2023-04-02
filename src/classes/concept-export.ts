@@ -1,4 +1,3 @@
-import log from 'electron-log';
 import { Liquid } from 'liquidjs';
 import { ExportFormatConfiguration } from '@riboseinc/paneron-registry-kit/types/views';
 import LocalizedConceptData from './localizedConcept/LocalizedConceptData';
@@ -8,17 +7,17 @@ import { ConceptData } from './concept';
 
 const RDFExport: ExportFormatConfiguration<ConceptData> = {
   label: "RDF",
-  exportItem: async (itemData, { getObjectData, getBlob }) => {
+  exportItem: async (itemData, { getObjectData, getBlob, logger }) => {
     const localizedEntryPaths = Object.entries(itemData.data.localizedConcepts).
     map(([ langID, itemID ]) => {
       return `/subregisters/${langID}/localized-concept/${itemID}.yaml`;
     });
 
-    log.info("RDF: Localized entry paths", localizedEntryPaths);
+    logger?.log("RDF: Localized entry paths", localizedEntryPaths);
 
     const localizedEntriesResponse = await getObjectData({ objectPaths: localizedEntryPaths });
 
-    log.info("RDF: Localized entry resp", localizedEntriesResponse.data);
+    logger?.log("RDF: Localized entry resp", localizedEntriesResponse.data);
 
     const localizedEntries: Record<string, RegisterItem<LocalizedConceptData>> = Object.entries(localizedEntriesResponse.data).
     filter(([, data]) => data !== null).
@@ -30,7 +29,7 @@ const RDFExport: ExportFormatConfiguration<ConceptData> = {
     }).
     reduce((prev, curr) => ({ ...prev, ...curr }), {});
 
-    log.info("RDF: Localized entries", localizedEntries);
+    logger?.log("RDF: Localized entries", localizedEntries);
 
     const ctx: RDFTemplateContext = {
       page_url: '<url_placeholder>',
@@ -56,11 +55,11 @@ const RDFExport: ExportFormatConfiguration<ConceptData> = {
       }
     };
 
-    log.info("RDF: Template context", ctx);
+    logger?.log("RDF: Template context", ctx);
 
     const renderedRDF: string = await liquidEngine.render(rdfTemplateInstance, ctx);
 
-    log.info("RDF: Rendered as", renderedRDF);
+    logger?.log("RDF: Rendered as", renderedRDF);
 
     return await getBlob(renderedRDF);
   },

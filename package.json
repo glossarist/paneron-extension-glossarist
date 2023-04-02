@@ -52,8 +52,6 @@
     "@types/react": "17.0.53",
     "@types/react-helmet": "6.1.0",
     "@types/webpack-env": "^1.16.0",
-    "electron": "^15.5.7",
-    "electron-log": "^4.3.0",
     "js-yaml": "4.1.0",
     "liquidjs": "^9.25.0",
     "react": "^17.0.2",
