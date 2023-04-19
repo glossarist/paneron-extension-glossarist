@@ -3,8 +3,8 @@
 
 import React from 'react';
 import { jsx, css } from '@emotion/react';
-import { ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
 import { SupportedLanguage, WritingDirectionality, writingDirectionalityOverrides } from '../../models/lang';
+import type { ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
 import LocalizedConceptForm from './LocalizedConceptForm';
 import LocalizedConceptDetails from './LocalizedConceptDetails';
 import LocalizedConceptData from './LocalizedConceptData';

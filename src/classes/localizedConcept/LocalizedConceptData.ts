@@ -1,7 +1,4 @@
-import {
-  AuthoritativeSource,
-  Designation
-} from '../../models/concepts';
+import type { AuthoritativeSource, Designation } from '../../models/concepts';
 
 
 export interface LocalizedConceptData {

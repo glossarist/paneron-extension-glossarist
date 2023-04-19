@@ -4,10 +4,10 @@
 import React, { useContext } from 'react';
 import { css, jsx } from '@emotion/react';
 import { UL, InputGroup } from '@blueprintjs/core';
-import { InternalItemReference, ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
+import type { InternalItemReference, ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
 import { GenericRelatedItemView, PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
-import { defaultLanguage, languageTitles, priorityLanguages, nonPriorityLanguages, SupportedLanguage } from '../models/lang';
-import { LocalizedConceptData } from './localizedConcept/LocalizedConceptData';
+import { defaultLanguage, languageTitles, priorityLanguages, nonPriorityLanguages, type SupportedLanguage } from '../models/lang';
+import type { LocalizedConceptData } from './localizedConcept/LocalizedConceptData';
 import { BrowserCtx } from '@riboseinc/paneron-registry-kit/views/BrowserCtx';
 import rdfExport from './concept-export';
 
