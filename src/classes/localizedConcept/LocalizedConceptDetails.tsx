@@ -7,9 +7,9 @@ import styled from '@emotion/styled';
 import MathJax from 'react-mathjax2';
 import { Classes, Colors, H2 } from '@blueprintjs/core';
 
-import { getHTMLDir, WritingDirectionality } from '../../models/lang';
-import { Designation } from '../../models/concepts';
-import { LocalizedConceptData } from './LocalizedConceptData';
+import { getHTMLDir, type WritingDirectionality } from '../../models/lang';
+import type { Designation } from '../../models/concepts';
+import type { LocalizedConceptData } from './LocalizedConceptData';
 import { FullDesignation } from './designation';
 import { openLinkInBrowser } from './util';
 import { Label } from '../../widgets';
