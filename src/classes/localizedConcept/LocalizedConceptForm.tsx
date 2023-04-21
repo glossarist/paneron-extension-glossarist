@@ -3,8 +3,15 @@
 
 import React from 'react';
 import { jsx, css } from '@emotion/react';
-import { Button, ButtonGroup, Classes, ControlGroup, FormGroup, InputGroup, TextArea } from '@blueprintjs/core';
-import { getHTMLDir, WritingDirectionality } from '../../models/lang';
+import {
+  Button, ButtonGroup,
+  Classes,
+  ControlGroup, FormGroup, InputGroup,
+  TextArea,
+  HTMLSelect,
+} from '@blueprintjs/core';
+
+import { PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
 
 import {
   type AuthoritativeSource,
@@ -13,9 +20,14 @@ import {
   NORMATIVE_STATUS_CHOICES,
 } from '../../models/concepts';
 
+import {
+  defaultLanguage, getHTMLDir, availableLanguageIDs, languageTitles,
+  type WritingDirectionality,
+  type SupportedLanguage,
+} from '../../models/lang';
+
 import { openLinkInBrowser } from './util';
 import { DesignationForm } from './DesignationForm';
-import { PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
 import type { LocalizedConceptData } from './LocalizedConceptData';
 
 
@@ -124,6 +136,11 @@ export const LocalizedConceptForm: React.FC<{
     props.onChange({ ...localizedConcept, usageInfo: newVal });
   }
 
+  function handleLanguageChange(newVal: SupportedLanguage) {
+    if (!props.onChange) { return; }
+    props.onChange({ ...localizedConcept, language_code: newVal });
+  }
+
   function designationTypeLabel(idx: number, dt: DesignationType): string {
     if (idx === 0) {
       return "Designation";
@@ -145,6 +162,20 @@ export const LocalizedConceptForm: React.FC<{
             <Button icon="add" disabled={!props.onChange} onClick={handleAuthSourceAddition} title="Add a source">Auth. source</Button>
           </ButtonGroup>
         : null}
+
+      <PropertyDetailView title="Language">
+        <HTMLSelect
+          value={props.localizedConcept.language_code ?? defaultLanguage}
+          options={availableLanguageIDs.map(langID => ({
+            value: langID,
+            label: languageTitles[langID] ?? langID,
+          }))}
+          onChange={(evt: React.FormEvent<HTMLSelectElement>) => 
+            availableLanguageIDs.indexOf(evt.currentTarget.value as SupportedLanguage) >= 0
+              ? handleLanguageChange(evt.currentTarget.value as SupportedLanguage)
+              : void 0}
+        />
+      </PropertyDetailView>
 
       {props.localizedConcept.terms.map((d, idx) =>
         <PropertyDetailView
