@@ -32,26 +32,27 @@ const universalConceptItemPathPrefix = incompleteItemRefToItemPathPrefix({ class
 function useUniversalConceptUUID(localizedConceptUUID: string): string | null | undefined {
   const { useMapReducedData } = useContext(DatasetContext);
 
-  if (!localizedConceptUUID) {
-    return undefined;
-  }
-
   const result = useMapReducedData({
     chains: {
       conceptUUID: {
-        mapFunc: `
-          if (key.startsWith("${universalConceptItemPathPrefix}") &&
-              value?.id &&
-              Object.values(value.data?.localizedConcepts ?? {}).indexOf("${localizedConceptUUID}") >= 0) {
-            emit(value.id);
-          }
-        `,
-        reduceFunc: `
-          return value?.[0];
-        `,
+        mapFunc: localizedConceptUUID
+          ? `
+              if (key.startsWith("${universalConceptItemPathPrefix}") &&
+                  value?.id &&
+                  Object.values(value.data?.localizedConcepts ?? {}).indexOf("${localizedConceptUUID}") >= 0) {
+                emit(value.id);
+              }
+            `
+          : ``,  // Don’t do anything if empty localizedConceptUUID is given
+        // Just return the first result.
+        reduceFunc: 'return value?.[0];',
       },
     },
   });
+
+  if (!localizedConceptUUID) {
+    return undefined;
+  }
 
   if (result.isUpdating) {
     return undefined;
