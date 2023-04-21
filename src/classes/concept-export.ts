@@ -9,8 +9,8 @@ const RDFExport: ExportFormatConfiguration<ConceptData> = {
   label: "RDF",
   exportItem: async (itemData, { getObjectData, getBlob, logger }) => {
     const localizedEntryPaths = Object.entries(itemData.data.localizedConcepts).
-    map(([ langID, itemID ]) => {
-      return `/subregisters/${langID}/localized-concept/${itemID}.yaml`;
+    map(([ itemID ]) => {
+      return `/localized-concept/${itemID}.yaml`;
     });
 
     logger?.log("RDF: Localized entry paths", localizedEntryPaths);

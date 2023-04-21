@@ -3,8 +3,8 @@
 
 import React from 'react';
 import { jsx, css } from '@emotion/react';
-import { SupportedLanguage, WritingDirectionality, writingDirectionalityOverrides } from '../../models/lang';
 import type { ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
+import { defaultLanguage, type WritingDirectionality, writingDirectionalityOverrides } from '../../models/lang';
 import LocalizedConceptForm from './LocalizedConceptForm';
 import LocalizedConceptDetails from './LocalizedConceptDetails';
 import LocalizedConceptData from './LocalizedConceptData';
@@ -35,33 +35,25 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
         </span>
       );
     },
-    detailView: (props) => <>
-      {props.itemData
-        ? <LocalizedConceptDetails
-            css={css`padding: 1rem; position: absolute; inset: 0;`}
-            localizedConcept={props.itemData}
-            className={props.className}
-            writingDirectionality={
-              (props.itemRef.subregisterID
-                ? writingDirectionalityOverrides[props.itemRef.subregisterID as SupportedLanguage]
-                : undefined
-              ) ?? ('LTR' as WritingDirectionality)}
-          />
-        : null}
-    </>,
-    editView: (props) => <>
-      <LocalizedConceptForm
-        css={css`padding: 1rem; position: absolute; inset: 0;`}
-        localizedConcept={props.itemData}
-        className={props.className}
-        onChange={props.onChange}
-        writingDirectionality={
-          (props.itemRef.subregisterID
-            ? writingDirectionalityOverrides[props.itemRef.subregisterID as SupportedLanguage]
-            : undefined
-          ) ?? ('LTR' as WritingDirectionality)}
-      />
-    </>,
+    detailView: (props) => <LocalizedConceptDetails
+      css={css`padding: 1rem; position: absolute; inset: 0;`}
+      localizedConcept={props.itemData}
+      className={props.className}
+      writingDirectionality={
+        writingDirectionalityOverrides[props.itemData.language_code ?? defaultLanguage]
+        ?? ('LTR' as WritingDirectionality)
+      }
+    />,
+    editView: (props) => <LocalizedConceptForm
+      css={css`padding: 1rem; position: absolute; inset: 0;`}
+      localizedConcept={props.itemData}
+      className={props.className}
+      onChange={props.onChange}
+      writingDirectionality={
+        writingDirectionalityOverrides[props.itemData.language_code ?? defaultLanguage]
+        ?? ('LTR' as WritingDirectionality)
+      }
+    />,
   },
   validatePayload: async () => true,
   sanitizePayload: async (t) => t,

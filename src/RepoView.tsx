@@ -6,7 +6,7 @@ import { jsx } from '@emotion/react';
 
 import { RegistryView } from '@riboseinc/paneron-registry-kit/views';
 import CRITERIA_CONFIGURATION from '@riboseinc/paneron-registry-kit/views/FilterCriteria/CRITERIA_CONFIGURATION';
-import { itemClassConfiguration, subregisters } from './registryConfig';
+import { itemClassConfiguration } from './registryConfig';
 
 
 
@@ -21,7 +21,6 @@ const RepositoryView: React.FC<Record<never, never>> =
 function () {
   return <RegistryView
     itemClassConfiguration={itemClassConfiguration}
-    subregisters={subregisters}
     keyExpression="obj.data.identifier || `${obj.data.terms?.[0]?.designation}-${obj.id}` || obj.id"
     defaultSearchCriteria={{ require: 'all', criteria: [{ key: 'item-class', query: defaultCriteria }] }}
   />

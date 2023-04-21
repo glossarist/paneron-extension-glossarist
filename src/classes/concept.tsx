@@ -12,10 +12,10 @@ import { BrowserCtx } from '@riboseinc/paneron-registry-kit/views/BrowserCtx';
 import rdfExport from './concept-export';
 
 
-const _PrimaryDesignation: React.FC<{ lang: string, itemID: string }> =
-function ({ lang, itemID }) {
+const _PrimaryDesignation: React.FC<{ itemID: string }> =
+function ({ itemID }) {
   const { useRegisterItemData } = useContext(BrowserCtx);
-  const defaultLanguageEntryPath = `subregisters/${lang}/localized-concept/${itemID}`;
+  const defaultLanguageEntryPath = `localized-concept/${itemID}.yaml`;
   const itemData = useRegisterItemData({ itemPaths: [defaultLanguageEntryPath] });
   const defaultLanguageEntry = itemData.value?.[defaultLanguageEntryPath]?.data as LocalizedConceptData | undefined;
   return <>{defaultLanguageEntry?.terms?.[0]?.designation}</>;
@@ -23,7 +23,7 @@ function ({ lang, itemID }) {
 
 const PrimaryDesignation = React.memo(
   _PrimaryDesignation,
-  (p1, p2) => p1.lang === p2.lang && p1.itemID === p2.itemID);
+  (p1, p2) => p1.itemID === p2.itemID);
 
 
 export interface ConceptData {
@@ -137,7 +137,7 @@ const ConceptEditView: ItemClassConfiguration<ConceptData>["views"]["editView"] 
             <PropertyDetailView
                 title={`Description in ${languageTitles[langID as SupportedLanguage]}`}>
               <GenericRelatedItemView
-                itemRef={{ classID: 'localized-concept', subregisterID: langID, itemID: localizedConcepts[langID] ?? '' }}
+                itemRef={{ classID: 'localized-concept', itemID: localizedConcepts[langID] ?? '' }}
                 onClear={props.onChange ? () => handleClearDescription(langID) : undefined}
                 onChange={props.onChange && !localizedConcepts[langID]
                   ? (itemRef) => handleSetDescription(itemRef, langID)
