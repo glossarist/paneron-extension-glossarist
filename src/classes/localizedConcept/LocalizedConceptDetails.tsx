@@ -86,22 +86,25 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
       </SynonymsContainer>
 
       <div className={`${Classes.RUNNING_TEXT}`}>
-        <DefinitionContainer>
-          {entry.usageInfo ? <UsageInfo>&lt;{entry.usageInfo}&gt;</UsageInfo> : null}
-          <MathJax.Text text={entry.definition} />
-        </DefinitionContainer>
+        {entry.usageInfo ? <UsageInfo>&lt;{entry.usageInfo}&gt;</UsageInfo> : null}
+
+        {[...(entry.definition ?? []).entries()].map(([idx, item]) =>
+          <DefinitionContainer key={`definition-${idx}`}>
+            <MathJax.Text text={item.content ?? item} />
+          </DefinitionContainer>
+        )}
 
         {[...entry.examples.entries()].map(([idx, item]) =>
           <ExampleContainer key={`example-${idx}`}>
             <Label dir="ltr" className={styles.label}>EXAMPLE:</Label>
-            <MathJax.Text text={item} />
+            <MathJax.Text text={item.content ?? item} />
           </ExampleContainer>
         )}
 
         {[...entry.notes.entries()].map(([idx, item]) =>
             <NoteContainer className={`${styles.note}`} key={`note-${idx}`}>
               <Label dir="ltr">Note {idx + 1} to entry:</Label>
-              <MathJax.Text text={item} />
+              <MathJax.Text text={item.content ?? item} />
             </NoteContainer>
           )}
       </div>

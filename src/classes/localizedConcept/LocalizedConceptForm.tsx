@@ -30,7 +30,7 @@ export const LocalizedConceptForm: React.FC<{
       ? [localizedConcept.authoritativeSource]
       : [];
 
-  function handleItemDeletion(field: 'notes' | 'examples' | 'terms' | 'authoritativeSource') {
+  function handleItemDeletion(field: 'notes' | 'examples' | 'terms' | 'authoritativeSource' | 'definition') {
     return (idx: number) => {
       if (!props.onChange) { return; }
       const e = props.localizedConcept;
@@ -40,7 +40,7 @@ export const LocalizedConceptForm: React.FC<{
     };
   }
 
-  function handleItemAddition<T extends 'notes' | 'examples' | 'terms' | 'authoritativeSource'>(field: T, makeNewItem: () => LocalizedConceptData[T][number]) {
+  function handleItemAddition<T extends 'notes' | 'examples' | 'terms' | 'authoritativeSource' | 'definition'>(field: T, makeNewItem: () => LocalizedConceptData[T][number]) {
     return () => {
       if (!props.onChange) { return; }
       const e = props.localizedConcept;
@@ -49,6 +49,7 @@ export const LocalizedConceptForm: React.FC<{
   }
 
   const handleDesignationDeletion = handleItemDeletion('terms');
+  const handleDefinitionDeletion = handleItemDeletion('definition');
   const handleNoteDeletion = handleItemDeletion('notes');
   const handleExampleDeletion = handleItemDeletion('examples');
   const handleAuthSourceDeletion = handleItemDeletion('authoritativeSource');
@@ -58,8 +59,9 @@ export const LocalizedConceptForm: React.FC<{
     designation: '',
     partOfSpeech: undefined,
   }));
-  const handleNoteAddition = handleItemAddition('notes', () => '');
-  const handleExampleAddition = handleItemAddition('examples', () => '');
+  const handleDefinitionAddition = handleItemAddition('definition', () => ({ content: '' }));
+  const handleNoteAddition = handleItemAddition('notes', () => ({ content: '' }));
+  const handleExampleAddition = handleItemAddition('examples', () => ({ content: '' }));
   const handleAuthSourceAddition = handleItemAddition('authoritativeSource', () => ({
     ref: 'Enter reference…',
   }));
@@ -95,28 +97,24 @@ export const LocalizedConceptForm: React.FC<{
     });
   }
 
-  function handleItemChange(field: 'notes' | 'examples') {
+  function handleItemChange(field: 'notes' | 'examples' | 'definition') {
     return (idx: number, val: string) => {
       if (!props.onChange) { return; }
 
       const e = props.localizedConcept;
 
       var items = [...e[field]];
-      items[idx] = val;
+      items[idx] = { content: val };
       props.onChange({ ...e, [field]: items });
     };
   }
   const handleNoteChange = handleItemChange('notes');
   const handleExampleChange = handleItemChange('examples');
+  const handleDefinitionChange = handleItemChange('definition');
 
   function handleUsageInfoChange(newVal: string) {
     if (!props.onChange) { return; }
     props.onChange({ ...localizedConcept, usageInfo: newVal });
-  }
-
-  function handleDefinitionChange(newVal: string) {
-    if (!props.onChange) { return; }
-    props.onChange({ ...localizedConcept, definition: newVal });
   }
 
   function designationTypeLabel(idx: number, dt: DesignationType): string {
@@ -133,6 +131,7 @@ export const LocalizedConceptForm: React.FC<{
     <div className={props.className}>
       {props.onChange
         ? <ButtonGroup css={css`margin-bottom: 1rem;`}>
+            <Button icon="add" disabled={!props.onChange} onClick={handleDefinitionAddition} title="Add another definition">Definition</Button>
             <Button icon="add" disabled={!props.onChange} onClick={handleDesignationAddition} title="Add another designation/synonym">Designation</Button>
             <Button icon="add" disabled={!props.onChange} onClick={handleExampleAddition} title="Add an EXAMPLE">EX.</Button>
             <Button icon="add" disabled={!props.onChange} onClick={handleNoteAddition} title="Add a NOTE">NOTE</Button>
@@ -175,33 +174,42 @@ export const LocalizedConceptForm: React.FC<{
         </PropertyDetailView>
       </div>
 
-      <PropertyDetailView
-          title="Definition">
-        <TextArea fill
-          dir={dir}
-          className={dir === 'rtl' ? Classes.RTL : undefined}
-          value={props.localizedConcept.definition || ''}
-          id="definition"
-          readOnly={!props.onChange}
-          intent={!props.localizedConcept.definition ? 'danger' : undefined}
-          onChange={(evt: React.FormEvent<HTMLTextAreaElement>) => handleDefinitionChange((evt.target as HTMLTextAreaElement).value)} />
-        {props.onChange
-          ? <div css={css`font-size: 90%; margin-top: 1em; line-height: 1`}>
-              <p>
-                Use a single phrase specifying the concept and, if possible, reflecting the position of the concept in the concept system.
-                </p>
-              <p>
-                Refer to
+      {props.localizedConcept.definition.map((item, idx) =>
+        <PropertyDetailView
+            key={`definition-${idx}`}
+            title={`DEFINITION ${idx + 1}`}
+            secondaryTitle={props.onChange
+              ? <Button small
+                title="Delete this definition"
+                icon="cross"
+                onClick={() => handleDefinitionDeletion(idx)} />
+              : undefined}>
+          <TextArea fill
+            dir={dir}
+            className={dir === 'rtl' ? Classes.RTL : undefined}
+            value={item.content || ''}
+            id={`definition-${idx}`}
+            readOnly={!props.onChange}
+            intent={!props.localizedConcept.definition ? 'danger' : undefined}
+            onChange={(evt: React.FormEvent<HTMLTextAreaElement>) => handleDefinitionChange(idx, (evt.target as HTMLTextAreaElement).value)} />
+          {props.onChange
+            ? <div css={css`font-size: 90%; margin-top: 1em; line-height: 1`}>
+                <p>
+                  Use a single phrase specifying the concept and, if possible, reflecting the position of the concept in the concept system.
+                  </p>
+                <p>
+                  Refer to
+                    {" "}
+                  <a onClick={() => openLinkInBrowser("https://www.iso.org/standard/40362.html")}>ISO 10241-1:2011, 6.4</a>
                   {" "}
-                <a onClick={() => openLinkInBrowser("https://www.iso.org/standard/40362.html")}>ISO 10241-1:2011, 6.4</a>
-                {" "}
-                  and
-                  {" "}
-                <a onClick={() => openLinkInBrowser("https://www.iso.org/standard/38109.html")}>ISO 704:2009, 6.3</a> for more details about what constitutes a good definition.
-                </p>
-            </div>
-          : undefined}
-      </PropertyDetailView>
+                    and
+                    {" "}
+                  <a onClick={() => openLinkInBrowser("https://www.iso.org/standard/38109.html")}>ISO 704:2009, 6.3</a> for more details about what constitutes a good definition.
+                  </p>
+              </div>
+            : undefined}
+        </PropertyDetailView>
+      )}
 
       {props.localizedConcept.examples.map((item, idx) =>
         <PropertyDetailView
@@ -216,7 +224,7 @@ export const LocalizedConceptForm: React.FC<{
           <TextArea fill
             dir={dir}
             className={dir === 'rtl' ? Classes.RTL : undefined}
-            value={item}
+            value={item.content ?? ''}
             id={`example-${idx}`}
             readOnly={!props.onChange}
             onChange={(evt: React.FormEvent<HTMLTextAreaElement>) => {
@@ -239,7 +247,7 @@ export const LocalizedConceptForm: React.FC<{
           <TextArea fill
             dir={dir}
             className={dir === 'rtl' ? Classes.RTL : undefined}
-            value={item}
+            value={item.content ?? ''}
             id={`note-${idx}`}
             readOnly={!props.onChange}
             onChange={(evt: React.FormEvent<HTMLTextAreaElement>) => {

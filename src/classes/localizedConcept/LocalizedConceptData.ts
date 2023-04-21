@@ -6,9 +6,9 @@ export interface LocalizedConceptData {
   terms: Designation[];
   language_code: SupportedLanguage;
   usageInfo?: string;
-  definition: string;
-  notes: string[];
-  examples: string[];
+  definition: { content: string }[];
+  notes: { content: string }[];
+  examples: { content: string }[];
   authoritativeSource: AuthoritativeSource[];
 }
 
