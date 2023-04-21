@@ -118,7 +118,7 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
         <dl dir="ltr" className={styles.label}>
           <dt>Language:</dt>
           <dd>
-            {languageTitles[entry.language_code] ?? <code>entry.language_code</code>}
+            {languageTitles[entry.language_code] ?? <code>{entry.language_code ?? 'N/A'}</code>}
           </dd>
 
           {authSources.map((source, idx) =>
