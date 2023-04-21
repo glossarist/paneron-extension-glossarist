@@ -1,65 +1,23 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 
-import React, { useContext } from 'react';
+import React from 'react';
 import { jsx } from '@emotion/react';
 import styled from '@emotion/styled';
 import MathJax from 'react-mathjax2';
 import { FormGroup, Classes, Colors, H2 } from '@blueprintjs/core';
 
-import { DatasetContext } from '@riboseinc/paneron-extension-kit/context';
 import { GenericRelatedItemView } from '@riboseinc/paneron-registry-kit/views/util';
-import { incompleteItemRefToItemPathPrefix } from '@riboseinc/paneron-registry-kit/views/itemPathUtils';
 
 import { getHTMLDir, type WritingDirectionality, languageTitles } from '../../models/lang';
 import type { Designation } from '../../models/concepts';
 import type { LocalizedConceptData } from './LocalizedConceptData';
 import { FullDesignation } from './designation';
-import { openLinkInBrowser } from './util';
+import { openLinkInBrowser, useUniversalConceptUUID } from './util';
 import { Label } from '../../widgets';
 
 
 const styles: Record<string, any> = {};
-
-const universalConceptItemPathPrefix = incompleteItemRefToItemPathPrefix({ classID: 'concept' });
-
-
-/**
- * Returns UUID of umbrella universal concept that links to this localized concept.
- * Returns `null` if no UUID could be determined, `undefined` while loading
- * or if given localized concept UUID is not right.
- */
-function useUniversalConceptUUID(localizedConceptUUID: string): string | null | undefined {
-  const { useMapReducedData } = useContext(DatasetContext);
-
-  const result = useMapReducedData({
-    chains: {
-      conceptUUID: {
-        mapFunc: localizedConceptUUID
-          ? `
-              if (key.startsWith("${universalConceptItemPathPrefix}") &&
-                  value?.id &&
-                  Object.values(value.data?.localizedConcepts ?? {}).indexOf("${localizedConceptUUID}") >= 0) {
-                emit(value.id);
-              }
-            `
-          : ``,  // Don’t do anything if empty localizedConceptUUID is given
-        // Just return the first result.
-        reduceFunc: 'return value?.[0];',
-      },
-    },
-  });
-
-  if (!localizedConceptUUID) {
-    return undefined;
-  }
-
-  if (result.isUpdating) {
-    return undefined;
-  } else {
-    return result.value.conceptUUID ?? null;
-  }
-}
 
 
 
