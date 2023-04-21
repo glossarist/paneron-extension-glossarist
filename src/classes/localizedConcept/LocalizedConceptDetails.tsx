@@ -146,7 +146,7 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
         </dl>
 
         {universalConceptUUID
-          ? <FormGroup label="For other languages, see:">
+          ? <FormGroup label={<span dir="ltr">For other languages, see:</span>}>
               <GenericRelatedItemView itemRef={{ classID: 'concept', itemID: universalConceptUUID }} />
             </FormGroup>
           : null}
