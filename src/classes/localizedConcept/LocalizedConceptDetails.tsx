@@ -5,13 +5,13 @@ import React, { useContext } from 'react';
 import { jsx } from '@emotion/react';
 import styled from '@emotion/styled';
 import MathJax from 'react-mathjax2';
-import { Classes, Colors, H2 } from '@blueprintjs/core';
+import { FormGroup, Classes, Colors, H2 } from '@blueprintjs/core';
 
 import { DatasetContext } from '@riboseinc/paneron-extension-kit/context';
 import { GenericRelatedItemView } from '@riboseinc/paneron-registry-kit/views/util';
 import { incompleteItemRefToItemPathPrefix } from '@riboseinc/paneron-registry-kit/views/itemPathUtils';
 
-import { getHTMLDir, type WritingDirectionality } from '../../models/lang';
+import { getHTMLDir, type WritingDirectionality, languageTitles } from '../../models/lang';
 import type { Designation } from '../../models/concepts';
 import type { LocalizedConceptData } from './LocalizedConceptData';
 import { FullDesignation } from './designation';
@@ -156,15 +156,18 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
           )}
       </div>
 
-      {universalConceptUUID
-        ? <GenericRelatedItemView itemRef={{ classID: 'concept', itemID: universalConceptUUID }} />
-        : null}
-
       <footer>
         <dl dir="ltr" className={styles.label}>
+          <dt>Language:</dt>
+          <dd>
+            {languageTitles[entry.language_code] ?? <code>entry.language_code</code>}
+          </dd>
+
           {authSources.map((source, idx) =>
             <React.Fragment key={idx}>
-              <dt key={`${idx}-label`}>Authoritative source(s):</dt>
+              <dt key={`${idx}-label`}>
+                Authoritative source{idx > 0 ? ` ${idx + 1}` : ''}:
+              </dt>
               <dd key={`${idx}-desc`}>
                 {`${source.link || ''}`.trim() !== ''
                   ? <a onClick={() => openAuthSource(`${source.link}`)}>
@@ -183,6 +186,12 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
             </React.Fragment>
           )}
         </dl>
+
+        {universalConceptUUID
+          ? <FormGroup label="For other languages, see:">
+              <GenericRelatedItemView itemRef={{ classID: 'concept', itemID: universalConceptUUID }} />
+            </FormGroup>
+          : null}
       </footer>
     </div>
   );
