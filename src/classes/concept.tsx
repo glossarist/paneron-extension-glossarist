@@ -26,56 +26,9 @@ const PrimaryDesignation = React.memo(
   (p1, p2) => p1.itemID === p2.itemID);
 
 
-export interface ConceptData {
-  identifier: string
-
-  // These point to UUIDs
-  localizedConcepts: {
-    [languageCode: string]: string
-  }
-};
-
-export const concept: ItemClassConfiguration<ConceptData> = {
-  itemCanBeSuperseded: false,
-  meta: {
-    title: "Concept",
-    description: "A concept is a unit of meaning. Each concept acts as an umbrella, linking together descriptions of the concept in different languages.",
-    id: 'concept',
-    alternativeNames: [],
-  },
-  defaults: {},
-  itemSorter: (p1, p2) => p1.identifier.localeCompare(p2.identifier),
-  exportFormats: [rdfExport],
-  views: {
-    listItemView: (props) => {
-      return (
-        <span className={props.className}>
-          <code>{props.itemData?.identifier}</code>
-          &ensp;
-          <PrimaryDesignation
-            lang={defaultLanguage}
-            itemID={props.itemData?.localizedConcepts?.[defaultLanguage] ?? ''}
-          />
-        </span>
-      );
-    },
-    detailView: (props) => {
-      return (
-        <ConceptEditView {...props} />
-      );
-    },
-    editView: (props) => {
-      return (
-        <ConceptEditView {...props} />
-      );
-    },
-  },
-  validatePayload: async () => true,
-  sanitizePayload: async (t) => t,
-};
-
-
-const ConceptEditView: ItemClassConfiguration<ConceptData>["views"]["editView"] = function (props) {
+const ConceptEditView:
+ItemClassConfiguration<ConceptData>["views"]["editView"] =
+function (props) {
   const { itemData } = props;
 
   const localizedConcepts = itemData.localizedConcepts ?? {};
@@ -99,20 +52,32 @@ const ConceptEditView: ItemClassConfiguration<ConceptData>["views"]["editView"] 
   }
 
   async function handleCreateDescription(classID: string, langID: SupportedLanguage) {
-    if (!props.onCreateRelatedItem || !props.onChange) { throw new Error("Cannot create description (read-only)") }
+    if (!props.onCreateRelatedItem || !props.onChange) {
+      throw new Error("Cannot create localized concept (read-only)");
+    }
     const itemRef = await props.onCreateRelatedItem(classID, langID);
-    props.onChange({ ...props.itemData, localizedConcepts: { ...localizedConcepts, [langID]: itemRef.itemID } });
+    props.onChange({
+      ...props.itemData,
+      localizedConcepts: { ...localizedConcepts, [langID]: itemRef.itemID },
+    });
     return itemRef;
   }
 
   function handleSetDescription(itemRef: InternalItemReference, langID: SupportedLanguage) {
-    if (!props.onChange) { throw new Error("Cannot set description (read-only)") }
-    props.onChange({ ...props.itemData, localizedConcepts: { ...localizedConcepts, [langID]: itemRef.itemID } });
+    if (!props.onChange) {
+      throw new Error("Cannot set localized concept (read-only)");
+    }
+    props.onChange({
+      ...props.itemData,
+      localizedConcepts: { ...localizedConcepts, [langID]: itemRef.itemID },
+    });
     return itemRef;
   }
 
   function handleClearDescription(langID: SupportedLanguage) {
-    if (!props.onChange) { throw new Error("Cannot clear description (read-only)") }
+    if (!props.onChange) {
+      throw new Error("Cannot clear localized concept (read-only)");
+    }
     const localizedConcepts = { ...(props.itemData.localizedConcepts ?? {}) };
     delete localizedConcepts[langID];
     props.onChange({ ...props.itemData, localizedConcepts });
@@ -153,6 +118,49 @@ const ConceptEditView: ItemClassConfiguration<ConceptData>["views"]["editView"] 
     </div>
   );
 }
+
+
+/** Concept as umbrella, universal, cross-language unit of meaning. */
+export interface ConceptData {
+  /**
+   * Human-readable identifier idiomatic for concept database.
+   */
+  identifier: string
+
+  /**
+   * Each language code points to UUID for respective
+   * concept description in a particular human language.
+   */
+  localizedConcepts: {
+    [languageCode: string]: string
+  }
+};
+
+export const concept: ItemClassConfiguration<ConceptData> = {
+  itemCanBeSuperseded: false,
+  meta: {
+    title: "Concept",
+    description: "A concept is a cross-language unit of meaning. Each concept links together detailed definitions of the concept in different languages.",
+    id: 'concept',
+    alternativeNames: [],
+  },
+  defaults: {},
+  itemSorter: (p1, p2) => p1.identifier.localeCompare(p2.identifier),
+  exportFormats: [rdfExport],
+  views: {
+    listItemView: (props) => <span className={props.className}>
+      <code>{props.itemData?.identifier}</code>
+      &ensp;
+      <PrimaryDesignation
+        itemID={props.itemData?.localizedConcepts?.[defaultLanguage] ?? ''}
+      />
+    </span>,
+    detailView: ConceptEditView,
+    editView: ConceptEditView,
+  },
+  validatePayload: async () => true,
+  sanitizePayload: async (t) => t,
+};
 
 
 export default concept;
