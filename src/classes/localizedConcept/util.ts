@@ -35,7 +35,7 @@ export function useUniversalConceptUUID(localizedConceptUUID: string): string | 
     return undefined;
   }
 
-  if (result.isUpdating || typeof result.value.conceptID !== 'string') {
+  if (result.isUpdating || typeof result.value.conceptUUID !== 'string') {
     return undefined;
   } else {
     return result.value.conceptUUID ?? null;
