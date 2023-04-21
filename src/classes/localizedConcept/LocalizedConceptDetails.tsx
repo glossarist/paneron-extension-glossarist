@@ -20,7 +20,6 @@ import { Label } from '../../widgets';
 const styles: Record<string, any> = {};
 
 
-
 interface EntryDetailsProps {
   localizedConcept: LocalizedConceptData
   itemID?: string
