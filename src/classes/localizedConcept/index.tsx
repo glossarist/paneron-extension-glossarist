@@ -47,6 +47,7 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
     </span>,
     detailView: (props) => <LocalizedConceptDetails
       css={css`padding: 1rem; position: absolute; inset: 0;`}
+      itemID={props.itemRef.itemID}
       localizedConcept={props.itemData}
       className={props.className}
       writingDirectionality={

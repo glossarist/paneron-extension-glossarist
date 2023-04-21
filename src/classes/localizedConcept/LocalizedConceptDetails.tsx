@@ -1,11 +1,15 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { jsx } from '@emotion/react';
 import styled from '@emotion/styled';
 import MathJax from 'react-mathjax2';
 import { Classes, Colors, H2 } from '@blueprintjs/core';
+
+import { DatasetContext } from '@riboseinc/paneron-extension-kit/context';
+import { GenericRelatedItemView } from '@riboseinc/paneron-registry-kit/views/util';
+import { incompleteItemRefToItemPathPrefix } from '@riboseinc/paneron-registry-kit/views/itemPathUtils';
 
 import { getHTMLDir, type WritingDirectionality } from '../../models/lang';
 import type { Designation } from '../../models/concepts';
@@ -17,19 +21,62 @@ import { Label } from '../../widgets';
 
 const styles: Record<string, any> = {};
 
+const universalConceptItemPathPrefix = incompleteItemRefToItemPathPrefix({ classID: 'concept' });
+
+
+/**
+ * Returns UUID of umbrella universal concept that links to this localized concept.
+ * Returns `null` if no UUID could be determined, `undefined` while loading
+ * or if given localized concept UUID is not right.
+ */
+function useUniversalConceptUUID(localizedConceptUUID: string): string | null | undefined {
+  const { useMapReducedData } = useContext(DatasetContext);
+
+  if (!localizedConceptUUID) {
+    return undefined;
+  }
+
+  const result = useMapReducedData({
+    chains: {
+      conceptUUID: {
+        mapFunc: `
+          if (key.startsWith("${universalConceptItemPathPrefix}") &&
+              value?.id &&
+              Object.values(value.data?.localizedConcepts ?? {}).indexOf("${localizedConceptUUID}") >= 0) {
+            emit(value.id);
+          }
+        `,
+        reduceFunc: `
+          return value?.[0];
+        `,
+      },
+    },
+  });
+
+  if (result.isUpdating) {
+    return undefined;
+  } else {
+    return result.value.conceptUUID ?? null;
+  }
+}
+
 
 
 interface EntryDetailsProps {
   localizedConcept: LocalizedConceptData
+  itemID?: string
   className?: string
   writingDirectionality: WritingDirectionality
 }
 export const EntryDetails: React.FC<EntryDetailsProps> = function ({
+  itemID,
   localizedConcept,
   className,
   writingDirectionality,
 }) {
   const entry = localizedConcept;
+
+  const universalConceptUUID = useUniversalConceptUUID(itemID ?? '');
 
   const primaryDesignation = entry.terms[0];
 
@@ -108,6 +155,10 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
             </NoteContainer>
           )}
       </div>
+
+      {universalConceptUUID
+        ? <GenericRelatedItemView itemRef={{ classID: 'concept', itemID: universalConceptUUID }} />
+        : null}
 
       <footer>
         <dl dir="ltr" className={styles.label}>
