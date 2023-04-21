@@ -4,12 +4,19 @@
 import React from 'react';
 import { jsx, css } from '@emotion/react';
 import { Button, ButtonGroup, Classes, ControlGroup, FormGroup, InputGroup, TextArea } from '@blueprintjs/core';
-import { AuthoritativeSource, Designation, DesignationType, NORMATIVE_STATUS_CHOICES } from '../../models/concepts';
 import { getHTMLDir, WritingDirectionality } from '../../models/lang';
+
+import {
+  type AuthoritativeSource,
+  type Designation,
+  type DesignationType,
+  NORMATIVE_STATUS_CHOICES,
+} from '../../models/concepts';
+
 import { openLinkInBrowser } from './util';
 import { DesignationForm } from './DesignationForm';
-import { LocalizedConceptData } from './LocalizedConceptData';
 import { PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
+import type { LocalizedConceptData } from './LocalizedConceptData';
 
 
 export const LocalizedConceptForm: React.FC<{
