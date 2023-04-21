@@ -1,11 +1,14 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { jsx, css } from '@emotion/react';
 import type { ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
+import { BrowserCtx } from '@riboseinc/paneron-registry-kit/views/BrowserCtx';
+import { itemRefToItemPath } from '@riboseinc/paneron-registry-kit/views/itemPathUtils';
 import type { Designation } from '../../models/concepts';
 import { defaultLanguage, type WritingDirectionality, writingDirectionalityOverrides } from '../../models/lang';
+import { useUniversalConceptUUID } from './util';
 import LocalizedConceptForm from './LocalizedConceptForm';
 import LocalizedConceptDetails from './LocalizedConceptDetails';
 import LocalizedConceptData from './LocalizedConceptData';
@@ -42,9 +45,23 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
   },
   itemSorter: () => 0,
   views: {
-    listItemView: (props) => <span className={props.className}>
-      <PrimaryDesignation term={props.itemData?.terms?.[0]} />
-    </span>,
+    listItemView: (props) => {
+      const conceptUUID = useUniversalConceptUUID(props.itemRef.itemID ?? '');
+      const { useRegisterItemData } = useContext(BrowserCtx);
+      const itemPath = itemRefToItemPath({
+        classID: 'concept',
+        itemID: conceptUUID ?? '',
+      });
+      const conceptID: string | null | undefined = useRegisterItemData({ itemPaths: [itemPath] }).value[itemPath]?.data?.identifier;
+      return (
+        <span className={props.className}>
+          {conceptID
+            ? <><code>{conceptID}/{props.itemData?.language_code ?? 'N/A'}</code>&ensp;</>
+            : null}
+          <PrimaryDesignation term={props.itemData?.terms?.[0]} />
+        </span>
+      );
+    },
     detailView: (props) => <LocalizedConceptDetails
       css={css`padding: 1rem; position: absolute; inset: 0;`}
       itemID={props.itemRef.itemID}
