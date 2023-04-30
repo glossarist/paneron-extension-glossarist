@@ -1,6 +1,6 @@
-import { StandardRef, StandardClause } from './standards';
-import { WithRevisions } from './revisions';
-import { AuthoritativeLanguage, OptionalLanguage, SupportedLanguage } from './lang';
+import type { StandardRef, StandardClause } from './standards';
+import type { WithRevisions } from './revisions';
+import type { AuthoritativeLanguage, OptionalLanguage, SupportedLanguage } from './lang';
 
 
 /* Concepts */
