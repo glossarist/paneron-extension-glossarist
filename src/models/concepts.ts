@@ -5,7 +5,7 @@ import type { AuthoritativeLanguage, OptionalLanguage, SupportedLanguage } from 
 
 /* Concepts */
 
-export const PARENT_RELATIONSHIP = 'parent' as const
+export const PARENT_RELATIONSHIP = 'parent' as const;
 
 export type ConceptRelation =
   { type: string, to: ConceptRef };
