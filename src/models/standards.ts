@@ -1,5 +1,5 @@
+/** A string like "ISO 1087-1:2000" */
 export type StandardRef = string
-// e.g. ISO 1087-1:2000
 
+/** A string like "3.4.9" */
 export type StandardClause = string;
-// e.g. 3.4.9
