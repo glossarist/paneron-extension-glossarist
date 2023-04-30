@@ -7,20 +7,20 @@ import type { AuthoritativeLanguage, OptionalLanguage, SupportedLanguage } from 
 
 export const PARENT_RELATIONSHIP = 'parent' as const;
 
+/** Relation as defined by terminology manager. */
 export type ConceptRelation =
   { type: string, to: ConceptRef };
-// Stored in the database
 
+/** Reverse relation inferred at runtime. */
 export type IncomingConceptRelation =
   { type: string, from: ConceptRef };
-// Inferred at runtime
 
 
 export type MultiLanguageConcept<Ref extends ConceptRef> = {
   termid: Ref
 
+  /** Parent concept indicats domain or subject area. */
   parent?: Ref
-  // Domain or subject.
 
   relations?: ConceptRelation[]
   eng: WithRevisions<Concept<Ref, AuthoritativeLanguage>>
@@ -33,6 +33,7 @@ export type _Concepts<Ref extends ConceptRef> = {
 }
 
 
+/** @deprecated RegistryKit covers this now. */
 export const LIFECYCLE_STAGES = [
   'Proposal',
   'Evaluation',
@@ -45,6 +46,7 @@ export const LIFECYCLE_STAGES = [
   'Draft',
 ] as const;
 
+/** @deprecated RegistryKit covers this now. */
 export type LifecycleStage = typeof LIFECYCLE_STAGES[number];
 
 
@@ -53,12 +55,14 @@ export interface Concept<Ref extends ConceptRef, Lang extends SupportedLanguage>
   language_code: Lang
   entry_status: ConceptStatus
 
+  /** @deprecated RegistryKit covers this now. */
   lifecycle_stage?: LifecycleStage
-
   terms: Designation[]
 
+  /**
+   * @deprecated this is part of legacy schema.
+   */
   domain?: string
-  // Legacy.
 
   //subject_field: SubjectFieldLabel
 
@@ -78,14 +82,13 @@ export interface Concept<Ref extends ConceptRef, Lang extends SupportedLanguage>
   // These apply to the definition.
 
   authoritative_source: AuthoritativeSource
-  // Can be set
 
   //lineage_source: LineageSource
 
-  // Date concept was first introduced?
+  /** @deprecated legacy schema, RegistryKit/proposal history should cover it. */
   date_accepted?: Date
 
-  // ?
+  /** @deprecated legacy schema. */
   release?: string
 
 
@@ -107,8 +110,12 @@ interface AuthoritativeSourceRelationship {
   modificiation?: string
 }
 
+
+/**
+ * Currently all properties of authoritative source are optional,
+ * but either ref & clause or link must be present.
+ */
 export type AuthoritativeSource = {
-  // All are optional, but either ref & clause or link must be present
   ref?: StandardRef
   clause?: StandardClause
   link?: string
@@ -119,11 +126,11 @@ export type AuthoritativeSource = {
 
 export type SubjectFieldLabel = string;
 
+/** A string that can contain HTML markup. */
 type Note = string;
-// Rich text
 
+/** A string that can contain HTML markup. */
 type Example = string;
-// Rich text
 
 type ConceptStatus = 'retired' | 'valid' | 'superseded' | 'proposed'
 
@@ -132,6 +139,7 @@ export type ConceptRef = number;
 
 // Misc.
 
+/** @deprecated */
 export interface ConceptCollection {
   id: string
   // ID is global across all collections,
@@ -151,11 +159,14 @@ export interface ConceptCollection {
 
 /* Designations */
 
+/** A designation is also known as a term. */
 export type Designation = {
   designation: string
   normative_status?: NormativeStatus
 } & TypedDesignation;
 
+/** Whether a designation is preferred. */
+// TODO: This clashes with register item status. Should it be reused?
 export const NORMATIVE_STATUS_CHOICES = [
   'preferred',
   'admitted',
@@ -164,11 +175,16 @@ export const NORMATIVE_STATUS_CHOICES = [
 export type NormativeStatus = typeof NORMATIVE_STATUS_CHOICES[number];
 
 export type TypedDesignation = Symbol | Expression | Prefix;
+
+/**
+ * IMPORTANT: Changing order of designation types
+ * REQUIRES changing corresponding types following.
+ */
+// TODO: Refactor these types to avoid this order specificity
 export const DESIGNATION_TYPES = [
   'expression',
   'symbol',
   'prefix',
-  // IMPORTANT: Changing order of designation types REQUIRES changing corresponding types following
 ] as const;
 export type DesignationType = typeof DESIGNATION_TYPES[number];
 type Symbol = { type: typeof DESIGNATION_TYPES[1] }
@@ -180,23 +196,23 @@ type Usage = {
 }
 
 type Grammar = {
-	alternateForms?: string[]
-	// NOT synonyms; variations of number/tense etc.
-	isAbbreviation?: true
+  /** Alternate forms are NOT synonyms; rather variations of number/tense etc. */
+  alternateForms?: string[]
+  isAbbreviation?: true
 } & (Noun | Verb | Adjective | Adverb | { partOfSpeech?: undefined })
 // {} is for unknown part of speech.
 
 export type Noun = {
-	partOfSpeech: 'noun'
+  partOfSpeech: 'noun'
 
-	grammaticalNumber?: 'plural' | 'singular' | 'mass'
-	// Doesn’t have to be explicit for singulars, unless circumstances require
+  // Doesn’t have to be explicit for singulars, unless circumstances require?
+  grammaticalNumber?: 'plural' | 'singular' | 'mass'
 
-	gender?: 'masculine' | 'feminine' | 'common' | 'neuter'
+  gender?: 'masculine' | 'feminine' | 'common' | 'neuter'
 }
 
 type Verb = {
-	partOfSpeech: 'verb'
+  partOfSpeech: 'verb'
 }
 
 type MaybeParticiple = {
@@ -204,9 +220,9 @@ type MaybeParticiple = {
 }
 
 type Adjective = MaybeParticiple & {
-	partOfSpeech: 'adjective'
+  partOfSpeech: 'adjective'
 }
 
 type Adverb = MaybeParticiple & {
-	partOfSpeech: 'adverb'
+  partOfSpeech: 'adverb'
 }
