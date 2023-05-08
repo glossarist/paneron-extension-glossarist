@@ -127,6 +127,18 @@ export interface ConceptData {
    */
   identifier: string
 
+  // /**
+  //  */
+  // parents: ItemReference[]
+  // XXX: Immediate parent is listed as domain?
+  // XXX: What about further ancestors parents?
+  // XXX: What distinguishes listed domain from a regular parent concept?
+  // XXX: Maybe two listed domains, immediate parent and topmost parent?
+  // XXX: No real existing examples of multiple parents/domains?
+  // XXX: No real existing examples of non-immediate ancestor listed as domain?
+  // XXX: Multiple parents/domains: follow ancestors of each parent?
+  // XXX: Easy on the web (can collapse/expand) but hard in a traditional representation
+
   /**
    * Each language code points to UUID for respective
    * concept description in a particular human language.
