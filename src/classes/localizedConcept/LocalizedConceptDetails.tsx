@@ -1,11 +1,11 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { jsx } from '@emotion/react';
 import styled from '@emotion/styled';
 import MathJax from 'react-mathjax2';
-import { FormGroup, Classes, Colors, H2 } from '@blueprintjs/core';
+import { FormGroup, Classes, Colors, Callout, H2 } from '@blueprintjs/core';
 
 import { GenericRelatedItemView } from '@riboseinc/paneron-registry-kit/views/util';
 
@@ -59,6 +59,23 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
       ? [entry.authoritativeSource]
       : [];
 
+  const definitionJSX = useMemo(() => {
+    if (entry.definition) {
+      // Normalize definition for older datasets which still use strings
+      return [...(Array.isArray(entry.definition) ? entry.definition : [entry.definition]).entries()].map(([idx, item]) =>
+        <DefinitionContainer key={`definition-${idx}`}>
+          <MathJax.Text text={item.content ?? item} />
+        </DefinitionContainer>
+      )
+    } else {
+      return <Callout icon='warning-sign'>
+        There is no definition for this concept
+        in {languageTitles[entry.language_code] ?? entry.language_code}.
+        Users should refer to definition in register’s operating language, if provided.
+      </Callout>
+    }
+  }, [itemID, JSON.stringify(localizedConcept.definition)]);
+
   return (
     <div
         dir={dir}
@@ -93,12 +110,7 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
       <div className={`${Classes.RUNNING_TEXT}`}>
         {entry.usageInfo ? <UsageInfo>&lt;{entry.usageInfo}&gt;</UsageInfo> : null}
 
-        {/* Normalize definition for older datasets which still use strings */}
-        {[...(Array.isArray(entry.definition) ? entry.definition : [entry.definition]).entries()].map(([idx, item]) =>
-          <DefinitionContainer key={`definition-${idx}`}>
-            <MathJax.Text text={item.content ?? item} />
-          </DefinitionContainer>
-        )}
+        {definitionJSX}
 
         {[...entry.examples.entries()].map(([idx, item]) =>
           <ExampleContainer key={`example-${idx}`}>
