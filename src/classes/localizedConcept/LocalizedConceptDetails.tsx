@@ -93,7 +93,8 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
       <div className={`${Classes.RUNNING_TEXT}`}>
         {entry.usageInfo ? <UsageInfo>&lt;{entry.usageInfo}&gt;</UsageInfo> : null}
 
-        {[...(entry.definition ?? []).entries()].map(([idx, item]) =>
+        {/* Normalize definition for older datasets which still use strings */}
+        {[...(Array.isArray(entry.definition) ? entry.definition : [entry.definition]).entries()].map(([idx, item]) =>
           <DefinitionContainer key={`definition-${idx}`}>
             <MathJax.Text text={item.content ?? item} />
           </DefinitionContainer>
