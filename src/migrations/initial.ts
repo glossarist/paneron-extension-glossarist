@@ -1,4 +1,4 @@
-import { DatasetMigrationFunction } from '@riboseinc/paneron-extension-kit/types/migrations';
+import type { DatasetMigrationFunction } from '@riboseinc/paneron-extension-kit/types/migrations';
 
 
 const initializeDataset: DatasetMigrationFunction = async (opts) => {
