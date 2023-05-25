@@ -71,7 +71,7 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
       return <Callout icon='warning-sign'>
         There is no definition for this concept
         in {languageTitles[entry.language_code] ?? entry.language_code}.
-        Users should refer to definition in register’s operating language, if provided.
+        Readers should refer to definition in register’s operating language, if provided.
       </Callout>
     }
   }, [itemID, JSON.stringify(localizedConcept.definition)]);
