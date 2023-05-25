@@ -62,7 +62,7 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
   const definitionJSX = useMemo(() => {
     if (entry.definition) {
       // Normalize definition for older datasets which still use strings
-      return [...(Array.isArray(entry.definition) ? entry.definition : [entry.definition]).entries()].map(([idx, item]) =>
+      return [...Object.entries(Array.isArray(entry.definition) ? entry.definition : [entry.definition])].map(([idx, item]) =>
         <DefinitionContainer key={`definition-${idx}`}>
           <MathJax.Text text={item.content ?? item} />
         </DefinitionContainer>
