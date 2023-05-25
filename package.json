@@ -1,6 +1,6 @@
 {
   "name": "@riboseinc/paneron-extension-glossarist",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "Paneron extension for maintaining terminology glossaries",
   "main": "plugin.js",
   "repository": "https://github.com/riboseinc/paneron-extension-documentation-site",
