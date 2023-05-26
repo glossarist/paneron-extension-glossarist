@@ -6,6 +6,7 @@
       "lib": ["es2020", "dom"],
 
       "strict": true,
+      "skipLibCheck": true,
       "noUnusedLocals": true,
       "noFallthroughCasesInSwitch": true,
       "noImplicitReturns": true,
