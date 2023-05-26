@@ -1,6 +1,5 @@
 import type { StandardRef, StandardClause } from './standards';
-import type { WithRevisions } from './revisions';
-import type { AuthoritativeLanguage, OptionalLanguage, SupportedLanguage } from './lang';
+import type { SupportedLanguage } from './lang';
 
 
 /* Concepts */
@@ -16,21 +15,6 @@ export type IncomingConceptRelation =
   { type: string, from: ConceptRef };
 
 
-export type MultiLanguageConcept<Ref extends ConceptRef> = {
-  termid: Ref
-
-  /** Parent concept indicats domain or subject area. */
-  parent?: Ref
-
-  relations?: ConceptRelation[]
-  eng: WithRevisions<Concept<Ref, AuthoritativeLanguage>>
-  // English is required, others optional
-} & _Concepts<Ref>;
-
-
-export type _Concepts<Ref extends ConceptRef> = {
-  [Lang in OptionalLanguage]?: WithRevisions<Concept<Ref, Lang>>
-}
 
 
 /** @deprecated RegistryKit covers this now. */
