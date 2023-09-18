@@ -1,7 +1,7 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 
-import React, { useContext } from 'react';
+import React, { useContext, memo } from 'react';
 import { jsx, css } from '@emotion/react';
 import type { ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
 import { BrowserCtx } from '@riboseinc/paneron-registry-kit/views/BrowserCtx';
@@ -15,7 +15,7 @@ import LocalizedConceptData from './LocalizedConceptData';
 
 
 const PrimaryDesignation: React.FC<{ term: Designation | undefined }> =
-function ({ term }) {
+memo(function ({ term }) {
   if (!term) {
     return <>(no designation)</>;
   }
@@ -24,7 +24,7 @@ function ({ term }) {
     suffix += ` (${term.partOfSpeech})`;
   }
   return <>{term.designation}{suffix}</>;
-}
+});
 
 
 export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
@@ -46,7 +46,7 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
   },
   itemSorter: () => 0,
   views: {
-    listItemView: (props) => {
+    listItemView: memo((props) => {
       const conceptUUID = useUniversalConceptUUID(props.itemRef.itemID ?? '');
       const { useRegisterItemData } = useContext(BrowserCtx);
       const itemPath = itemRefToItemPath({
@@ -62,7 +62,7 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
           <PrimaryDesignation term={props.itemData?.terms?.[0]} />
         </span>
       );
-    },
+    }),
     detailView: (props) => <LocalizedConceptDetails
       css={css`padding: 1rem; position: absolute; inset: 0;`}
       itemID={props.itemRef.itemID}
