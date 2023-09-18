@@ -7,6 +7,7 @@ import { ConceptData } from './concept';
 
 const RDFExport: ExportFormatConfiguration<ConceptData> = {
   label: "RDF",
+  filenameExtension: '.ttl',
   exportItem: async (itemData, { getObjectData, getBlob, logger }) => {
     const localizedEntryPaths = Object.entries(itemData.data.localizedConcepts).
     map(([ itemID ]) => {
