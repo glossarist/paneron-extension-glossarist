@@ -16,13 +16,17 @@ const defaultCriteria = CRITERIA_CONFIGURATION['item-class'].toQuery(
   { itemClasses: itemClassConfiguration },
 );
 
+const defaultSearchCriteria = {
+  require: 'all',
+  criteria: [{ key: 'item-class', query: defaultCriteria }],
+} as const;
 
 const GlossaryRegisterRepoView: React.FC<Record<never, never>> =
 function () {
   return <RegistryView
     itemClassConfiguration={itemClassConfiguration}
     keyExpression="obj.data.identifier || `${obj.data.terms?.[0]?.designation}-${obj.id}` || obj.id"
-    defaultSearchCriteria={{ require: 'all', criteria: [{ key: 'item-class', query: defaultCriteria }] }}
+    defaultSearchCriteria={defaultSearchCriteria as any}
   />
 };
 
