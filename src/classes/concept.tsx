@@ -19,7 +19,7 @@ function ({ itemID }) {
   const itemData = useRegisterItemData({ itemPaths: [defaultLanguageEntryPath] });
   const defaultLanguageEntry = itemData.value?.[defaultLanguageEntryPath]?.data as LocalizedConceptData | undefined;
   return <>{defaultLanguageEntry?.terms?.[0]?.designation}</>;
-}
+};
 
 const PrimaryDesignation = React.memo(
   _PrimaryDesignation,
