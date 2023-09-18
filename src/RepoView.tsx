@@ -17,7 +17,7 @@ const defaultCriteria = CRITERIA_CONFIGURATION['item-class'].toQuery(
 );
 
 
-const RepositoryView: React.FC<Record<never, never>> =
+const GlossaryRegisterRepoView: React.FC<Record<never, never>> =
 function () {
   return <RegistryView
     itemClassConfiguration={itemClassConfiguration}
@@ -27,4 +27,4 @@ function () {
 };
 
 
-export default RepositoryView;
+export default GlossaryRegisterRepoView;
