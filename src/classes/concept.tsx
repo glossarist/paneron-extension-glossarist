@@ -1,7 +1,7 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 
-import React, { useContext } from 'react';
+import React, { useContext, useMemo, memo } from 'react';
 import { css, jsx } from '@emotion/react';
 import { UL, InputGroup } from '@blueprintjs/core';
 import type { InternalItemReference, ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
@@ -21,9 +21,12 @@ function ({ itemID }) {
   return <>{defaultLanguageEntry?.terms?.[0]?.designation}</>;
 };
 
-const PrimaryDesignation = React.memo(
+const PrimaryDesignation = memo(
   _PrimaryDesignation,
   (p1, p2) => p1.itemID === p2.itemID);
+
+
+const PLACEHOLDER_LOCALIZED_CCONCEPTS = {} as const;
 
 
 const ConceptEditView:
@@ -31,20 +34,21 @@ ItemClassConfiguration<ConceptData>["views"]["editView"] =
 function (props) {
   const { itemData } = props;
 
-  const localizedConcepts = itemData.localizedConcepts ?? {};
+  const localizedConcepts = itemData.localizedConcepts ?? PLACEHOLDER_LOCALIZED_CCONCEPTS;
 
-  let langs: SupportedLanguage[];
-  if (props.onChange) {
-    langs = [
-      ...priorityLanguages,
-      ...nonPriorityLanguages,
-    ];
-  } else {
-    langs = [
-      ...priorityLanguages,
-      ...nonPriorityLanguages,
-    ].filter(langID => localizedConcepts[langID] !== undefined);
-  }
+  const langs: SupportedLanguage[] = useMemo(() => {
+    if (props.onChange) {
+      return [
+        ...priorityLanguages,
+        ...nonPriorityLanguages,
+      ];
+    } else {
+      return [
+        ...priorityLanguages,
+        ...nonPriorityLanguages,
+      ].filter(langID => localizedConcepts[langID] !== undefined);
+    }
+  }, [props.onChange, localizedConcepts]);
 
   function handleIdentifierChange(newVal: string) {
     if (!props.onChange) { return; }
