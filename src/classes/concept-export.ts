@@ -64,7 +64,7 @@ const RDFExport: ExportFormatConfiguration<ConceptData> = {
 
     return await getBlob(renderedRDF);
   },
-};
+} as const;
 
 
 export default RDFExport;

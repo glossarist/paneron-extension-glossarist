@@ -176,7 +176,7 @@ export const concept: ItemClassConfiguration<ConceptData> = {
   },
   validatePayload: async () => true,
   sanitizePayload: async (t) => t,
-};
+} as const;
 
 
 export default concept;

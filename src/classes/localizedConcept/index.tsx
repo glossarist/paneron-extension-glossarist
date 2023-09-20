@@ -86,7 +86,7 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
   },
   validatePayload: async () => true,
   sanitizePayload: async (t) => t,
-};
+} as const;
 
 
 export default localizedConcept;

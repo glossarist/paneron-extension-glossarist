@@ -3,13 +3,13 @@ import type { SupportedLanguage } from '../../models/lang';
 
 
 export interface LocalizedConceptData {
-  terms: Designation[];
+  terms: Readonly<Designation[]>;
   language_code: SupportedLanguage;
   usageInfo?: string;
-  definition: { content: string }[];
-  notes: { content: string }[];
-  examples: { content: string }[];
-  authoritativeSource: AuthoritativeSource[];
+  definition: Readonly<{ content: string }[]>;
+  notes: Readonly<{ content: string }[]>;
+  examples: Readonly<{ content: string }[]>;
+  authoritativeSource: Readonly<AuthoritativeSource[]>;
 }
 
 
