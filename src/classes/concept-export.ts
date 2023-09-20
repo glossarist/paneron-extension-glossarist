@@ -1,8 +1,8 @@
 import { Liquid } from 'liquidjs';
-import { ExportFormatConfiguration } from '@riboseinc/paneron-registry-kit/types/views';
-import LocalizedConceptData from './localizedConcept/LocalizedConceptData';
-import { RegisterItem } from '@riboseinc/paneron-registry-kit/types/item';
-import { ConceptData } from './concept';
+import type { ExportFormatConfiguration } from '@riboseinc/paneron-registry-kit/types/views';
+import type LocalizedConceptData from './localizedConcept/LocalizedConceptData';
+import type { RegisterItem } from '@riboseinc/paneron-registry-kit/types/item';
+import type { ConceptData } from './concept';
 
 
 const RDFExport: ExportFormatConfiguration<ConceptData> = {

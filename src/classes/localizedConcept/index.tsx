@@ -11,7 +11,7 @@ import { defaultLanguage, type WritingDirectionality, writingDirectionalityOverr
 import { useUniversalConceptUUID } from './util';
 import LocalizedConceptForm from './LocalizedConceptForm';
 import LocalizedConceptDetails from './LocalizedConceptDetails';
-import LocalizedConceptData from './LocalizedConceptData';
+import type LocalizedConceptData from './LocalizedConceptData';
 
 
 const PrimaryDesignation: React.FC<{ term: Designation | undefined }> =
