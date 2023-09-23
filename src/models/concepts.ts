@@ -91,7 +91,7 @@ export interface Concept<Ref extends ConceptRef, Lang extends SupportedLanguage>
 
 interface AuthoritativeSourceRelationship {
   type: 'identical' | 'modified'
-  modificiation?: string
+  modification?: string
 }
 
 

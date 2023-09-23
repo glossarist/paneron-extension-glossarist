@@ -332,7 +332,7 @@ const AuthSource: React.FC<{ src: AuthoritativeSource, onChange: (newVal: Author
         <ControlGroup>
           <Button
               active={src.relationship?.type === 'identical'}
-              onClick={() => onChange({ ...src, relationship: { type: 'identical', modificiation: '' }})}>
+              onClick={() => onChange({ ...src, relationship: { type: 'identical', modification: '' }})}>
             Identical
           </Button>
           <Button
@@ -341,12 +341,12 @@ const AuthSource: React.FC<{ src: AuthoritativeSource, onChange: (newVal: Author
             Modified
           </Button>
           <InputGroup
-            value={src.relationship?.modificiation ?? ''}
+            value={src.relationship?.modification ?? ''}
             placeholder="Modification note…"
             disabled={src.relationship?.type !== 'modified'}
             onChange={(evt: React.FormEvent<HTMLInputElement>) => onChange({
               ...src,
-              relationship: { type: 'modified', modificiation: evt.currentTarget.value },
+              relationship: { type: 'modified', modification: evt.currentTarget.value },
             })}
           />
         </ControlGroup>

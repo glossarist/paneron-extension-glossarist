@@ -149,7 +149,7 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
                   ? <>
                       &nbsp;—&nbsp;{source.relationship.type}
                       {source.relationship.type === 'modified'
-                        ? <em>&ensp;{source.relationship.modificiation ?? 'no modification note'}</em>
+                        ? <em>&ensp;{source.relationship.modification ?? 'no modification note'}</em>
                         : null}
                     </>
                   : null}
