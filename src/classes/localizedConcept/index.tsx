@@ -47,21 +47,24 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
   itemSorter: () => 0,
   views: {
     listItemView: memo((props) => {
-      const conceptUUID = useUniversalConceptUUID(props.itemRef.itemID ?? '');
-      const { useRegisterItemData } = useContext(BrowserCtx);
-      const itemPath = itemRefToItemPath({
-        classID: 'concept',
-        itemID: conceptUUID ?? '',
-      });
-      const conceptID: string | null | undefined = useRegisterItemData({ itemPaths: [itemPath] }).value[itemPath]?.data?.identifier;
-      return (
-        <span className={props.className}>
-          {conceptID
-            ? <><code>{conceptID}/{props.itemData?.language_code ?? 'N/A'}</code>&ensp;</>
-            : null}
-          <PrimaryDesignation term={props.itemData?.terms?.[0]} />
-        </span>
-      );
+      return <span className={props.className} dir={getHTMLDirForLanguage(props.itemData.language_code)}>
+        <PrimaryDesignation term={props.itemData?.terms?.[0]} />
+      </span>;
+      // const conceptUUID = useUniversalConceptUUID(props.itemRef.itemID ?? '');
+      // const { useRegisterItemData } = React.useContext(regkit.BrowserCtx);
+      // const itemPath = regkit.itemRefToItemPath({
+      //   classID: 'concept',
+      //   itemID: conceptUUID ?? '',
+      // });
+      // const conceptID: string | null | undefined = useRegisterItemData({ itemPaths: [itemPath] }).value[itemPath]?.data?.identifier;
+      // return (
+      //   <span className={props.className}>
+      //     {conceptID
+      //       ? <><code>{conceptID}/{props.itemData?.language_code ?? 'N/A'}</code>&ensp;</>
+      //       : null}
+      //     <PrimaryDesignation term={props.itemData?.terms?.[0]} />
+      //   </span>
+      // );
     }),
     detailView: (props) => <LocalizedConceptDetails
       css={css`padding: 1rem; position: absolute; inset: 0;`}
