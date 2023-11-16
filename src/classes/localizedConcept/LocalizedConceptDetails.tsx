@@ -125,7 +125,9 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
           )}
       </div>
 
-      <footer>
+      <footer dir="ltr" css={css`
+        text-align: left; /* Needed to negate Blueprint’s RTL class. sigh */
+      `}>
         <dl dir="ltr" className={styles.label}>
           <dt>Language:</dt>
           <dd>
