@@ -7,8 +7,8 @@ import type { ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/typ
 import { BrowserCtx } from '@riboseinc/paneron-registry-kit/views/BrowserCtx';
 import { itemRefToItemPath } from '@riboseinc/paneron-registry-kit/views/itemPathUtils';
 import type { Designation } from '../../models/concepts';
-import { defaultLanguage, type WritingDirectionality, writingDirectionalityOverrides } from '../../models/lang';
 import { useUniversalConceptUUID } from './util';
+import { defaultLanguage, getHTMLDirForLanguage } from '../../models/lang';
 import LocalizedConceptForm from './LocalizedConceptForm';
 import LocalizedConceptDetails from './LocalizedConceptDetails';
 import type LocalizedConceptData from './LocalizedConceptData';
@@ -68,20 +68,12 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
       itemID={props.itemRef.itemID}
       localizedConcept={props.itemData}
       className={props.className}
-      writingDirectionality={
-        writingDirectionalityOverrides[props.itemData.language_code ?? defaultLanguage]
-        ?? ('LTR' as WritingDirectionality)
-      }
     />,
     editView: (props) => <LocalizedConceptForm
       css={css`padding: 1rem; position: absolute; inset: 0;`}
       localizedConcept={props.itemData}
       className={props.className}
       onChange={props.onChange}
-      writingDirectionality={
-        writingDirectionalityOverrides[props.itemData.language_code ?? defaultLanguage]
-        ?? ('LTR' as WritingDirectionality)
-      }
     />,
   },
   validatePayload: async () => true,

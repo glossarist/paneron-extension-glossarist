@@ -10,20 +10,17 @@ import {
   NormativeStatus, NORMATIVE_STATUS_CHOICES,
   Noun
 } from '../../models/concepts';
-import { getHTMLDir, WritingDirectionality } from '../../models/lang';
 
 
 export const DesignationForm: React.FC<{
   designation: Designation;
-  writingDirectionality: WritingDirectionality;
+  dir?: string;
   designationClassName?: string;
   designationPropsClassName?: string;
   usageAreaClassName?: string;
   onChange?: (newVal: Designation) => void;
 }> = function (props) {
-  const { designation: d } = props;
-
-  const dir = getHTMLDir(props.writingDirectionality);
+  const { designation: d, dir } = props;
 
   function handleExpressionAreaEdit(val: string) {
     if (!props.onChange) { return; }

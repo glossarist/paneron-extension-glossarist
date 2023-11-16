@@ -51,20 +51,23 @@ export const languageTitles:
   'srp': 'Serbian',
 } as const;
 
-export type WritingDirectionality = 'LTR' | 'RTL' | 'TBRL';
-
-export function getHTMLDir(wd: WritingDirectionality): 'rtl' | 'ltr' {
+const writingDirectionalityOverrides:
+Partial<{ [langID in SupportedLanguage]: WritingDirectionality }> = {
+  'ara': 'RTL',
+};
+type WritingDirectionality = 'LTR' | 'RTL' | 'TBRL';
+function getHTMLDir(wd: WritingDirectionality): 'rtl' | 'ltr' {
   if (wd === 'RTL') {
     return 'rtl';
   } else {
     return 'ltr';
   }
 }
-
-export const writingDirectionalityOverrides:
-Partial<{ [langID in typeof availableLanguageIDs[number]]: WritingDirectionality }> = {
-  'ara': 'RTL',
-};
+export function getHTMLDirForLanguage(langCode: SupportedLanguage): string {
+  return getHTMLDir(
+    writingDirectionalityOverrides[langCode ?? defaultLanguage]
+    ?? ('LTR' as WritingDirectionality))
+}
 
 export const priorityLanguages:
 (typeof availableLanguageIDs[number])[] = [

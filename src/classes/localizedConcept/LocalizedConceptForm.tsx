@@ -21,8 +21,7 @@ import {
 } from '../../models/concepts';
 
 import {
-  defaultLanguage, getHTMLDir, availableLanguageIDs, languageTitles,
-  type WritingDirectionality,
+  defaultLanguage, getHTMLDirForLanguage, availableLanguageIDs, languageTitles,
   type SupportedLanguage,
 } from '../../models/lang';
 
@@ -33,15 +32,14 @@ import type { LocalizedConceptData } from './LocalizedConceptData';
 
 export const LocalizedConceptForm: React.FC<{
   localizedConcept: LocalizedConceptData;
-  writingDirectionality: WritingDirectionality;
   className?: string;
   usageInfoClassName?: string;
   onChange?: (newVal: LocalizedConceptData) => void;
 }> = function (props) {
 
-  const dir = getHTMLDir(props.writingDirectionality);
-
   const { localizedConcept } = props;
+
+  const dir = getHTMLDirForLanguage(localizedConcept.language_code);
 
   const authSources: LocalizedConceptData["authoritativeSource"] = Array.isArray(localizedConcept.authoritativeSource)
     ? localizedConcept.authoritativeSource
@@ -195,7 +193,7 @@ export const LocalizedConceptForm: React.FC<{
             onChange={props.onChange
               ? ((newD) => handleDesignationChange(idx, newD))
               : undefined}
-            writingDirectionality={props.writingDirectionality} />
+            dir={dir} />
         </PropertyDetailView>
       )}
 

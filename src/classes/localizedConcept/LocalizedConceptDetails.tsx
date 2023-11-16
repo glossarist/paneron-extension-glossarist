@@ -9,7 +9,7 @@ import { FormGroup, Classes, Colors, Callout, H2 } from '@blueprintjs/core';
 
 import { GenericRelatedItemView } from '@riboseinc/paneron-registry-kit/views/util';
 
-import { getHTMLDir, type WritingDirectionality, languageTitles } from '../../models/lang';
+import { getHTMLDirForLanguage, languageTitles } from '../../models/lang';
 import type { Designation } from '../../models/concepts';
 import type { LocalizedConceptData } from './LocalizedConceptData';
 import { FullDesignation } from './designation';
@@ -24,13 +24,11 @@ interface EntryDetailsProps {
   localizedConcept: LocalizedConceptData
   itemID?: string
   className?: string
-  writingDirectionality: WritingDirectionality
 }
 export const EntryDetails: React.FC<EntryDetailsProps> = function ({
   itemID,
   localizedConcept,
   className,
-  writingDirectionality,
 }) {
   const entry = localizedConcept;
 
@@ -40,7 +38,7 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
 
   //const parentConceptIDs: string[] = [];
 
-  const dir = getHTMLDir(writingDirectionality);
+  const dir = getHTMLDirForLanguage(localizedConcept.language_code);
 
   let synonyms: Designation[];
   if (entry.terms.length > 1) {
@@ -79,7 +77,7 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
   return (
     <div
         dir={dir}
-        className={`${writingDirectionality === 'RTL' ? Classes.RTL : ''} ${className ?? ''}`}>
+        className={`${dir === 'rtl' ? Classes.RTL : ''} ${className ?? ''}`}>
 
       {/*entry.domain
         ? <span className={sharedStyles.legacyDomain}>&lt;{entry.domain}&gt;</span>
