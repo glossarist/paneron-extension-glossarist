@@ -16,11 +16,12 @@ export function useUniversalConceptUUID(localizedConceptUUID: string): string | 
   const result = useMapReducedData({
     chains: {
       conceptUUID: {
+        predicateFunc: `
+          return (key.startsWith("${universalConceptItemPathPrefix}") && value?.id)
+        `,
         mapFunc: localizedConceptUUID
           ? `
-              if (key.startsWith("${universalConceptItemPathPrefix}") &&
-                  value?.id &&
-                  Object.values(value.data?.localizedConcepts ?? {}).indexOf("${localizedConceptUUID}") >= 0) {
+              if (Object.values(value.data?.localizedConcepts ?? {}).indexOf("${localizedConceptUUID}") >= 0) {
                 emit(value.id);
               }
             `
