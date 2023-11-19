@@ -6,7 +6,6 @@ import { UL, InputGroup } from '@blueprintjs/core';
 import React, { useMemo } from 'react';
 import type { InternalItemReference, ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
 import { GenericRelatedItemView, PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
-import { BrowserCtx } from '@riboseinc/paneron-registry-kit/views/BrowserCtx';
 //import type { LocalizedConceptData } from './localizedConcept/LocalizedConceptData';
 import { languageTitles, priorityLanguages, nonPriorityLanguages, type SupportedLanguage } from '../models/lang';
 import rdfExport from './concept-export';

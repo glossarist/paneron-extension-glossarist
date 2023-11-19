@@ -2,7 +2,7 @@
 /** @jsxFrag React.Fragment */
 
 import React from 'react';
-import { css } from '@emotion/react';
+import { jsx, css } from '@emotion/react';
 import type { ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
 import type { Designation } from '../../models/concepts';
 import { defaultLanguage, getHTMLDirForLanguage } from '../../models/lang';
