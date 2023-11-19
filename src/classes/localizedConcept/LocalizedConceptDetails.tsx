@@ -2,7 +2,7 @@
 /** @jsxFrag React.Fragment */
 
 import React, { useMemo } from 'react';
-import { jsx } from '@emotion/react';
+import { jsx, css } from '@emotion/react';
 import styled from '@emotion/styled';
 import MathJax from 'react-mathjax2';
 import { FormGroup, Classes, Colors, Callout, H2 } from '@blueprintjs/core';

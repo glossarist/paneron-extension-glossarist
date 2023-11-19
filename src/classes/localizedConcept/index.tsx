@@ -1,13 +1,10 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 
-import React, { useContext, memo } from 'react';
-import { jsx, css } from '@emotion/react';
+import React from 'react';
+import { css } from '@emotion/react';
 import type { ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
-import { BrowserCtx } from '@riboseinc/paneron-registry-kit/views/BrowserCtx';
-import { itemRefToItemPath } from '@riboseinc/paneron-registry-kit/views/itemPathUtils';
 import type { Designation } from '../../models/concepts';
-import { useUniversalConceptUUID } from './util';
 import { defaultLanguage, getHTMLDirForLanguage } from '../../models/lang';
 import LocalizedConceptForm from './LocalizedConceptForm';
 import LocalizedConceptDetails from './LocalizedConceptDetails';
@@ -15,7 +12,7 @@ import type LocalizedConceptData from './LocalizedConceptData';
 
 
 const PrimaryDesignation: React.FC<{ term: Designation | undefined }> =
-memo(function ({ term }) {
+React.memo(function ({ term }) {
   if (!term) {
     return <>(no designation)</>;
   }
