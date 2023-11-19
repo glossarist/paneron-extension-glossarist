@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React from 'react';
 import { DatasetContext } from '@riboseinc/paneron-extension-kit/context';
 import { incompleteItemRefToItemPathPrefix } from '@riboseinc/paneron-registry-kit/views/itemPathUtils';
 
@@ -11,7 +11,7 @@ const universalConceptItemPathPrefix = incompleteItemRefToItemPathPrefix({ class
  * or if given localized concept UUID is not right.
  */
 export function useUniversalConceptUUID(localizedConceptUUID: string): string | null | undefined {
-  const { useMapReducedData } = useContext(DatasetContext);
+  const { useMapReducedData } = React.useContext(DatasetContext);
 
   const result = useMapReducedData({
     chains: {

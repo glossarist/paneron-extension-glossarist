@@ -1,7 +1,7 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import { jsx, css } from '@emotion/react';
 import styled from '@emotion/styled';
 import MathJax from 'react-mathjax2';
@@ -57,7 +57,7 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
       ? [entry.authoritativeSource]
       : [];
 
-  const definitionJSX = useMemo(() => {
+  const definitionJSX = React.useMemo(() => {
     if (entry.definition) {
       // Normalize definition for older datasets which still use strings
       return [...Object.entries(Array.isArray(entry.definition) ? entry.definition : [entry.definition])].map(([idx, item]) =>

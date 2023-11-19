@@ -3,7 +3,7 @@
 
 import { css, jsx } from '@emotion/react';
 import { UL, InputGroup } from '@blueprintjs/core';
-import React, { useMemo } from 'react';
+import React from 'react';
 import type { InternalItemReference, ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
 import { GenericRelatedItemView, PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
 //import type { LocalizedConceptData } from './localizedConcept/LocalizedConceptData';
@@ -35,7 +35,7 @@ function (props) {
 
   const localizedConcepts = itemData.localizedConcepts ?? PLACEHOLDER_LOCALIZED_CCONCEPTS;
 
-  const langs: SupportedLanguage[] = useMemo(() => {
+  const langs: SupportedLanguage[] = React.useMemo(() => {
     if (props.onChange) {
       return [
         ...priorityLanguages,
