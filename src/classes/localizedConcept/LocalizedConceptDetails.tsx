@@ -66,7 +66,7 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
         </DefinitionContainer>
       )
     } else {
-      return <Callout icon='warning-sign'>
+      return <Callout icon='warning-sign' dir="ltr" css={css`text-align: left;`}>
         There is no definition for this concept
         in {languageTitles[entry.language_code] ?? entry.language_code}.
         Readers should refer to definition in register’s operating language, if provided.
