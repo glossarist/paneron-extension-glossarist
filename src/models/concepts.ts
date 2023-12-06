@@ -34,6 +34,7 @@ export const LIFECYCLE_STAGES = [
 export type LifecycleStage = typeof LIFECYCLE_STAGES[number];
 
 
+/** @deprecated use LocalizedConceptData instead. */
 export interface Concept<Ref extends ConceptRef, Lang extends SupportedLanguage> {
   id: Ref
   language_code: Lang
