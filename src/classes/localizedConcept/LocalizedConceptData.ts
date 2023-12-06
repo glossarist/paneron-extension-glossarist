@@ -2,6 +2,7 @@ import type { AuthoritativeSource, Designation } from '../../models/concepts';
 import type { SupportedLanguage } from '../../models/lang';
 
 
+/** Represents a description of a concept in a particular language. */
 export interface LocalizedConceptData {
   terms: Readonly<Designation[]>;
   language_code: SupportedLanguage;
