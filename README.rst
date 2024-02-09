@@ -25,7 +25,7 @@ Release process
 
 7. Publish to NPM::
 
-       npm publish --access public
+       cd dist && npm publish --access public
 
 To upgrade key dependencies if needed::
 
