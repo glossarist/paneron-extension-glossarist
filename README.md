@@ -12,6 +12,8 @@
   
   Enter some brief message.
 
-- ```
+- Publish to NPM:
+
+  ```
   npm publish --access public
   ```
