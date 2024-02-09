@@ -4,20 +4,29 @@ Glossarist extension for Paneron
 Release process
 ---------------
 
-#. Make and test your changes.
+1. Update version in package.json to `<next version>`.
 
-#. Update version in package.json to `<next version>`.
+2. Make your changes.
 
-#. Build the latest version::
+3. Build the latest version::
 
        yarn run dist
 
-#. Tag commit::
+4. Test by, e.g., adding the `dist` directory in Paneron as local extension
+   and using it on a dataset.
+
+5. Repeat steps 2-4 as needed.
+
+6. Tag commit::
 
        git tag -s <next version>
 
    Enter some brief message.
 
-#. Publish to NPM::
+7. Publish to NPM::
 
        npm publish --access public
+
+To upgrade key dependencies if needed::
+
+    yarn upgrade --ignore-scripts @riboseinc/paneron-extension-kit @riboseinc/paneron-registry-kit
