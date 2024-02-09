@@ -4,16 +4,16 @@ Glossarist extension for Paneron
 Release process
 ---------------
 
-- Make and test your changes.
+#. Make and test your changes.
 
-- Update version in package.json to `<next version>`.
+#. Update version in package.json to `<next version>`.
 
-- ::
+#. Tag commit::
 
-      git tag -s <next version>
-  
-  Enter some brief message.
+       git tag -s <next version>
 
-- ::
+   Enter some brief message.
 
-      npm publish --access public
+#. Publish to NPM::
+
+       npm publish --access public
