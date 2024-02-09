@@ -26,8 +26,8 @@ export function useUniversalConceptUUID(localizedConceptUUID: string): string | 
               }
             `
           : ``,  // Don’t do anything if empty localizedConceptUUID is given
-        // Just return the first result.
-        reduceFunc: 'return value?.[0];',
+        // Just return the result.
+        reduceFunc: 'return value;',
       },
     },
   });
