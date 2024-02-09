@@ -4,7 +4,7 @@ Glossarist extension for Paneron
 Release process
 ---------------
 
-1. Update version in package.json to `<next version>`.
+1. Update version in package.json to ``<next version>``.
 
 2. Make your changes.
 
@@ -12,8 +12,8 @@ Release process
 
        yarn run dist
 
-4. Test by, e.g., adding the `dist` directory in Paneron as local extension
-   and using it on a dataset.
+4. Test by, e.g., adding the ``dist`` directory in Paneron as local extension
+   and opening some relevant dataset.
 
 5. Repeat steps 2-4 as needed.
 
