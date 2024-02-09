@@ -8,6 +8,10 @@ Release process
 
 #. Update version in package.json to `<next version>`.
 
+#. Build the latest version::
+
+       yarn run dist
+
 #. Tag commit::
 
        git tag -s <next version>
