@@ -5,24 +5,25 @@ import { css, jsx } from '@emotion/react';
 import { UL, InputGroup } from '@blueprintjs/core';
 import React from 'react';
 import type { InternalItemReference, ItemClassConfiguration } from '@riboseinc/paneron-registry-kit/types';
-import { GenericRelatedItemView, PropertyDetailView } from '@riboseinc/paneron-registry-kit/views/util';
-//import type { LocalizedConceptData } from './localizedConcept/LocalizedConceptData';
+import { BrowserCtx, GenericRelatedItemView, PropertyDetailView } from '@riboseinc/paneron-registry-kit';
+import type { LocalizedConceptData } from './localizedConcept/LocalizedConceptData';
 import { languageTitles, priorityLanguages, nonPriorityLanguages, type SupportedLanguage } from '../models/lang';
 import rdfExport from './concept-export';
+import { defaultLanguage } from '../models/lang';
 
 
-//const _PrimaryDesignation: React.FC<{ itemID: string }> =
-//function ({ itemID }) {
-//  const { useRegisterItemData } = React.useContext(registryKit.BrowserCtx);
-//  const defaultLanguageEntryPath = `localized-concept/${itemID}.yaml`;
-//  const itemData = useRegisterItemData({ itemPaths: [defaultLanguageEntryPath] });
-//  const defaultLanguageEntry = itemData.value?.[defaultLanguageEntryPath]?.data as LocalizedConceptData | undefined;
-//  return <>{defaultLanguageEntry?.terms?.[0]?.designation}</>;
-//};
-//
-//const PrimaryDesignation = React.memo(
-//  _PrimaryDesignation,
-//  (p1, p2) => p1.itemID === p2.itemID);
+const _PrimaryDesignation: React.FC<{ itemID: string }> =
+function ({ itemID }) {
+  const { useRegisterItemData } = React.useContext(BrowserCtx);
+  const defaultLanguageEntryPath = `/localized-concept/${itemID}.yaml`;
+  const itemData = useRegisterItemData({ itemPaths: [defaultLanguageEntryPath] });
+  const defaultLanguageEntry = itemData.value?.[defaultLanguageEntryPath]?.data as LocalizedConceptData | undefined;
+  return <>{defaultLanguageEntry?.terms?.[0]?.designation ?? 'no designation'}</>;
+};
+
+const PrimaryDesignation = React.memo(
+  _PrimaryDesignation,
+  (p1, p2) => p1.itemID === p2.itemID);
 
 
 const PLACEHOLDER_LOCALIZED_CCONCEPTS = {} as const;
@@ -163,14 +164,16 @@ export const concept: ItemClassConfiguration<ConceptData> = {
   itemSorter: (p1, p2) => p1.identifier.localeCompare(p2.identifier),
   exportFormats: [rdfExport],
   views: {
-    listItemView: (props) => <code className={props.className}>{props.itemData?.identifier}</code>,
-    // listItemView: (props) => <span className={props.className}>
-    //   <code>{props.itemData?.identifier}</code>
-    //   &ensp;
-    //   <PrimaryDesignation
-    //     itemID={props.itemData?.localizedConcepts?.[defaultLanguage] ?? ''}
-    //   />
-    // </span>,
+    //listItemView: (props) => <code className={props.className}>{props.itemData?.identifier}</code>,
+    listItemView: (props) => <span className={props.className}>
+      <code>{props.itemData?.identifier}</code>
+      &ensp;
+      <span css={css`opacity: 0.75`}>
+        <PrimaryDesignation
+          itemID={props.itemData?.localizedConcepts?.[defaultLanguage] ?? ''}
+        />
+      </span>
+    </span>,
     detailView: ConceptEditView,
     editView: ConceptEditView,
   },
