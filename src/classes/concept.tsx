@@ -18,7 +18,7 @@ function ({ itemID }) {
   const defaultLanguageEntryPath = `/localized-concept/${itemID}.yaml`;
   const itemData = useRegisterItemData({ itemPaths: [defaultLanguageEntryPath] });
   const defaultLanguageEntry = itemData.value?.[defaultLanguageEntryPath]?.data as LocalizedConceptData | undefined;
-  return <>{defaultLanguageEntry?.terms?.[0]?.designation ?? 'no designation'}</>;
+  return <>{defaultLanguageEntry?.terms?.[0]?.designation ?? '—'}</>;
 };
 
 const PrimaryDesignation = React.memo(
