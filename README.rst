@@ -1,6 +1,8 @@
 Glossarist extension for Paneron
 ================================
 
+Tested on Node 16 (Paneron host’s version).
+
 Release process
 ---------------
 
