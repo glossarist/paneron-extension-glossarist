@@ -45,7 +45,10 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
   views: {
     listItemView: React.memo((props) => {
       return (
-        <div className={props.className} dir={getHTMLDirForLanguage(props.itemData.language_code)}>
+        <div
+            className={props.className}
+            dir={getHTMLDirForLanguage(props.itemData.language_code)}
+            css={css`flex: 1;`}>
           <PrimaryDesignation term={props.itemData?.terms?.[0]} />
         </div>
       );
