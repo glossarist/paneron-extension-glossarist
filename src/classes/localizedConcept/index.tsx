@@ -44,9 +44,11 @@ export const localizedConcept: ItemClassConfiguration<LocalizedConceptData> = {
   itemSorter: () => 0,
   views: {
     listItemView: React.memo((props) => {
-      return <div className={props.className} dir={getHTMLDirForLanguage(props.itemData.language_code)}>
-        <PrimaryDesignation term={props.itemData?.terms?.[0]} />
-      </div>;
+      return (
+        <div className={props.className} dir={getHTMLDirForLanguage(props.itemData.language_code)}>
+          <PrimaryDesignation term={props.itemData?.terms?.[0]} />
+        </div>
+      );
       // const conceptUUID = useUniversalConceptUUID(props.itemRef.itemID ?? '');
       // const { useRegisterItemData } = React.useContext(regkit.BrowserCtx);
       // const itemPath = regkit.itemRefToItemPath({
