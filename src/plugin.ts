@@ -29,6 +29,6 @@ export default makeRegistryExtension({
   name: "Glossarist",
   itemClassConfiguration,
   defaultSearchCriteria: defaultSearchCriteria as any,
-  keyExpression: "obj.data.identifier || `${obj.data.terms?.[0]?.designation}-${obj.id}` || obj.id",
+  keyExpression: "obj.data?.identifier ? parseInt(obj.data.identifier ?? '0', 10) : `${obj.data.terms?.[0]?.designation}-${obj.id}`",
   getQuickSearchPredicate,
 });
