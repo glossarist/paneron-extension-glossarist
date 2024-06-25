@@ -34,6 +34,10 @@ export const EntryDetails: React.FC<EntryDetailsProps> = function ({
 
   const universalConceptUUID = useUniversalConceptUUID(itemID ?? '');
 
+  if (!universalConceptUUID) {
+    console.error("Unable to obtain universal concept UUID", universalConceptUUID);
+  }
+
   const primaryDesignation = entry.terms[0];
 
   //const parentConceptIDs: string[] = [];
